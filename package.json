@@ -1,6 +1,7 @@
 {
   "name": "iching-app",
   "version": "0.1.0",
+  "description": "A modern I Ching hexagram generator and reader.",
   "private": true,
   "scripts": {
     "dev": "next dev",

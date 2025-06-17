@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# I Ching Hexagram Reader
 
-## Getting Started
+A modern web application to explore and generate I Ching hexagrams, inspired by traditional divination methods.
 
-First, run the development server:
+## ✨ Features
+
+- Generate hexagrams using the coin method (automated and manual modes)
+- View original and changing hexagrams
+- Interpretations and commentary (in progress)
+- User accounts and reading history (planned)
+- Personal notes per reading
+- Trigram cross-reference table (8x8)
+- Hexagram sequence index (1–64)
+
+## 🛠️ Stack
+
+- **Next.js** (App Router)
+- **Tailwind CSS** for styling
+- **TypeScript** for static typing
+- **(Planned)**: Authentication (NextAuth), database (TBD), shadcn/ui
+
+## 📁 Project Structure (WIP)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+app/
+├── page.tsx              # Home (Quick reading)
+├── leitura/              # Reading page (manual method)
+├── hexagramas/           # 1-64 index
+├── trigramas/            # Trigram table
+
+components/
+├── tables/
+│   ├── HexagramGrid.tsx
+│   ├── TrigramCrossTable.tsx
+├── Header.tsx
+├── ReadingResult.tsx
+
+lib/
+├── hexagram.ts           # Hexagram logic
+├── coinMethod.ts         # Coin method generation
+
+🚧 Status
+
+This project is currently under active development as a personal learning and portfolio exercise. Contributions and feedback are welcome.
+
+    Parts of this project were planned and structured with the assistance of AI tools like ChatGPT, but all implementation is original and serves educational purposes.
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
