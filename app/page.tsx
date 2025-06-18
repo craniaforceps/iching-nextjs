@@ -1,8 +1,12 @@
-export default function HomePage() {
+import HexagramDisplay from '@/components/ui/HexagramDisplay'
+
+export default function Home() {
   return (
-    <main>
-      <h1>I Ching Quick Reading</h1>
-      {/* TODO: Add button to generate reading */}
+    <main className="flex justify-center py-2">
+      <div className="w-full max-w-3xl text-center p-6">
+        <h1 className="text-3xl font-bold mb-6">I Ching</h1>
+        <HexagramDisplay />
+      </div>
     </main>
   )
 }

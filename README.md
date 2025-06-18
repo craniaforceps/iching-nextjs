@@ -38,10 +38,10 @@ components/
 lib/
 ├── hexagram.ts           # Hexagram logic
 ├── coinMethod.ts         # Coin method generation
+```
 
 🚧 Status
 
 This project is currently under active development as a personal learning and portfolio exercise. Contributions and feedback are welcome.
 
-    Parts of this project were planned and structured with the assistance of AI tools like ChatGPT, but all implementation is original and serves educational purposes.
-```
+Parts of this project were planned and structured with the assistance of AI tools like ChatGPT, but all implementation is original and serves educational purposes.

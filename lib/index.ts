@@ -1,0 +1,5 @@
+export { generateLine } from './generateLine'
+export { generateRawHexagram } from './generateRawHexagram'
+export { generateBinary } from './generateBinary'
+export { findMatchingHexagrams } from './findMatchingHexagrams'
+export { simulateCoinToss } from './simulateCoinToss'
