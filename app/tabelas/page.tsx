@@ -1,4 +1,6 @@
+import Title from '@/components/ui/Title'
+
 const TabelasPage = () => {
-  return <div>TabelasPage</div>
+  return <Title title="Tabelas" />
 }
 export default TabelasPage

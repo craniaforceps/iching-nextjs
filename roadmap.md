@@ -9,32 +9,32 @@ A phased breakdown of the application's development plan.
 - [x] Initialize project with Next.js + Tailwind + TypeScript
 - [x] Define base folder structure and README
 - [x] Set up Git and commit conventions
-- [ ] Add favicon and basic style tokens
+- [x] Add favicon and basic style tokens
 
 ---
 
 ## 🔢 Phase 2: Hexagram Logic
 
-- [ ] Generate lines (6, 7, 8, 9) using the coin method
-- [ ] Build a hexagram from 6 lines
-- [ ] Determine changing lines and dynamic hexagram
-- [ ] Map sequence to static/dynamic hexagrams
+- [x] Generate lines (6, 7, 8, 9) using the coin method
+- [x] Build a hexagram from 6 lines
+- [x] Determine changing lines and dynamic hexagram
+- [x] Map sequence to static/dynamic hexagrams
 
 ---
 
 ## 💡 Phase 3: Interface (MVP)
 
-- [ ] Create quick reading page
-- [ ] Display hexagram, number, and interpretation
+- [x] Create quick reading page
+- [x] Display hexagram, number, and interpretation
 - [ ] Add manual line generation (interactive)
-- [ ] Responsive design (mobile-first)
+- [x] Responsive design (mobile-first)
 
 ---
 
 ## 📚 Phase 4: Content & Commentary
 
-- [ ] Add basic hexagram data (names, numbers)
-- [ ] Add simplified interpretation texts (initial version)
+- [x] Add basic hexagram data (names, numbers)
+- [x] Add simplified interpretation texts (initial version)
 - [ ] Enable user-added commentary per reading
 - [ ] Show transition from static to dynamic hexagram
 

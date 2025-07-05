@@ -4,7 +4,7 @@ export const generateRawHexagram = (): number[] => {
   const hexagramRaw: number[] = []
 
   for (let i = 0; i < 6; i++) {
-    hexagramRaw.unshift(generateLine())
+    hexagramRaw.push(generateLine())
   }
   console.log('Hexagram: ', hexagramRaw) //DEBUG
   return hexagramRaw

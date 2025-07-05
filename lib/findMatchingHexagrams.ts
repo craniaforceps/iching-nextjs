@@ -1,4 +1,4 @@
-import type { BinaryMatchInput, BinaryMatchOutput } from './../types/hexagram.d'
+import type { BinaryMatchInput, BinaryMatchOutput } from '../types/hexagram'
 import { hexagramsData } from '@/data/data'
 
 export const findMatchingHexagrams = ({
@@ -11,5 +11,6 @@ export const findMatchingHexagrams = ({
   if (!match1 || !match2) {
     return null
   }
+
   return { match1, match2 }
 }

@@ -25,7 +25,7 @@ export default function Navbar() {
 
       {/* Menu mobile dropdown */}
       {open && (
-        <div className="fixed top-[64px] left-0 right-0 bg-white dark:bg-gray-900 z-50 p-4 md:hidden max-w-3xl mx-auto border-b border-gray-300 dark:border-gray-700">
+        <div className="fixed top-[64px] left-0 right-0 bg-white dark:bg-gray-500 z-50 p-4 md:hidden max-w-3xl mx-auto border-b border-gray-300 dark:border-gray-700">
           <NavbarLinks />
         </div>
       )}

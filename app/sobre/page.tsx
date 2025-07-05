@@ -1,4 +1,10 @@
+import Title from '@/components/ui/Title'
+
 function AboutPage() {
-  return <div>About page</div>
+  return (
+    <div>
+      <Title title="Leituras" />
+    </div>
+  )
 }
 export default AboutPage
