@@ -3,7 +3,7 @@ import {
   generateBinary,
   findMatchingHexagrams,
   generateRawHexagram,
-} from '@/lib/index'
+} from '@/lib/coinMethodLogic/index'
 import { HexagramObject } from '@/types/hexagram'
 
 type HexagramMatches = {

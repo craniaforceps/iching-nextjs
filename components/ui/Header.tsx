@@ -52,13 +52,16 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-md md:hidden z-10">
+        <nav
+          className="absolute top-full left-0 w-full bg-white
+        bg- dark:bg-stone-900 shadow-md md:hidden z-10"
+        >
           <div className="flex flex-col p-4 gap-2">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="py-2 border-b border-gray-300 dark:border-gray-700 hover:text-amber-500"
+                className="py-2 border-b border-gray-300 dark:border-white hover:text-amber-500"
                 onClick={() => setMenuOpen(false)}
               >
                 {label}

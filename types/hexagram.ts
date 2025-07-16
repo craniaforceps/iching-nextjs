@@ -45,3 +45,27 @@ export type BinaryMatchOutput = {
   match1: HexagramObject
   match2: HexagramObject
 }
+
+export type Reading = {
+  id: string
+  question: string
+  notes: string
+  originalHexagram: Hexagram
+  mutantHexagram: Hexagram
+  createdAt: string
+}
+
+export type Hexagram = {
+  number: number
+  name: string
+  unicode: string
+  info: string
+  details?: {
+    image: string[]
+    judgment: string[]
+    lines: {
+      position: number
+      text: string[]
+    }[]
+  }
+}
