@@ -1,78 +1,141 @@
+// Zod
+import { ReadingInputSchema } from '@/lib/schemas/hexagramSchemas'
+
 // Next
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+
+// Random ID
+import { randomUUID } from 'crypto'
+
+// DB
+import db from '@/data/db/db'
 
 // Helpers
-import { loadReadings, saveReadings } from '@/lib/api/readings'
-import { extractIdFromRequest } from '@/lib/api/helpers'
+import { getHexagramByBinary } from '@/lib/queries/getHexagramByBinary'
 
 // Types
-import type { Reading } from '@/types/hexagram' //
+import type { ReadingRow, ReadingView } from '@/types/hexagram'
 
-// DELETE /api/readings/:id
-
-/**
- * Handler para o método HTTP DELETE.
- * Remove a leitura com o `id` fornecido.
- * @param request - objeto NextRequest da API
- */
-export async function DELETE(request: NextRequest) {
-  const id = extractIdFromRequest(request) // extrai o id da URL
-  if (!id) {
-    // se não existir id
-    // responde com erro 400 - bad request
-    return NextResponse.json({ error: 'Missing ID' }, { status: 400 })
-  }
-
+// GET: Retorna todas as leituras com hexagramas enriquecidos
+export async function GET() {
   try {
-    const readings: Reading[] = loadReadings() // carrega todas as leituras do JSON
-    // filtra para manter só leituras cujo id é diferente do recebido (remove o que tem id)
-    const filtered = readings.filter((reading) => reading.id !== id)
-    saveReadings(filtered) // grava o array atualizado no JSON
+    const rows: ReadingRow[] = db
+      .prepare('SELECT * FROM readings ORDER BY createdAt DESC')
+      .all() as ReadingRow[]
 
-    // resposta de sucesso
-    return NextResponse.json({ success: true })
-  } catch (err: unknown) {
-    // caso haja erro na leitura/escrita do ficheiro, retorna erro 500
+    // Mapeia os binários para hexagramas completos
+    const readings: ReadingView[] = await Promise.all(
+      rows.map(async (row) => {
+        const originalHexagram = await getHexagramByBinary(row.originalBinary)
+        const mutantHexagram = await getHexagramByBinary(row.mutantBinary)
+
+        if (!originalHexagram || !mutantHexagram) {
+          throw new Error(
+            'Hexagramas não encontrados para os binários fornecidos.'
+          )
+        }
+
+        return {
+          ...row,
+          originalHexagram,
+          mutantHexagram,
+        }
+      })
+    )
+
+    return NextResponse.json(readings)
+  } catch (err) {
     const error = err instanceof Error ? err.message : 'Erro desconhecido'
+    console.error('Erro no GET readings:', error)
     return NextResponse.json({ error }, { status: 500 })
   }
 }
 
-// PUT /api/readings/:id
-
-/**
- * Handler para o método HTTP PUT.
- * Atualiza a leitura com o `id` fornecido usando os dados do body JSON.
- * @param request - objeto NextRequest da API
- */
-export async function PUT(request: NextRequest) {
-  const id = extractIdFromRequest(request) // extrai o id da URL
-  if (!id) {
-    // se não existir id
-    // responde com erro 400 - bad request
-    return NextResponse.json({ error: 'Missing ID' }, { status: 400 })
-  }
-
+// POST: Cria nova leitura e retorna com hexagramas enriquecidos
+export async function POST(req: Request) {
   try {
-    const patch: Partial<Reading> = await request.json() // lê o corpo JSON da requisição com os dados para atualizar
-    const list: Reading[] = loadReadings() // carrega todas as leituras
-    const idx = list.findIndex((reading) => reading.id === id) // procura o índice da leitura com o id dado
+    const json = await req.json()
+    const parsed = ReadingInputSchema.safeParse(json)
 
-    if (idx === -1) {
-      // se não encontrou a leitura
-      // retorna erro 404 - not found
-      return NextResponse.json({ error: 'Reading not found' }, { status: 404 })
+    if (!parsed.success) {
+      return NextResponse.json(
+        { success: false, error: parsed.error.flatten() },
+        { status: 400 }
+      )
     }
 
-    // atualiza a leitura com os novos dados, preservando o resto dos campos
-    list[idx] = { ...list[idx], ...patch }
-    saveReadings(list) // salva a lista atualizada no ficheiro JSON
+    const data = parsed.data
 
-    // retorna sucesso e a leitura atualizada
-    return NextResponse.json({ success: true, reading: list[idx] })
-  } catch (err: unknown) {
-    // caso erro geral, retorna erro 500
+    const originalHexagram = getHexagramByBinary(data.originalHexagram.binary)
+    const mutantHexagram = getHexagramByBinary(data.mutantHexagram.binary)
+
+    if (!originalHexagram || !mutantHexagram) {
+      return NextResponse.json(
+        { success: false, error: 'Hexagramas não encontrados' },
+        { status: 400 }
+      )
+    }
+
+    const newReading: ReadingView = {
+      id: randomUUID(),
+      question: data.question,
+      notes: data.notes ?? null,
+      createdAt: new Date().toISOString(),
+      originalBinary: originalHexagram.binary,
+      mutantBinary: mutantHexagram.binary,
+      originalHexagram,
+      mutantHexagram,
+    }
+
+    const stmt = db.prepare(`
+      INSERT INTO readings (id, question, notes, createdAt, originalBinary, mutantBinary)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `)
+
+    stmt.run(
+      newReading.id,
+      newReading.question,
+      newReading.notes,
+      newReading.createdAt,
+      newReading.originalBinary,
+      newReading.mutantBinary
+    )
+
+    return NextResponse.json({ success: true, reading: newReading })
+  } catch (err) {
     const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    return NextResponse.json({ error }, { status: 500 })
+    return NextResponse.json({ success: false, error }, { status: 500 })
+  }
+}
+
+// DELETE: Remove leitura pelo ID
+export async function DELETE(
+  _req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { id } = params
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: 'ID em falta' },
+        { status: 400 }
+      )
+    }
+
+    const stmt = db.prepare('DELETE FROM readings WHERE id = ?')
+    const result = stmt.run(id)
+
+    if (result.changes === 0) {
+      return NextResponse.json(
+        { success: false, error: 'Leitura não encontrada' },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json({ success: true })
+  } catch (err) {
+    const error = err instanceof Error ? err.message : 'Erro desconhecido'
+    return NextResponse.json({ success: false, error }, { status: 500 })
   }
 }

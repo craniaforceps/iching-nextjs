@@ -1,18 +1,15 @@
 'use client'
 
-import { useState } from 'react'
-import { Minus, Plus, Trash } from 'lucide-react'
+import { Trash, Minus, Plus } from 'lucide-react'
 import HexagramCard from './HexagramCard'
-import type { Reading } from '@/types/hexagram'
+import type { ReadingItemProps } from '@/types/hexagram'
 
 export default function ReadingItem({
   reading,
   onDelete,
-}: {
-  reading: Reading
-  onDelete: (id: string) => void
-}) {
-  const [open, setOpen] = useState(false)
+  isOpen,
+  onToggle,
+}: ReadingItemProps) {
   const date = new Date(reading.createdAt).toLocaleString()
 
   const handleDelete = async () => {
@@ -33,10 +30,10 @@ export default function ReadingItem({
 
   return (
     <div className="border-transparent rounded-lg shadow-sm">
-      {/* Cabeçalho clickable */}
+      {/* Cabeçalho clicável */}
       <div
-        className="w-full flex justify-between items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:text-amber-500"
-        onClick={() => setOpen((o) => !o)}
+        className="w-full flex justify-between items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:text-amber-500 cursor-pointer"
+        onClick={onToggle}
       >
         <div className="text-left">
           <div className="font-semibold">{reading.question}</div>
@@ -44,7 +41,7 @@ export default function ReadingItem({
         </div>
 
         <div className="ml-4 flex gap-2 items-center">
-          {/* botão apagar (não propaga o click de abrir/fechar) */}
+          {/* Botão apagar (não propaga o click de abrir/fechar) */}
           <button
             className="text-red-500 hover:text-red-700"
             onClick={handleClickDelete}
@@ -52,12 +49,12 @@ export default function ReadingItem({
           >
             <Trash size={18} />
           </button>
-          {open ? <Minus size={20} /> : <Plus size={20} />}
+          {isOpen ? <Minus size={20} /> : <Plus size={20} />}
         </div>
       </div>
 
       {/* Conteúdo colapsável */}
-      {open && (
+      {isOpen && (
         <div className="p-4 space-y-6 bg-white dark:bg-gray-800">
           <HexagramCard title="Original" hexagram={reading.originalHexagram} />
           <HexagramCard title="Mutante" hexagram={reading.mutantHexagram} />
@@ -65,7 +62,7 @@ export default function ReadingItem({
             <h4 className="font-semibold mb-2">Notas</h4>
             <div
               className="prose dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: reading.notes }}
+              dangerouslySetInnerHTML={{ __html: reading.notes ?? '' }}
             />
           </div>
         </div>

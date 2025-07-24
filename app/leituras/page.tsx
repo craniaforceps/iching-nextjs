@@ -1,4 +1,4 @@
-import HexagramDisplay from '@/components/ui/HexagramDisplay'
+import HexagramDisplay from '@/components/features/HexagramDisplay'
 import Title from '@/components/ui/Title'
 
 export default function LeituraPage() {

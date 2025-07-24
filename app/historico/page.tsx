@@ -1,11 +1,6 @@
-import ArchiveDisplay from '@/components/ui/ArchiveDisplay'
+import ArchiveDisplay from '@/components/features/ArchiveDisplay'
 
 function HistoricoPage() {
-  return (
-    <div>
-      <h1>TESTE</h1>
-      <ArchiveDisplay />
-    </div>
-  )
+  return <ArchiveDisplay />
 }
 export default HistoricoPage

@@ -1,5 +1,4 @@
 import './globals.css'
-import Navbar from '@/components/ui/Navbar'
 import { ToastProvider } from './providers/toast-provider'
 import type { Metadata } from 'next'
 import { Inter, Lora } from 'next/font/google'

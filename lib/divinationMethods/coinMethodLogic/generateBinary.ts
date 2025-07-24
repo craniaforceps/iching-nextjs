@@ -1,6 +1,6 @@
-import type { BinaryResult } from '../types/hexagram'
+import type { BinaryMatchInput } from '@/types/hexagram'
 
-export const generateBinary = (hexagramRaw: number[]): BinaryResult => {
+export const generateBinary = (hexagramRaw: number[]): BinaryMatchInput => {
   const binary1 = hexagramRaw
     .map((value) => (value === 7 || value === 9 ? '1' : '0'))
     .join('')

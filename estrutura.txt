@@ -1,0 +1,99 @@
+.
+├── app
+│   ├── api
+│   │   ├── hexagram
+│   │   │   └── route.ts
+│   │   └── readings
+│   │       ├── [binary].ts
+│   │       ├── [id]
+│   │       └── route.ts
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── historico
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   ├── leituras
+│   │   └── page.tsx
+│   ├── login
+│   │   └── page.tsx
+│   ├── page.tsx
+│   ├── providers
+│   │   └── toast-provider.tsx
+│   ├── register
+│   │   └── page.tsx
+│   ├── sobre
+│   │   └── page.tsx
+│   ├── tabelas
+│   │   └── page.tsx
+│   ├── theme
+│   │   └── theme-provider.tsx
+│   └── trigrams
+│       └── page.tsx
+├── components
+│   ├── databaseTest.tsx
+│   ├── tables
+│   │   ├── HexagramGrid.tsx
+│   │   ├── ReferenceTable.tsx
+│   │   └── TrigramCrossTable.tsx
+│   └── ui
+│       ├── ArchiveDisplay.tsx
+│       ├── AuthButtons.tsx
+│       ├── Button.tsx
+│       ├── DarkModeButton.tsx
+│       ├── Footer.tsx
+│       ├── Header.tsx
+│       ├── HexagramCard.tsx
+│       ├── HexagramDetails.tsx
+│       ├── HexagramDisplay.tsx
+│       ├── Input.tsx
+│       ├── Logo.tsx
+│       ├── Navbar.tsx
+│       ├── NavLinks.tsx
+│       ├── ReadingItem.tsx
+│       ├── TextEditor.tsx
+│       └── Title.tsx
+├── components.json
+├── data
+│   ├── data.js
+│   ├── dataTable.ts
+│   ├── data.ts
+│   ├── hexagrams.json
+│   ├── hexagramsRaw.json
+│   ├── iching.sqlite
+│   ├── importHexagrams.js
+│   ├── importHexagramsSql.js
+│   └── oldHexagramData.js
+├── eslint.config.mjs
+├── estrutura.txt
+├── hooks
+│   └── useHexagram.tsx
+├── lib
+│   ├── api
+│   │   ├── helpers.ts
+│   │   └── readings.ts
+│   ├── coinMethodLogic
+│   │   ├── findMatchingHexagrams.ts
+│   │   ├── generateBinary.ts
+│   │   ├── generateLine.ts
+│   │   ├── generateRawHexagram.ts
+│   │   ├── index.ts
+│   │   └── simulateCoinToss.ts
+│   └── db.ts
+├── next.config.ts
+├── next-env.d.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── public
+│   ├── images
+│   │   └── chinese-mountains.webp
+│   └── yin-yang.svg
+├── README.md
+├── roadmap.md
+├── tailwind.config.ts
+├── tsconfig.json
+├── tsconfig.tsbuildinfo
+└── types
+    └── hexagram.ts
+
+25 directories, 71 files

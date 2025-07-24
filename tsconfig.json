@@ -28,7 +28,10 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "data/merge.ts",
-    "data/data.ts"
+    "data/hexagrams/data.ts",
+    "data/legacy/oldHexagramData.js",
+    "data/importHexagrams.js",
+    "data/convertHexagrams.js"
   ],
   "exclude": ["node_modules"]
 }

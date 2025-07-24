@@ -2,7 +2,7 @@
 
 import { useHexagram } from '@/hooks/useHexagram'
 import HexagramCard from './HexagramCard'
-import Button from './Button'
+import Button from '../ui/Button'
 import dynamic from 'next/dynamic'
 import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
@@ -31,13 +31,21 @@ export default function HexagramDisplay() {
   }
 
   async function handleSave() {
-    if (!hexagrams?.match1 || !hexagrams?.match2) return
+    if (!hexagrams?.match1 || !hexagrams?.match2) {
+      toast.error('Hexagramas incompletos')
+      return
+    }
+
+    if (!hexagrams.match1.binary || !hexagrams.match2.binary) {
+      toast.error('Binary do hexagrama original ou mutante está em falta')
+      return
+    }
 
     const payload = {
       question,
       notes,
-      originalHexagram: hexagrams.match1,
-      mutantHexagram: hexagrams.match2,
+      originalBinary: hexagrams.match1.binary,
+      mutantBinary: hexagrams.match2.binary,
       createdAt: new Date().toISOString(),
     }
 
@@ -50,8 +58,9 @@ export default function HexagramDisplay() {
       const json = await res.json()
       if (!json.success) throw new Error(json.error)
       toast.success('Leitura guardada com sucesso!')
-    } catch (err: any) {
-      toast.error('Erro ao guardar: ' + err.message)
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Erro desconhecido'
+      toast.error('Erro ao guardar: ' + message)
     }
   }
 

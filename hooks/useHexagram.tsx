@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import {
-  generateBinary,
-  findMatchingHexagrams,
   generateRawHexagram,
-} from '@/lib/coinMethodLogic/index'
+  generateBinary,
+} from '@/lib/divinationMethods/coinMethodLogic/client'
+
 import { HexagramObject } from '@/types/hexagram'
 
 type HexagramMatches = {
@@ -15,17 +15,30 @@ export function useHexagram() {
   const [hexagrams, setHexagrams] = useState<HexagramMatches | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const generateHexagram = () => {
+  const generateHexagram = async () => {
     const hexagram = generateRawHexagram()
     const binaries = generateBinary(hexagram)
-    const matches = findMatchingHexagrams(binaries)
 
-    if (matches) {
-      setHexagrams(matches)
-      setError(null)
-    } else {
+    try {
+      const res = await fetch('/api/hexagram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(binaries),
+      })
+
+      const data = await res.json()
+
+      if (!data.success) {
+        setHexagrams(null)
+        setError('Hexagrama não encontrado, tenta novamente.')
+      } else {
+        setHexagrams({ match1: data.match1, match2: data.match2 })
+        setError(null)
+      }
+    } catch (err: unknown) {
+      console.log(err)
       setHexagrams(null)
-      setError('Hexagrama não encontrado, tenta novamente.')
+      setError('Erro ao buscar hexagramas.')
     }
   }
 

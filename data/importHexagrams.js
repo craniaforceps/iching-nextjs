@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3'
-import oldHexagramData from './oldHexagramData.js'
+import oldHexagramData from './legacy/oldHexagramData.js'
 const { book1Info } = oldHexagramData
 
 const db = new Database('iching.sqlite')

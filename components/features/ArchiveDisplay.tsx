@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import ReadingItem from './ReadingItem'
-import type { Reading } from '@/types/hexagram'
+import type { ReadingView } from '@/types/hexagram'
 
 export default function ArchiveDisplay() {
-  const [readings, setReadings] = useState<Reading[]>([])
+  const [readings, setReadings] = useState<ReadingView[]>([])
   const [loading, setLoading] = useState(true)
   const [openId, setOpenId] = useState<string | null>(null)
 
@@ -14,7 +14,7 @@ export default function ArchiveDisplay() {
       try {
         const res = await fetch('/api/readings')
         if (!res.ok) throw new Error('Fetch failed')
-        const arr: Reading[] = await res.json()
+        const arr: ReadingView[] = await res.json()
 
         const validArr = arr
           .filter((r) => !!r.id)
@@ -38,7 +38,12 @@ export default function ArchiveDisplay() {
     if (openId === id) setOpenId(null)
   }
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <div className="flex justify-center py-10">
+        <span className="loader" />
+      </div>
+    )
 
   return (
     <div className="max-w-3xl mx-auto py-12 space-y-4">

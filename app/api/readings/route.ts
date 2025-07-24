@@ -1,49 +1,75 @@
 import { NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
-import { loadReadings, saveReadings } from '@/lib/api/readings'
-import { ensureReadingsHaveIds } from '@/lib/api/helpers'
-import type { Reading } from '@/types/hexagram'
+import db from '@/data/db/db'
+import type { ReadingRow } from '@/types/hexagram'
+import { getHexagramByBinary } from '@/lib/queries/getHexagramByBinary'
 
-/* GET /api/readings
- * Lê todas as leituras do ficheiro JSON.
- * Se alguma leitura não tiver 'id', gera um novo UUID e grava o ficheiro atualizado.
- * Retorna a lista completa das leituras.
- */
 export async function GET() {
-  const list: Reading[] = loadReadings()
-  const listWithIds = ensureReadingsHaveIds(list)
-  if (listWithIds !== list) saveReadings(listWithIds)
-  return NextResponse.json(listWithIds)
+  try {
+    const rows = db
+      .prepare('SELECT * FROM readings ORDER BY createdAt DESC')
+      .all() as ReadingRow[]
+
+    const readings = rows.map((row) => ({
+      ...row,
+      originalHexagram: getHexagramByBinary(row.originalBinary),
+      mutantHexagram: getHexagramByBinary(row.mutantBinary),
+    }))
+
+    return NextResponse.json(readings)
+  } catch (err) {
+    const error = err instanceof Error ? err.message : 'Erro desconhecido'
+    console.error('Erro no GET readings:', error)
+    return NextResponse.json({ error }, { status: 500 })
+  }
 }
 
-/* POST /api/readings
- * Recebe uma nova leitura via corpo da requisição.
- * Atribui um 'id' único e timestamp 'createdAt' antes de guardar.
- * Adiciona a leitura à lista e grava no ficheiro JSON.
- * Retorna sucesso e a leitura criada.
- */
 export async function POST(req: Request) {
   try {
-    // Obtém os dados enviados na requisição
-    const data: Omit<Reading, 'id' | 'createdAt'> = await req.json()
+    const data = await req.json()
 
-    // Cria uma nova leitura com id e data
-    const newReading: Reading = {
-      ...data,
-      id: randomUUID(),
-      createdAt: new Date().toISOString(),
+    if (
+      !data.question ||
+      typeof data.question !== 'string' ||
+      !data.originalBinary ||
+      typeof data.originalBinary !== 'string' ||
+      !data.mutantBinary ||
+      typeof data.mutantBinary !== 'string'
+    ) {
+      return NextResponse.json(
+        { success: false, error: 'Original or mutant binary missing' },
+        { status: 400 }
+      )
     }
 
-    // Carrega lista atual, adiciona a nova leitura e salva
-    const list: Reading[] = loadReadings()
-    list.push(newReading)
-    saveReadings(list)
+    const newReading = {
+      id: randomUUID(),
+      question: data.question,
+      notes: data.notes || null,
+      createdAt: new Date().toISOString(),
+      originalBinary: data.originalBinary,
+      mutantBinary: data.mutantBinary,
+    }
 
-    // Retorna sucesso com a leitura criada
+    const stmt = db.prepare(`
+      INSERT INTO readings (
+        id, question, notes, createdAt,
+        originalBinary, mutantBinary
+      ) VALUES (?, ?, ?, ?, ?, ?)
+    `)
+
+    stmt.run(
+      newReading.id,
+      newReading.question,
+      newReading.notes,
+      newReading.createdAt,
+      newReading.originalBinary,
+      newReading.mutantBinary
+    )
+
     return NextResponse.json({ success: true, reading: newReading })
-  } catch (err: unknown) {
-    // Caso ocorra erro, retorna mensagem e status 500
+  } catch (err) {
     const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    return NextResponse.json({ error }, { status: 500 })
+    return NextResponse.json({ success: false, error }, { status: 500 })
   }
 }

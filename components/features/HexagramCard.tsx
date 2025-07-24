@@ -1,32 +1,17 @@
 'use client'
 
 import HexagramDetails from './HexagramDetails'
-
-type HexagramLine = {
-  position: number
-  text: string[]
-}
-
-type HexagramDetailsType = {
-  image: string[]
-  judgment: string[]
-  lines: HexagramLine[]
-}
-
-export type Hexagram = {
-  number: number
-  name: string
-  unicode: string
-  info: string
-  details?: HexagramDetailsType
-}
-
-type HexagramCardProps = {
-  title: string
-  hexagram: Hexagram
-}
+import type { HexagramCardProps } from '@/types/hexagram'
 
 export default function HexagramCard({ title, hexagram }: HexagramCardProps) {
+  if (!hexagram) {
+    return (
+      <p className="text-center italic text-gray-500">
+        Hexagram data not found.
+      </p>
+    )
+  }
+
   const { number, name, unicode, info, details } = hexagram
   const { image = [], judgment = [], lines = [] } = details ?? {}
 
@@ -44,11 +29,13 @@ export default function HexagramCard({ title, hexagram }: HexagramCardProps) {
         title="Judgment"
         content={judgment}
       />
+
       <HexagramDetails hexagramId={number} title="Image" content={image} />
+
       <HexagramDetails
         hexagramId={number}
         title="Lines"
-        content={lines.map((line) => [`Line ${line.position}`, ...line.text])}
+        content={lines.map((textArr, i) => [`Line ${i + 1}`, ...textArr])}
       />
     </div>
   )
