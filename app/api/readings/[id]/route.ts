@@ -1,11 +1,7 @@
 // Zod
-import { ReadingInputSchema } from '@/lib/schemas/hexagramSchemas'
 
 // Next
 import { NextResponse } from 'next/server'
-
-// Random ID
-import { randomUUID } from 'crypto'
 
 // DB
 import db from '@/data/db/db'
@@ -14,21 +10,23 @@ import db from '@/data/db/db'
 import { getHexagramByBinary } from '@/lib/queries/getHexagramByBinary'
 
 // Types
-import type { ReadingRow, ReadingView } from '@/types/hexagram'
+import type { ReadingRow, ReadingView } from '@/lib/types/hexagram'
 
-// GET: Retorna todas as leituras com hexagramas enriquecidos
+// GET: Retorna todas as leituras com os hexagramas
 export async function GET() {
   try {
+    // base de dados
     const rows: ReadingRow[] = db
       .prepare('SELECT * FROM readings ORDER BY createdAt DESC')
       .all() as ReadingRow[]
 
-    // Mapeia os binários para hexagramas completos
+    // itera sobre cada item
     const readings: ReadingView[] = await Promise.all(
       rows.map(async (row) => {
         const originalHexagram = await getHexagramByBinary(row.originalBinary)
         const mutantHexagram = await getHexagramByBinary(row.mutantBinary)
 
+        // tratamento de erros - caso não existam
         if (!originalHexagram || !mutantHexagram) {
           throw new Error(
             'Hexagramas não encontrados para os binários fornecidos.'
@@ -48,63 +46,6 @@ export async function GET() {
     const error = err instanceof Error ? err.message : 'Erro desconhecido'
     console.error('Erro no GET readings:', error)
     return NextResponse.json({ error }, { status: 500 })
-  }
-}
-
-// POST: Cria nova leitura e retorna com hexagramas enriquecidos
-export async function POST(req: Request) {
-  try {
-    const json = await req.json()
-    const parsed = ReadingInputSchema.safeParse(json)
-
-    if (!parsed.success) {
-      return NextResponse.json(
-        { success: false, error: parsed.error.flatten() },
-        { status: 400 }
-      )
-    }
-
-    const data = parsed.data
-
-    const originalHexagram = getHexagramByBinary(data.originalHexagram.binary)
-    const mutantHexagram = getHexagramByBinary(data.mutantHexagram.binary)
-
-    if (!originalHexagram || !mutantHexagram) {
-      return NextResponse.json(
-        { success: false, error: 'Hexagramas não encontrados' },
-        { status: 400 }
-      )
-    }
-
-    const newReading: ReadingView = {
-      id: randomUUID(),
-      question: data.question,
-      notes: data.notes ?? null,
-      createdAt: new Date().toISOString(),
-      originalBinary: originalHexagram.binary,
-      mutantBinary: mutantHexagram.binary,
-      originalHexagram,
-      mutantHexagram,
-    }
-
-    const stmt = db.prepare(`
-      INSERT INTO readings (id, question, notes, createdAt, originalBinary, mutantBinary)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `)
-
-    stmt.run(
-      newReading.id,
-      newReading.question,
-      newReading.notes,
-      newReading.createdAt,
-      newReading.originalBinary,
-      newReading.mutantBinary
-    )
-
-    return NextResponse.json({ success: true, reading: newReading })
-  } catch (err) {
-    const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    return NextResponse.json({ success: false, error }, { status: 500 })
   }
 }
 

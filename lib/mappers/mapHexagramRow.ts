@@ -1,22 +1,7 @@
-import type { HexagramObject } from '@/types/hexagram'
-
-export type HexagramRow = {
-  number: number
-  name_en: string
-  unicode_hexagram: string
-  summary: string
-  binary: string
-  image: string
-  judgment: string
-  line_1: string
-  line_2: string
-  line_3: string
-  line_4: string
-  line_5: string
-  line_6: string
-}
+import type { HexagramObject, HexagramRow } from '@/lib/types/hexagram'
 
 export const mapHexagramRow = (row: HexagramRow): HexagramObject => {
+  // Define line_1, etc, como parte de HexagramRow
   const lineKeys: (keyof HexagramRow)[] = [
     'line_1',
     'line_2',
@@ -26,8 +11,10 @@ export const mapHexagramRow = (row: HexagramRow): HexagramObject => {
     'line_6',
   ]
 
+  // Faz o parse do JSON do SQLite
   const lines = lineKeys.map((key) => JSON.parse(row[key] as string))
 
+  // Devolve um HexagramObject renomeado para uso no frontend
   return {
     number: row.number,
     name: row.name_en,

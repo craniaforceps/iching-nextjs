@@ -13,17 +13,34 @@ export const binaryMatchSchema = z.object({
 export type BinaryMatchInput = z.infer<typeof binaryMatchSchema>
 
 // Inputs
-export const ReadingInputSchema = z.object({
+
+// Esquema base comum aos dois casos
+const BaseReadingSchema = z.object({
   question: z.string().min(1, 'Pergunta obrigatória'),
   notes: z.string().nullable().optional(),
-
-  originalHexagram: z.object({
-    binary: z.string().regex(/^[01]{6}$/, 'Binary inválido (6 dígitos 0 ou 1)'),
-  }),
-
-  mutantHexagram: z.object({
-    binary: z.string().regex(/^[01]{6}$/, 'Binary inválido (6 dígitos 0 ou 1)'),
-  }),
+  originalBinary: z.string().regex(/^[01]{6}$/, 'Binary inválido (6 dígitos)'),
+  mutantBinary: z.string().regex(/^[01]{6}$/, 'Binary inválido (6 dígitos)'),
 })
 
+// Esquema para validar o input do cliente (ex: POST request)
+export const ReadingInputSchema = BaseReadingSchema
+
 export type ReadingInput = z.infer<typeof ReadingInputSchema>
+
+// Esquema para validar o objeto completo a guardar, que inclui createdAt
+export const SaveReadingSchema = BaseReadingSchema.extend({
+  createdAt: z
+    .string()
+    .refine((date) => !isNaN(Date.parse(date)), 'Data inválida'),
+})
+
+// Caso notes deva ser só string ou undefined aqui, podes refinar
+// se quiseres ser mais restritivo (opcional)
+export const StrictSaveReadingSchema = SaveReadingSchema.refine(
+  (data) => data.notes === null || typeof data.notes === 'string',
+  {
+    message: 'notes deve ser string ou null',
+  }
+)
+
+export type SaveReadingInput = z.infer<typeof SaveReadingSchema>

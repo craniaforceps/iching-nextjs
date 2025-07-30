@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { randomUUID } from 'crypto'
-import type { Reading } from '@/types/hexagram'
+import type { Reading } from '@/lib/types/hexagram'
 
 // Caminho absoluto para o ficheiro JSON que guarda as leituras
 const FILE = path.join(process.cwd(), 'data', 'hexagrams.json')

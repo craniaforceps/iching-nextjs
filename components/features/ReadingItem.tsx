@@ -1,8 +1,10 @@
 'use client'
 
 import { Trash, Minus, Plus } from 'lucide-react'
+import { toast } from 'react-toastify'
 import HexagramCard from './HexagramCard'
-import type { ReadingItemProps } from '@/types/hexagram'
+import type { ReadingItemProps } from '@/lib/types/hexagram'
+import Swal from 'sweetalert2'
 
 export default function ReadingItem({
   reading,
@@ -12,15 +14,29 @@ export default function ReadingItem({
 }: ReadingItemProps) {
   const date = new Date(reading.createdAt).toLocaleString()
 
+  // Apaga da base de dados
   const handleDelete = async () => {
-    if (!confirm('Tens a certeza que queres apagar esta leitura?')) return
+    const result = await Swal.fire({
+      title: 'Tens a certeza?',
+      text: 'Quer mesmo apagar esta leitura? Esta ação não pode ser desfeita.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Apagar',
+      cancelButtonText: 'Cancelar',
+    })
+
+    if (!result.isConfirmed) return
 
     const res = await fetch(`/api/readings/${reading.id}`, {
       method: 'DELETE',
     })
 
-    if (res.ok) onDelete(reading.id)
-    else alert('Erro ao apagar leitura.')
+    if (res.ok) {
+      toast.success('Leitura apagada com sucesso!')
+      onDelete(reading.id)
+    } else {
+      toast.error('Erro ao apagar leitura.')
+    }
   }
 
   const handleClickDelete = (e: React.MouseEvent) => {
@@ -29,7 +45,7 @@ export default function ReadingItem({
   }
 
   return (
-    <div className="border-transparent rounded-lg shadow-sm">
+    <div className="w-full border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
       {/* Cabeçalho clicável */}
       <div
         className="w-full flex justify-between items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:text-amber-500 cursor-pointer"
@@ -41,7 +57,6 @@ export default function ReadingItem({
         </div>
 
         <div className="ml-4 flex gap-2 items-center">
-          {/* Botão apagar (não propaga o click de abrir/fechar) */}
           <button
             className="text-red-500 hover:text-red-700"
             onClick={handleClickDelete}
@@ -53,20 +68,24 @@ export default function ReadingItem({
         </div>
       </div>
 
-      {/* Conteúdo colapsável */}
-      {isOpen && (
-        <div className="p-4 space-y-6 bg-white dark:bg-gray-800">
+      {/* Conteúdo colapsável (sempre presente no DOM, animado via CSS) */}
+      <div
+        className={`transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 w-full ${
+          isOpen ? 'p-4' : 'max-h-0 p-0'
+        }`}
+      >
+        <div className="space-y-6 w-full">
           <HexagramCard title="Original" hexagram={reading.originalHexagram} />
           <HexagramCard title="Mutante" hexagram={reading.mutantHexagram} />
           <div>
             <h4 className="font-semibold mb-2">Notas</h4>
             <div
-              className="prose dark:prose-invert max-w-none"
+              className="prose dark:prose-invert max-w-none w-full"
               dangerouslySetInnerHTML={{ __html: reading.notes ?? '' }}
             />
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }

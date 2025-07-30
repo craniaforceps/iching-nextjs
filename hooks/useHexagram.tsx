@@ -4,7 +4,7 @@ import {
   generateBinary,
 } from '@/lib/divinationMethods/coinMethodLogic/client'
 
-import { HexagramObject } from '@/types/hexagram'
+import { HexagramObject } from '@/lib/types/hexagram'
 
 type HexagramMatches = {
   match1: HexagramObject

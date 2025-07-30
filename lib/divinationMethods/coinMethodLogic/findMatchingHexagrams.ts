@@ -2,7 +2,7 @@ import type {
   BinaryMatchInput,
   BinaryMatchOutput,
   HexagramRow,
-} from '@/types/hexagram'
+} from '@/lib/types/hexagram'
 import db from '@/data/db/db'
 import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
 

@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import type { Reading } from '@/types/hexagram'
+import type { Reading } from '@/lib/types/hexagram'
 
 import { NextRequest } from 'next/server'
 

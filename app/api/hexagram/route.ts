@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     // Validação de dados através do zod
     const result = binaryMatchSchema.safeParse(body)
 
-    // Tratamento de erro
+    // Tratamento de erro - binary inválidos
     if (!result.success) {
       return NextResponse.json(
         {
@@ -28,10 +28,11 @@ export async function POST(req: Request) {
       )
     }
 
-    // O binaries será o resultado da validação
+    // O binaries será o resultado da validação (contém as props binary1 e binary2)
     const binaries = result.data
     const matches = await findMatchingHexagrams(binaries)
 
+    // Tratamento do erro - match não existe
     if (!matches) {
       return NextResponse.json(
         { success: false, error: 'Hexagrama não encontrado' },

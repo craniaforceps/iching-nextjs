@@ -1,4 +1,7 @@
-function page() {
-  return <div>page</div>
+'use client'
+
+import LoginForm from '@/components/auth/LoginForm'
+
+export default function LoginPage() {
+  return <LoginForm />
 }
-export default page

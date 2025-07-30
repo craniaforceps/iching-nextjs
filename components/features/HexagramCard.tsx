@@ -1,7 +1,7 @@
 'use client'
 
 import HexagramDetails from './HexagramDetails'
-import type { HexagramCardProps } from '@/types/hexagram'
+import type { HexagramCardProps } from '@/lib/types/hexagram'
 
 export default function HexagramCard({ title, hexagram }: HexagramCardProps) {
   if (!hexagram) {
