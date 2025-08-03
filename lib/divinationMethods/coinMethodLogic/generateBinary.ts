@@ -1,4 +1,4 @@
-import type { BinaryMatchInput } from '@/lib/types/hexagram'
+import type { BinaryMatchInput } from '@/lib/types/hexagramTypes'
 
 export const generateBinary = (hexagramRaw: number[]): BinaryMatchInput => {
   const binary1 = hexagramRaw

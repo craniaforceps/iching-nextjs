@@ -38,37 +38,36 @@ export default function HexagramDisplay() {
   }
 
   async function handleSave() {
+    // Validar hexagramas
     if (!hexagrams?.match1 || !hexagrams?.match2) {
       toast.error('Hexagramas incompletos')
       return
     }
 
-    if (!hexagrams.match1.binary || !hexagrams.match2.binary) {
-      toast.error('Binary do hexagrama original ou mutante está em falta')
+    // Ir buscar o utilizador
+    const meRes = await fetch('/api/me')
+    const meJson = await meRes.json()
+
+    if (!meJson.user || !meJson.user.id) {
+      toast.error('Não foi possível identificar o utilizador')
       return
     }
+
+    const userId = meJson.user.id
 
     const payload = {
       question,
       notes,
       originalBinary: hexagrams.match1.binary,
       mutantBinary: hexagrams.match2.binary,
-      createdAt: new Date().toISOString(),
+      user_id: userId,
     }
 
-    // Validar payload com zod (não inclui createdAt no esquema de input, então valide só os dados necessários)
-    const parsed = ReadingInputSchema.safeParse({
-      question: payload.question,
-      notes: payload.notes,
-      originalBinary: payload.originalBinary,
-      mutantBinary: payload.mutantBinary,
-    })
+    // Validar com Zod
+    const parsed = ReadingInputSchema.safeParse(payload)
 
     if (!parsed.success) {
-      // extrai mensagens dos erros
-      const errors = parsed.error.issues
-        .map((issue) => issue.message)
-        .join(', ')
+      const errors = parsed.error.issues.map((i) => i.message).join(', ')
       toast.error('Erro na validação: ' + errors)
       return
     }
@@ -79,11 +78,12 @@ export default function HexagramDisplay() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
+
       const json = await res.json()
       if (!json.success) throw new Error(json.error)
-      console.log('Guardado com sucesso - vou mostrar toast')
+
       toast.success('Leitura guardada com sucesso!')
-    } catch (err: unknown) {
+    } catch (err) {
       const message = err instanceof Error ? err.message : 'Erro desconhecido'
       toast.error('Erro ao guardar: ' + message)
     }

@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from 'react'
 import ReadingItem from './ReadingItem'
-import type { ReadingView } from '@/lib/types/hexagram'
+import type { ReadingView } from '@/lib/types/hexagramTypes'
 
 export default function ArchiveDisplay() {
   // States
   const [readings, setReadings] = useState<ReadingView[]>([])
   const [loading, setLoading] = useState(true)
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<number | null>(null)
 
   // Corre o fetch quando é montado
   useEffect(() => {
     ;(async () => {
       try {
         // Faz o get implicito
-        const res = await fetch('/api/readings')
+        const res = await fetch('/api/readings', { credentials: 'include' })
         if (!res.ok) throw new Error('Fetch failed')
         const arr: ReadingView[] = await res.json()
 
@@ -37,7 +37,7 @@ export default function ArchiveDisplay() {
   }, [])
 
   // Apaga no frontend - em ReadingItem apaga da base de dados
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: number) => {
     setReadings((prev) => prev.filter((r) => r.id !== id))
     if (openId === id) setOpenId(null)
   }

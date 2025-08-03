@@ -1,5 +1,6 @@
 import './globals.css'
 import { ToastProvider } from './providers/toast-provider'
+import { AuthProvider } from '@/context/AuthProvider'
 import type { Metadata } from 'next'
 import { Inter, Lora } from 'next/font/google'
 import ThemeProvider from './theme/theme-provider'
@@ -42,11 +43,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ToastProvider /> {/* Coloque aqui, fora do main */}
-          <Header />
-          <main className="max-w-xl mx-auto p-5 flex gap-x-4 justify-center">
-            {children}
-          </main>
+          <AuthProvider>
+            <ToastProvider />
+            <Header />
+            <main className="max-w-xl mx-auto p-5 flex gap-x-4 justify-center">
+              {children}
+            </main>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

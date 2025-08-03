@@ -4,8 +4,15 @@ import { encrypt } from '@/lib/auth/session'
 export async function POST(request: Request) {
   const { userId } = await request.json()
 
-  const token = await encrypt(userId)
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+  if (!userId) {
+    return NextResponse.json(
+      { success: false, error: 'Missing userId' },
+      { status: 400 }
+    )
+  }
+
+  const token = await encrypt({ userId })
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 dias
 
   const response = NextResponse.json({ success: true })
 

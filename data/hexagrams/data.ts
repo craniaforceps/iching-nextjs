@@ -1,4 +1,4 @@
-import type { HexagramObject } from '@/lib/types/hexagram'
+import type { HexagramObject } from '@/lib/types/hexagramTypes'
 
 export const hexagramsData: HexagramObject[] = [
   {

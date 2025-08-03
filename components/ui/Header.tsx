@@ -1,22 +1,15 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import DarkModeToggle from './DarkModeButton'
 import YinYangSymbol from '@/public/yin-yang.svg'
-// import AuthButtons from './AuthButtons'
-
-const navLinks = [
-  { href: '/', label: 'Início' },
-  { href: '/leituras', label: 'Leituras' },
-  { href: '/tabelas', label: 'Tabelas' },
-  { href: '/sobre', label: 'Sobre' },
-  { href: '/historico', label: 'Histórico' },
-]
+import NavbarLinks from './NavLinks'
+// import { useAuth } from '@/context/AuthProvider'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  // const { isAuthenticated } = useAuth() // <-- aqui está a magia
 
   return (
     <header className="max-w-3xl mx-auto p-4 flex items-center justify-between relative">
@@ -27,46 +20,27 @@ export default function Header() {
 
       {/* DESKTOP */}
       <nav className="hidden md:flex gap-x-6">
-        {navLinks.map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            className="text-sm md:text-base py-2 dark:hover:text-amber-500 hover:text-amber-500"
-          >
-            {label}
-          </Link>
-        ))}
+        <NavbarLinks onLinkClick={() => setMenuOpen(false)} />
       </nav>
 
+      {/* Ações: DarkMode + Menu Mobile */}
       <div className="flex items-center gap-4">
         <DarkModeToggle />
 
-        {/* MOBILE */}
         <button
           className="md:hidden p-2 hover:scale-105 dark:hover:text-amber-500"
           onClick={() => setMenuOpen((prev) => !prev)}
-          aria-label="Toggle menu"
+          aria-label="Abrir menu"
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
+      {/* MOBILE MENU */}
       {menuOpen && (
-        <nav
-          className="absolute top-full left-0 w-full bg-white
-        bg- dark:bg-stone-900 shadow-md md:hidden z-10"
-        >
+        <nav className="absolute top-full left-0 w-full bg-white dark:bg-stone-900 shadow-md md:hidden z-10">
           <div className="flex flex-col p-4 gap-2">
-            {navLinks.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className="py-2 border-b border-gray-300 dark:border-white hover:text-amber-500"
-                onClick={() => setMenuOpen(false)}
-              >
-                {label}
-              </Link>
-            ))}
+            <NavbarLinks onLinkClick={() => setMenuOpen(false)} />
           </div>
         </nav>
       )}

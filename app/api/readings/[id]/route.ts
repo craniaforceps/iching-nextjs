@@ -10,7 +10,7 @@ import db from '@/data/db/db'
 import { getHexagramByBinary } from '@/lib/queries/getHexagramByBinary'
 
 // Types
-import type { ReadingRow, ReadingView } from '@/lib/types/hexagram'
+import type { ReadingRow, ReadingView } from '@/lib/types/hexagramTypes'
 
 // GET: Retorna todas as leituras com os hexagramas
 export async function GET() {

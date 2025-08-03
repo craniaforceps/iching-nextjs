@@ -52,7 +52,8 @@ export type HexagramCardProps = {
 }
 
 export type Reading = {
-  id: string
+  id: number
+  user_id: number
   question: string
   notes: string | null
   createdAt: string
@@ -67,23 +68,17 @@ export type ReadingView = ReadingRow & {
 
 export type ReadingItemProps = {
   reading: ReadingView
-  onDelete: (id: string) => void
+  onDelete: (id: number) => void
   isOpen: boolean
   onToggle: () => void
 }
 
 export type ReadingRow = {
-  id: string
+  id: number
+  user_id: number
   question: string
   notes: string | null
   createdAt: string
   originalBinary: string
   mutantBinary: string
-}
-
-export type User = {
-  id: string
-  email: string
-  password: string
-  createdAt: string
 }

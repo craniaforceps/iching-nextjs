@@ -1,3 +1,4 @@
+// app/api/logout/route.ts
 import { NextResponse } from 'next/server'
 
 export async function POST() {
@@ -8,6 +9,9 @@ export async function POST() {
     value: '',
     path: '/',
     expires: new Date(0),
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
   })
 
   return response

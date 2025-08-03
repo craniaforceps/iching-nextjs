@@ -1,32 +1,17 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { encrypt } from '@/lib/auth/session' // Assumindo que usas jose
-import { z, treeifyError } from 'zod'
+import { encrypt } from '@/lib/auth/session'
+import { treeifyError } from 'zod'
 import db from '@/data/db/db'
 import bcrypt from 'bcryptjs'
-import type { User } from '@/lib/types/hexagram'
-
-const loginSchema = z.object({
-  email: z.email(),
-  password: z
-    .email()
-    .min(8, { message: 'Password deve ter pelo menos 8 caracteres' })
-    .trim(),
-})
-
-type LoginState = {
-  errors?: {
-    email?: string[]
-    password?: string[]
-  }
-}
+import type { LoginState, User } from '@/lib/types/authTypes'
+import { loginSchema } from '@/lib/schemas/authSchemas'
 
 export async function login(
   _prevState: LoginState,
   formData: FormData
-): Promise<LoginState | void> {
+): Promise<LoginState> {
   const result = loginSchema.safeParse(Object.fromEntries(formData))
 
   if (!result.success) {
@@ -49,21 +34,21 @@ export async function login(
     return {
       errors: {
         email: ['Email ou palavra-passe inválidos'],
+        password: [],
       },
     }
   }
 
-  // ✅ Encriptar e guardar cookie diretamente
   const session = await encrypt({ userId: user.id })
-
   const cookieStore = await cookies()
 
   cookieStore.set('session', session, {
     httpOnly: true,
     path: '/',
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
   })
 
-  redirect('/dashboard')
+  // Em vez de redirect, retorna sucesso (ou um flag, se quiseres)
+  return { errors: {}, success: true }
 }

@@ -3,7 +3,7 @@
 import { Trash, Minus, Plus } from 'lucide-react'
 import { toast } from 'react-toastify'
 import HexagramCard from './HexagramCard'
-import type { ReadingItemProps } from '@/lib/types/hexagram'
+import type { ReadingItemProps } from '@/lib/types/hexagramTypes'
 import Swal from 'sweetalert2'
 
 export default function ReadingItem({

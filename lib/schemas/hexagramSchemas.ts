@@ -16,10 +16,11 @@ export type BinaryMatchInput = z.infer<typeof binaryMatchSchema>
 
 // Esquema base comum aos dois casos
 const BaseReadingSchema = z.object({
-  question: z.string().min(1, 'Pergunta obrigatória'),
-  notes: z.string().nullable().optional(),
-  originalBinary: z.string().regex(/^[01]{6}$/, 'Binary inválido (6 dígitos)'),
-  mutantBinary: z.string().regex(/^[01]{6}$/, 'Binary inválido (6 dígitos)'),
+  question: z.string().min(1, 'A pergunta é obrigatória'),
+  notes: z.string().optional().nullable(),
+  originalBinary: z.string().length(6, 'Binary inválido'),
+  mutantBinary: z.string().length(6, 'Binary inválido'),
+  user_id: z.number(),
 })
 
 // Esquema para validar o input do cliente (ex: POST request)
