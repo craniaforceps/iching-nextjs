@@ -1,13 +1,13 @@
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/button/Button'
 import Title from '@/components/ui/Title'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className="flex justify-center  prose dark:prose-invert p-6">
-      <div className="w-full max-w-3xl  ">
-        <Title title="Bem-vindos ao nosso oráculo" />
+    <main className="w-full max-w-5xl mx-auto p-6 prose dark:prose-invert">
+      <div className=" ">
+        <Title title="Vem descobrir o I Ching connosco" />
         <Image
           src="/images/chinese-mountains.webp"
           width={1920}
@@ -20,18 +20,20 @@ export default function Home() {
         />
 
         <p className="text-lg text-justify">
-          O <strong>I Ching</strong>, ou livro das mutações, é um dos mais
-          antigos sistemas de divinição do mundo. Por milénios, tem sido
-          consultado por aqueles que buscam compreender melhor o fluxo que rege
-          as nossas vidas.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic minus
+          quisquam molestias molestiae facilis, corporis temporibus, dignissimos
+          quae, iure quod sed tempora soluta eius omnis fugiat tenetur ut id
+          sint?
         </p>
         <p className="text-lg text-justify">
-          Aqui oferecemos um espaço onde poderás reflectir e meditar com a ajuda
-          do I Ching.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic minus
+          quisquam molestias molestiae facilis, corporis temporibus, dignissimos
+          quae, iure quod sed tempora soluta eius omnis fugiat tenetur ut id
+          sint?
         </p>
 
         <div>
-          <h2>Como usar o I Ching?</h2>
+          <h2>Instruções básicas sobre o I Ching</h2>
           <ol className="space-y-2 text-lg">
             <li>Formula a tua questão</li>
             <li>Segue as instruções</li>

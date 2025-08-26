@@ -1,32 +1,19 @@
-// Zod
-
-// Next
 import { NextResponse } from 'next/server'
-
-// DB
 import db from '@/data/db/db'
-
-// Helpers
 import { getHexagramByBinary } from '@/lib/queries/getHexagramByBinary'
-
-// Types
 import type { ReadingRow, ReadingView } from '@/lib/types/hexagramTypes'
 
-// GET: Retorna todas as leituras com os hexagramas
-export async function GET() {
+export async function getReadings() {
   try {
-    // base de dados
     const rows: ReadingRow[] = db
       .prepare('SELECT * FROM readings ORDER BY createdAt DESC')
       .all() as ReadingRow[]
 
-    // itera sobre cada item
     const readings: ReadingView[] = await Promise.all(
       rows.map(async (row) => {
         const originalHexagram = await getHexagramByBinary(row.originalBinary)
         const mutantHexagram = await getHexagramByBinary(row.mutantBinary)
 
-        // tratamento de erros - caso não existam
         if (!originalHexagram || !mutantHexagram) {
           throw new Error(
             'Hexagramas não encontrados para os binários fornecidos.'
@@ -41,42 +28,55 @@ export async function GET() {
       })
     )
 
-    return NextResponse.json(readings)
+    return readings
   } catch (err) {
-    const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    console.error('Erro no GET readings:', error)
-    return NextResponse.json({ error }, { status: 500 })
+    throw err
   }
 }
 
-// DELETE: Remove leitura pelo ID
-export async function DELETE(
-  _req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function deleteReading(id: string) {
   try {
-    const { id } = params
-
     if (!id) {
-      return NextResponse.json(
-        { success: false, error: 'ID em falta' },
-        { status: 400 }
-      )
+      throw new Error('ID em falta')
     }
 
     const stmt = db.prepare('DELETE FROM readings WHERE id = ?')
     const result = stmt.run(id)
 
     if (result.changes === 0) {
-      return NextResponse.json(
-        { success: false, error: 'Leitura não encontrada' },
-        { status: 404 }
-      )
+      throw new Error('Leitura não encontrada')
     }
 
-    return NextResponse.json({ success: true })
+    return { success: true }
   } catch (err) {
-    const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    return NextResponse.json({ success: false, error }, { status: 500 })
+    throw err
+  }
+}
+
+export function handleError(err: unknown) {
+  const error = err instanceof Error ? err.message : 'Erro desconhecido'
+  console.error('Erro:', error)
+  return NextResponse.json({ error }, { status: 500 })
+}
+
+export async function GET() {
+  try {
+    const readings = await getReadings()
+    return NextResponse.json(readings)
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export async function DELETE(
+  _req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { id } = await params
+    const result = await deleteReading(id)
+    return NextResponse.json(result)
+  } catch (err) {
+    return handleError(err)
   }
 }

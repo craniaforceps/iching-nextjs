@@ -31,7 +31,9 @@
     "data/hexagrams/data.ts",
     "data/legacy/oldHexagramData.js",
     "data/importHexagrams.js",
-    "data/convertHexagrams.js"
+    "data/convertHexagrams.js",
+    "data/db/populate_hexagrams.Js",
+    "data/db/db.ts"
   ],
   "exclude": ["node_modules"]
 }

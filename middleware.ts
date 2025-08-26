@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { decrypt } from '@/lib/auth/session' // tua função para verificar o token JWT
 
-const protectedRoutes = ['/dashboard']
+const protectedRoutes = ['/dashboard', '/historico', '/tabelas']
 const publicRoutes = ['/login', '/register']
 
 export async function middleware(req: NextRequest) {
@@ -32,5 +32,5 @@ export async function middleware(req: NextRequest) {
 
 // Aplica middleware só a estas rotas (opcional)
 export const config = {
-  matcher: ['/dashboard/:path*', '/login', '/register'],
+  matcher: ['/dashboard/:path*', '/login', '/register', '/tabelas'],
 }

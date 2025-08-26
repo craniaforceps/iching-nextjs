@@ -3,24 +3,10 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useActionState } from 'react'
-import { useFormStatus } from 'react-dom'
 import { login } from '@/lib/auth/actions'
 import { useAuth } from '@/context/AuthProvider'
 import type { LoginState } from '@/lib/types/authTypes'
-
-function SubmitButton() {
-  const { pending } = useFormStatus()
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="w-full py-1.5 px-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition disabled:opacity-50"
-    >
-      {pending ? 'A entrar...' : 'Entrar'}
-    </button>
-  )
-}
+import { SubmitButton } from '../ui/button/SubmitButton'
 
 export default function LoginForm() {
   const [state, loginAction] = useActionState<LoginState, FormData>(login, {

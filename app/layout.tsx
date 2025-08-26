@@ -4,7 +4,7 @@ import { AuthProvider } from '@/context/AuthProvider'
 import type { Metadata } from 'next'
 import { Inter, Lora } from 'next/font/google'
 import ThemeProvider from './theme/theme-provider'
-import Header from '@/components/ui/Header'
+import Header from '@/components/ui/navbar/Header'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -46,7 +46,7 @@ export default function RootLayout({
           <AuthProvider>
             <ToastProvider />
             <Header />
-            <main className="max-w-xl mx-auto p-5 flex gap-x-4 justify-center">
+            <main className="w-full max-w-5xl mx-auto p-5 flex gap-x-4 justify-center">
               {children}
             </main>
           </AuthProvider>

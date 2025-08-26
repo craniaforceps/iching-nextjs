@@ -12,3 +12,8 @@ export type LoginState = {
   }
   success?: boolean // 👈 ADICIONA ISTO
 }
+
+export type AuthContextType = {
+  isAuthenticated: boolean
+  refreshAuth: () => void
+}

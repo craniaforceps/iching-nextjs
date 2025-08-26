@@ -1,18 +1,12 @@
-// app/api/logout/route.ts
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 
-export async function POST() {
-  const response = NextResponse.json({ success: true })
+const COOKIE_NAME = 'session'
 
-  response.cookies.set({
-    name: 'session',
-    value: '',
-    path: '/',
-    expires: new Date(0),
-    httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-  })
-
-  return response
+export async function POST(request: NextRequest) {
+  if (request.cookies.get(COOKIE_NAME)?.value) {
+    const response = NextResponse.json({ success: true })
+    response.cookies.delete(COOKIE_NAME)
+    return response
+  }
+  return NextResponse.json({ error: 'Cookie not found' }, { status: 404 })
 }
