@@ -15,7 +15,7 @@ export default function TextEditor({ value, onChange }: Props) {
   return (
     <EditorContent
       editor={editor}
-      className="min-h-[150px] w-full prose dark:prose-invert p-2 border rounded-md placeholder-gray-400"
+      className="min-h-[200px] w-full min-w-[100px] max-w-[800px] prose dark:prose-invert p-2 border rounded-md placeholder-gray-400"
     />
   )
 }

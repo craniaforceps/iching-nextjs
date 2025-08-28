@@ -3,9 +3,11 @@ import Title from '@/components/ui/Title'
 
 export default function ArquivoPage() {
   return (
-    <main className="container px-6">
+    <>
       <Title title="Arquivo" />
-      <ArchiveDisplay />
-    </main>
+      <div className="w-full max-w-[55rem] space-y-4 items-center justify-center mx-auto">
+        <ArchiveDisplay />
+      </div>
+    </>
   )
 }

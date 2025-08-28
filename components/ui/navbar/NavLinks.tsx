@@ -56,7 +56,7 @@ export default function NavbarLinks({ onLinkClick }: Props) {
           {authNavLinks.map(renderLink)}
           <button
             onClick={handleLogout}
-            className="text-red-600 hover:text-red-800 transition font-medium"
+            className=" hover:text-red-500 transition font-medium"
           >
             Logout
           </button>

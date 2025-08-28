@@ -20,7 +20,7 @@ function HexagramDetails({ title, content, hexagramId }: HexagramDetailsProps) {
   }, [hexagramId])
 
   return (
-    <div className=" md:text-base p-1 px-2 ">
+    <div className="text-sm p-1 px-2 ">
       <div className="flex justify-between items-center mb-1 ">
         <h4 className="font-semibold tracking-wide leading-loose">{title}</h4>
         <button

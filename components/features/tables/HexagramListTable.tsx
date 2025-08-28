@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-
 import HexagramCell from './HexagramCell'
 import {
   hexagramsNumbersList,
@@ -13,14 +12,8 @@ import {
   clearHexagramHover,
 } from '@/lib/table/tableHandlers'
 import useHexagramSelection from '@/hooks/useHexagramSelection'
-import HexagramCard from '@/components/features/display/HexagramCard'
+import ResponsiveHexagramLayout from '@/components/features/display/ResponsiveHexagramLayout'
 import type { HexagramObject } from '@/lib/types/hexagramTypes'
-
-type PartialHexagram = {
-  number: number
-  name: string
-  unicode: string
-}
 
 const HexagramListTable: React.FC = () => {
   const {
@@ -35,47 +28,50 @@ const HexagramListTable: React.FC = () => {
     setHoveredHexagram: (hexagram: HexagramObject | null) => void
   } = useHexagramSelection()
 
+  const table = (
+    <table className="border-collapse border border-gray-400 w-full table-auto">
+      <tbody>
+        {hexagramsNumbersList.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((number, cellIndex) => {
+              const partialHexagram = {
+                number,
+                name: hexagramsEnglishList[rowIndex][cellIndex],
+                unicode: hexagramsSymbolsList[rowIndex][cellIndex],
+              }
+
+              return (
+                <HexagramCell
+                  key={cellIndex}
+                  number={number}
+                  symbol={partialHexagram.unicode}
+                  englishName={partialHexagram.name}
+                  isSelected={selectedHexagram?.number === number}
+                  isHovered={hoveredHexagram?.number === number}
+                  onClick={async () =>
+                    await handleHexagramClick(
+                      partialHexagram,
+                      setSelectedHexagram
+                    )
+                  }
+                  onMouseEnter={() =>
+                    handleHexagramHover(partialHexagram, setHoveredHexagram)
+                  }
+                  onMouseLeave={() => clearHexagramHover(setHoveredHexagram)}
+                />
+              )
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+
   return (
-    <div className="flex flex-col items-center gap-4">
-      <table className="border-collapse border border-gray-400 w-full table-auto">
-        <tbody>
-          {hexagramsNumbersList.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((number, cellIndex) => {
-                const partialHexagram: PartialHexagram = {
-                  number,
-                  name: hexagramsEnglishList[rowIndex][cellIndex],
-                  unicode: hexagramsSymbolsList[rowIndex][cellIndex],
-                }
-
-                return (
-                  <HexagramCell
-                    key={cellIndex}
-                    number={number}
-                    symbol={partialHexagram.unicode}
-                    englishName={partialHexagram.name}
-                    isSelected={selectedHexagram?.number === number}
-                    isHovered={hoveredHexagram?.number === number}
-                    onClick={async () =>
-                      await handleHexagramClick(
-                        partialHexagram,
-                        setSelectedHexagram
-                      )
-                    }
-                    onMouseEnter={() =>
-                      handleHexagramHover(partialHexagram, setHoveredHexagram)
-                    }
-                    onMouseLeave={() => clearHexagramHover(setHoveredHexagram)}
-                  />
-                )
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <HexagramCard title="Hexagrama" hexagram={selectedHexagram} />
-    </div>
+    <ResponsiveHexagramLayout
+      table={table}
+      selectedHexagram={selectedHexagram}
+    />
   )
 }
 

@@ -2,10 +2,11 @@ import Title from '@/components/ui/Title'
 
 export default function DefiniçoesPage() {
   return (
-    <main className="">
-      <div className="text-justify">
-        <Title title="Definições" />
-        <p className="text-justify prose dark:prose-invert">
+    <>
+      <Title title="Definições" />
+
+      <div className="prose dark:prose-invert lg:max-w-3xl mx-auto text-justify">
+        <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas amet,
           quaerat sunt praesentium soluta nulla ex est deleniti animi. Fugit
           itaque obcaecati saepe. Error voluptates aperiam vel ex modi atque.
@@ -15,6 +16,6 @@ export default function DefiniçoesPage() {
           voluptatem. Distinctio omnis iure laudantium.
         </p>
       </div>
-    </main>
+    </>
   )
 }

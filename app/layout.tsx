@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { Inter, Lora } from 'next/font/google'
 import ThemeProvider from './theme/theme-provider'
 import Header from '@/components/ui/navbar/Header'
+import Footer from '@/components/ui/Footer'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -46,9 +47,8 @@ export default function RootLayout({
           <AuthProvider>
             <ToastProvider />
             <Header />
-            <main className="w-full max-w-5xl mx-auto p-5 flex gap-x-4 justify-center">
-              {children}
-            </main>
+            <main className="mt-10 min-h-screen px-4">{children}</main>
+            <Footer />
           </AuthProvider>
         </ThemeProvider>
       </body>

@@ -19,7 +19,7 @@ export default function LoginForm() {
   useEffect(() => {
     if (state?.success) {
       refreshAuth() // Atualiza o contexto
-      router.push('/') // Ou dashboard, etc.
+      router.push('/dashboard') // Ou dashboard, etc.
     }
   }, [state, refreshAuth, router])
 

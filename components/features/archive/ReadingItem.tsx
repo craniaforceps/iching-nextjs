@@ -49,17 +49,25 @@ export default function ReadingItem({
     <div className="w-full border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
       {/* Cabeçalho clicável */}
       <div
-        className="w-full flex justify-between items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:text-amber-500 cursor-pointer"
+        className="w-full flex justify-between items-center px-4 py-2 hover:text-amber-500 cursor-pointer"
         onClick={onToggle}
       >
         <div className="text-left">
-          <div className="font-semibold">{reading.question}</div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">{date}</div>
+          <div className="font-semibold text-sm lg:text-base ">
+            {reading.question}
+          </div>
+          <div className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">
+            {date} - {reading.originalHexagram.unicode}{' '}
+            {reading.mutantHexagram.unicode}
+          </div>
+          {/* <div className="lg:text-base text-sm text-gray-600 dark:text-gray-400 ">
+            {reading.originalHexagram.unicode} {reading.mutantHexagram.unicode}
+          </div> */}
         </div>
 
         <div className="ml-4 flex gap-2 items-center">
           <button
-            className="text-red-500 hover:text-red-700"
+            className=" hover:text-red-500"
             onClick={handleClickDelete}
             title="Apagar leitura"
           >
@@ -71,17 +79,24 @@ export default function ReadingItem({
 
       {/* Conteúdo colapsável (sempre presente no DOM, animado via CSS) */}
       <div
-        className={`transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 w-full ${
+        className={`transition-all duration-300 overflow-hidden  w-full ${
           isOpen ? 'p-4' : 'max-h-0 p-0'
         }`}
       >
-        <div className="space-y-6 w-full">
-          <HexagramCard title="Original" hexagram={reading.originalHexagram} />
-          <HexagramCard title="Mutante" hexagram={reading.mutantHexagram} />
-          <div>
+        {/* Original + Mutante + Notas */}
+        <div className="">
+          {' '}
+          <div className="space-y-6 w-full md:grid md:grid-cols-2 md:gap-4">
+            <HexagramCard
+              title="Original"
+              hexagram={reading.originalHexagram}
+            />
+            <HexagramCard title="Mutante" hexagram={reading.mutantHexagram} />
+          </div>
+          <div className="w-full ">
             <h4 className="font-semibold mb-2">Notas</h4>
             <div
-              className="prose dark:prose-invert max-w-none w-full"
+              className="prose dark:prose-invert max-w-none w-full mx-auto items-center justify-center"
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(reading.notes ?? ''),
               }}

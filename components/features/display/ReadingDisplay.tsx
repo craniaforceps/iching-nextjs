@@ -41,22 +41,27 @@ export default function HexagramDisplay() {
         onChange={(e) => setQuestion(e.target.value)}
         className="w-full border rounded-md px-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
-
-      <Button text="Leitura" type="button" onClick={handleGenerate} />
+      <div className="flex justify-center">
+        <Button text="Leitura" type="button" onClick={handleGenerate} />
+      </div>
 
       {error && <p className="text-red-500">{error}</p>}
 
       {match1 && match2 && !error && (
-        <>
-          <HexagramCard title="Original" hexagram={match1} />
-          <HexagramCard title="Mutante" hexagram={match2} />
-
-          <div className="py-5 w-full">
-            <TextEditor value={notes} onChange={setNotes} />
+        <div>
+          <div className="md:grid md:grid-cols-2 md:gap-4">
+            <HexagramCard title="Original" hexagram={match1} />
+            <HexagramCard title="Mutante" hexagram={match2} />
           </div>
-
-          <Button text="Guardar" type="button" onClick={handleSave} />
-        </>
+          <div className="md:grid grid-cols-1">
+            <div className="py-5 w-full justify-center">
+              <TextEditor value={notes} onChange={setNotes} />
+            </div>
+            <div className="flex justify-center">
+              <Button text="Guardar" type="button" onClick={handleSave} />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

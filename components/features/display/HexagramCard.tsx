@@ -12,17 +12,23 @@ export default function HexagramCard({ title, hexagram }: HexagramCardProps) {
     )
   }
 
-  const { number, name, unicode, info, details } = hexagram
+  const {
+    number,
+    name,
+    unicode,
+    // info,
+    details,
+  } = hexagram
   const { image = [], judgment = [], lines = [] } = details ?? {}
 
   return (
     <div className="mb-4 text-center w-full">
       <h2 className="font-semibold md:text-base">{title}</h2>
-      <p className="md:text-lg">
+      <p className="">
         {number}. {name}
       </p>
-      <p className="md:text-9xl text-8xl pb-5">{unicode}</p>
-      <p className="md:text-base text-sm italic mb-3">{info}</p>
+      <p className="lg:text-9xl md:text-8xl text-8xl pb-5">{unicode}</p>
+      {/* <p className="md:text-sm text-sm italic mb-3">{info}</p> */}
 
       <HexagramDetails
         hexagramId={number}

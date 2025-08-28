@@ -10,6 +10,15 @@ const config: Config = {
         serif: ['var(--font-lora)', 'ui-serif', 'Georgia', 'serif'],
       },
     },
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+      // Breakpoint customizado
+      wide: '1483px',
+    },
   },
 }
 

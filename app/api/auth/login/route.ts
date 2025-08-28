@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   // Recebe o userId na requisição e destrutura
   const { userId } = await request.json()
 
-  // Valida se« existe o userId
+  // Valida se existe o userId
   if (!userId) {
     return NextResponse.json(
       { success: false, error: 'Missing userId' },

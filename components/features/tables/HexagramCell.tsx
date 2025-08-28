@@ -23,17 +23,18 @@ const HexagramCell: React.FC<HexagramCellProps> = ({
 }) => {
   // Classes base para o td, com transição e cursor
   const baseTdClasses =
-    'cursor-pointer border border-gray-400 p-2 text-center align-top transition-colors duration-200'
+    'cursor-pointer border border-gray-400 py-1 m-0 text-center align-top transition-colors duration-200'
 
   // Classes para número reduzido no mobile/sm e aumentado em md+
-  const numberClasses = 'text-[6px] sm:text-[8px] font-semibold lg:text-base'
+  const numberClasses = 'text-[6px]   font-semibold lg:text-[10px] pb-0 mb-0'
 
   // Classes para unicode (símbolo), menor no mobile, maior em md+
-  const symbolClasses = 'mt-1 text-2xl sm:text-3xl md:text-5xl leading-none'
+  const symbolClasses =
+    'mt-1  sm:text-3xl md:text-4xl lg:text-4xl leading-none pb-1 px-0'
 
   // Classes para nome em inglês, escondido em sm, visível só em lg
-  const englishNameClasses =
-    'italic mt-1 text-[7px] sm:text-[8px] hidden lg:inline lg:text-[12px]'
+  // const englishNameClasses =
+  //   'italic mt-1 text-[7px] sm:text-[8px] hidden lg:inline lg:text-[12px]'
 
   // Define estilos para selected, hovered e default
   let tdClasses = baseTdClasses
@@ -54,7 +55,7 @@ const HexagramCell: React.FC<HexagramCellProps> = ({
     hoverText = 'hover:text-gray-100 dark:hover:text-gray-900'
   }
 
-  tdClasses = `${baseTdClasses} ${bgColor} ${textColor} ${hoverBg} ${hoverText}`
+  tdClasses = `${baseTdClasses} ${bgColor} ${textColor} ${hoverBg} ${hoverText} p-0`
 
   return (
     <td
@@ -69,7 +70,7 @@ const HexagramCell: React.FC<HexagramCellProps> = ({
       >
         <span className={numberClasses}>{number}</span>
         <span className={symbolClasses}>{symbol}</span>
-        <span className={englishNameClasses}>{englishName}</span>
+        {/* <span className={englishNameClasses}>{englishName}</span> */}
       </div>
     </td>
   )

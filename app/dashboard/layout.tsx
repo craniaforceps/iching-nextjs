@@ -12,30 +12,47 @@ const menuLinks = [
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 md:h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
-      {/* Sidebar */}
-      <aside className="md:col-span-1 w-full shadow-md p-4 flex md:block justify-center bg-white dark:bg-gray-800 transition-colors encurtar-no-mobile">
-        <div className="w-full">
-          {' '}
-          {/* <-- Garantir que ocupa toda a coluna */}
-          <nav className="flex md:flex-col justify-center items-center space-y-2">
+    <div className="w-full max-w-7xl mx-auto transition-colors relative">
+      {/* Navbar horizontal para mobile com sticky */}
+      <nav className="flex w-full justify-center shadow-md py-2 mb-4 mt-20 md:hidden sticky top-0 z-10 bg-white dark:bg-stone-900">
+        <div className="flex w-full max-w-3xl justify-center md:gap-4 gap-2 px-4 sm:p-0">
+          {menuLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="px-3 py-0 my-0 rounded hover:text-amber-700 dark:hover:text-amber-200 transition text-md text-center"
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      </nav>
+
+      {/* Layout desktop / tablet */}
+      <div className="hidden md:flex gap-4 h-screen">
+        {/* Sidebar */}
+        <aside className="md:w-60 xl:w-64 flex flex-col">
+          <div className="sticky top-24 px-3 flex flex-col space-y-2">
             {menuLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="px-3 py-1 rounded hover:bg-amber-100 dark:hover:bg-amber-700 hover:text-amber-700 dark:hover:text-amber-200 transition w-full text-center md:text-left"
+                className="px-3 py-1 hover:text-amber-700 dark:hover:text-amber-500 transition w-full text-left break-words md:border-b"
               >
                 {label}
               </Link>
             ))}
-          </nav>
-        </div>
-      </aside>
+          </div>
+        </aside>
 
-      {/* Conteúdo das páginas */}
-      <main className="md:col-span-3 w-full max-w-4xl mx-auto p-6 overflow-y-auto">
-        {children}
-      </main>
+        {/* Conteúdo com scroll independente */}
+        <div className="flex-1 overflow-y-auto px-4 lg:px-6 flex flex-col mt-5">
+          {children}
+        </div>
+      </div>
+
+      {/* Mobile content */}
+      <div className="md:hidden mt-4">{children}</div>
     </div>
   )
 }
