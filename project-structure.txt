@@ -1,0 +1,170 @@
+.
+├── app
+│   ├── api
+│   │   ├── auth
+│   │   │   ├── login
+│   │   │   │   └── route.ts
+│   │   │   ├── logout
+│   │   │   │   └── route.ts
+│   │   │   └── register
+│   │   │       └── route.ts
+│   │   ├── hexagram
+│   │   │   ├── [number]
+│   │   │   │   └── route.ts
+│   │   │   └── route.ts
+│   │   ├── me
+│   │   │   └── route.ts
+│   │   └── readings
+│   │       ├── [id]
+│   │       │   └── route.ts
+│   │       └── route.ts
+│   ├── dashboard
+│   │   ├── arquivo
+│   │   │   └── page.tsx
+│   │   ├── definicoes
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── leituras
+│   │   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   └── tabelas
+│   │       └── page.tsx
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── hexagrama
+│   │   └── [number]
+│   │       └── page.tsx
+│   ├── layout.tsx
+│   ├── login
+│   │   └── page.tsx
+│   ├── logout
+│   │   └── page.tsx
+│   ├── page.tsx
+│   ├── providers
+│   │   └── toast-provider.tsx
+│   ├── registo
+│   │   └── page.tsx
+│   ├── sobre
+│   │   └── page.tsx
+│   ├── theme
+│   │   └── theme-provider.tsx
+│   └── trigrams
+│       └── page.tsx
+├── components
+│   ├── auth
+│   │   ├── LoginForm.tsx
+│   │   └── RegisterForm.tsx
+│   ├── features
+│   │   ├── archive
+│   │   │   ├── ArchiveDisplay.tsx
+│   │   │   └── ReadingItem.tsx
+│   │   ├── dashboard
+│   │   │   └── DashboardDisplay.tsx
+│   │   ├── display
+│   │   │   ├── HexagramCard.tsx
+│   │   │   ├── HexagramDetails.tsx
+│   │   │   ├── HexagramDisplay.tsx
+│   │   │   ├── HexagramMobileDisplay.tsx
+│   │   │   ├── HexagramPairDisplay.tsx
+│   │   │   ├── HexagramSideEditorDisplay.tsx
+│   │   │   ├── ReadingDisplay.tsx
+│   │   │   └── ResponsiveHexagramLayout.tsx
+│   │   └── tables
+│   │       ├── HexagramCell.tsx
+│   │       ├── HexagramListTable.tsx
+│   │       └── HexagramReferenceTable.tsx
+│   └── ui
+│       ├── button
+│       │   ├── AuthButtons.tsx
+│       │   ├── Button.tsx
+│       │   ├── DarkModeButton.tsx
+│       │   ├── LogoutButton.tsx
+│       │   └── SubmitButton.tsx
+│       ├── DashboardMenu.tsx
+│       ├── editor
+│       │   └── TextEditor.tsx
+│       ├── Footer.tsx
+│       ├── loading
+│       │   └── LoadingSpinner.tsx
+│       ├── Logo.tsx
+│       ├── navbar
+│       │   ├── Header.tsx
+│       │   └── NavLinks.tsx
+│       └── Title.tsx
+├── context
+│   └── AuthProvider.tsx
+├── data
+│   ├── convertHexagrams.js
+│   ├── db
+│   │   ├── db.ts
+│   │   ├── iching.sqlite
+│   │   └── populate_hexagrams.js
+│   ├── importHexagrams.js
+│   ├── importHexagramsSql.js
+│   ├── legacy
+│   │   ├── hexagrams.json
+│   │   ├── hexagramsRaw.json
+│   │   └── oldHexagramData.js
+│   └── table
+│       └── dataTable.ts
+├── eslint.config.mjs
+├── estrutura.txt
+├── hooks
+│   ├── useArchiveReadings.ts
+│   ├── useHexagramDisplay.ts
+│   ├── useHexagramSelection.tsx
+│   ├── useHexagram.ts
+│   ├── useLayoutMode.ts
+│   ├── useMediaQuery.ts
+│   └── useTextEditor.ts
+├── lib
+│   ├── auth
+│   │   ├── actions.ts
+│   │   ├── session.ts
+│   │   └── user.ts
+│   ├── divinationMethods
+│   │   ├── coinMethodLogic
+│   │   │   ├── client.ts
+│   │   │   ├── findMatchingHexagrams.ts
+│   │   │   ├── generateBinary.ts
+│   │   │   ├── generateLine.ts
+│   │   │   ├── generateRawHexagram.ts
+│   │   │   ├── index.ts
+│   │   │   ├── server.ts
+│   │   │   └── simulateCoinToss.ts
+│   │   ├── coinMethodModified
+│   │   │   ├── generateLine.ts
+│   │   │   └── simulateCoinToss.ts
+│   │   ├── yarrowStalkMethod
+│   │   └── yarrowStalkMethodModified
+│   ├── mappers
+│   │   └── mapHexagramRow.ts
+│   ├── queries
+│   │   ├── getHexagramByBinary.ts
+│   │   └── getHexagramByNumber.ts
+│   ├── schemas
+│   │   ├── authSchemas.ts
+│   │   └── hexagramSchemas.ts
+│   ├── table
+│   │   └── tableHandlers.ts
+│   └── types
+│       ├── authTypes.ts
+│       └── hexagramTypes.ts
+├── middleware.ts
+├── next.config.ts
+├── next-env.d.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── project-structure.txt
+├── public
+│   ├── images
+│   │   └── chinese-mountains.webp
+│   └── yin-yang.svg
+├── README.md
+├── roadmap.md
+├── tailwind.config.ts
+├── tsconfig.json
+└── tsconfig.tsbuildinfo
+
+57 directories, 110 files

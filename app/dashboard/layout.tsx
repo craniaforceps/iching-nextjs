@@ -13,14 +13,14 @@ const menuLinks = [
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="w-full max-w-7xl mx-auto transition-colors relative">
-      {/* Navbar horizontal para mobile com sticky */}
-      <nav className="flex w-full justify-center shadow-md py-2 mb-4 mt-20 md:hidden sticky top-0 z-10 bg-white dark:bg-stone-900">
-        <div className="flex w-full max-w-3xl justify-center md:gap-4 gap-2 px-4 sm:p-0">
+      {/* Navbar mobile */}
+      <nav className="flex w-full justify-center shadow-md py-2 sticky top-[60px] z-10 bg-white dark:bg-stone-900 md:hidden">
+        <div className="flex w-full max-w-3xl justify-center gap-2 px-4 sm:p-0">
           {menuLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="px-3 py-0 my-0 rounded hover:text-amber-700 dark:hover:text-amber-200 transition text-md text-center"
+              className="px-3 py-1 rounded hover:text-amber-700 dark:hover:text-amber-200 transition text-md text-center"
             >
               {label}
             </Link>
@@ -28,10 +28,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </div>
       </nav>
 
-      {/* Layout desktop / tablet */}
-      <div className="hidden md:flex gap-4 h-screen">
-        {/* Sidebar */}
-        <aside className="md:w-60 xl:w-64 flex flex-col">
+      {/* Conteúdo principal (único container responsivo) */}
+      <div className="flex flex-col md:flex-row gap-4 min-h-screen">
+        {/* Sidebar desktop */}
+        <aside className="hidden md:flex md:flex-col md:w-60 xl:w-64">
           <div className="sticky top-24 px-3 flex flex-col space-y-2">
             {menuLinks.map(({ href, label }) => (
               <Link
@@ -45,14 +45,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
         </aside>
 
-        {/* Conteúdo com scroll independente */}
-        <div className="flex-1 overflow-y-auto px-4 lg:px-6 flex flex-col mt-5">
+        {/* Conteúdo */}
+        <main className="flex-1 px-4 lg:px-6 flex flex-col gap-6 pt-6 md:pt-0">
           {children}
-        </div>
+        </main>
       </div>
-
-      {/* Mobile content */}
-      <div className="md:hidden mt-4">{children}</div>
     </div>
   )
 }
