@@ -1,15 +1,16 @@
-import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { decrypt } from '@/lib/auth/session'
 import { findUserById } from '@/lib/auth/user'
+import { errorResponse, successResponse } from '@/lib/api/responses'
 
 export async function authenticateSession(sessionValue: string | undefined) {
   try {
     const payload = await decrypt(sessionValue)
     if (!payload || typeof payload.userId !== 'number') {
+      errorResponse('Sessão inválida', 401)
       throw new Error('Sessão inválida')
     }
-    const user = findUserById(payload.userId)
+    const user = await findUserById(payload.userId)
     if (!user) {
       throw new Error('Utilizador não encontrado')
     }
@@ -19,25 +20,6 @@ export async function authenticateSession(sessionValue: string | undefined) {
       `Erro ao validar sessão: ${error instanceof Error ? error.message : 'Erro desconhecido'}`
     )
   }
-}
-
-export function handleError(error: unknown) {
-  console.error('Erro:', error)
-  return NextResponse.json(
-    { error: error instanceof Error ? error.message : 'Erro desconhecido' },
-    { status: 500 }
-  )
-}
-
-export function successResponse(data: unknown) {
-  return NextResponse.json(data, { status: 200 })
-}
-
-export function errorResponse(error: unknown, status: number) {
-  return NextResponse.json(
-    { error: error instanceof Error ? error.message : 'Erro desconhecido' },
-    { status }
-  )
 }
 
 export async function GET() {
@@ -52,6 +34,6 @@ export async function GET() {
     const user = await authenticateSession(session.value)
     return successResponse({ user: { id: user.id, email: user.email } })
   } catch (error) {
-    return handleError(error)
+    return errorResponse(error, 500)
   }
 }

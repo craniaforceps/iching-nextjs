@@ -1,21 +1,23 @@
-// hooks/useHexagramDisplay.ts
 'use client'
 
-import { useState, useRef } from 'react'
-import { toast } from 'react-toastify'
+// types and schemas
+import { BinaryMatchOutput } from '@/lib/types/hexagramTypes'
 import { ReadingInputSchema } from '@/lib/schemas/hexagramSchemas'
-import { useHexagram } from './useHexagram'
-import { HexagramObject } from '@/lib/types/hexagramTypes'
 
-interface HexagramPair {
-  match1: HexagramObject
-  match2: HexagramObject
-}
+// hooks
+import { useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
+import { useHexagram } from './useHexagram'
+
+// toast and alerts
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 export function useHexagramDisplay() {
   const { generateHexagram: generateHexagramAPI } = useHexagram()
+  const router = useRouter()
 
-  const [hexagrams, setHexagrams] = useState<HexagramPair | null>(null)
+  const [hexagrams, setHexagrams] = useState<BinaryMatchOutput | null>(null)
   const [question, setQuestion] = useState('')
   const [notes, setNotes] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -26,7 +28,6 @@ export function useHexagramDisplay() {
       toast.error('Escreve a pergunta antes de lançar o I Ching.')
       return
     }
-
     try {
       const newHexagrams = await generateHexagramAPI()
       setHexagrams(newHexagrams)
@@ -39,9 +40,6 @@ export function useHexagramDisplay() {
       const message = err instanceof Error ? err.message : 'Erro desconhecido'
       setError(message)
       toast.error(message)
-      // Não limpamos intencionalmente aqui para que o utilizador possa decidir
-      // (mas podes descomentar a linha abaixo se preferires limpar automaticamente)
-      // setHexagrams(null)
     }
   }
 
@@ -51,11 +49,22 @@ export function useHexagramDisplay() {
       return
     }
 
+    const res = await Swal.fire({
+      title: 'Guardar leitura?',
+      text: 'Desejas realmente guardar esta leitura?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, guardar',
+      cancelButtonText: 'Cancelar',
+    })
+
+    if (!res.isConfirmed) return
+
     try {
       const meRes = await fetch('/api/me')
       const meJson = await meRes.json()
 
-      if (!meJson.user?.id) {
+      if (!meJson.data?.user?.id) {
         toast.error('Não foi possível identificar o utilizador')
         return
       }
@@ -65,7 +74,7 @@ export function useHexagramDisplay() {
         notes,
         originalBinary: hexagrams.match1.binary,
         mutantBinary: hexagrams.match2.binary,
-        user_id: meJson.user.id,
+        user_id: meJson.data.user.id,
       }
 
       const parsed = ReadingInputSchema.safeParse(payload)
@@ -75,14 +84,18 @@ export function useHexagramDisplay() {
         return
       }
 
-      const res = await fetch('/api/readings', {
+      const saveRes = await fetch('/api/readings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      const json = await res.json()
+      const json = await saveRes.json()
       if (!json.success) throw new Error(json.error)
+
       toast.success('Leitura guardada com sucesso!')
+
+      // Redireciona para a mesma página, "forçando refresh"
+      router.push('/dashboard')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Erro desconhecido'
       toast.error('Erro ao guardar: ' + message)
@@ -99,6 +112,6 @@ export function useHexagramDisplay() {
     buttonRef,
     handleGenerate,
     handleSave,
-    setHexagrams, // exposto por se precisares de limpar manualmente
+    setHexagrams,
   }
 }

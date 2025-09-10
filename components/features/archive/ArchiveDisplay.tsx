@@ -1,27 +1,23 @@
 'use client'
 
 import { useState } from 'react'
-import { useReadings } from '@/hooks/useArchiveReadings'
+import { useArchiveReadings } from '@/hooks/useArchiveReadings'
 import ReadingItem from './ReadingItem'
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner'
 
 export default function ArchiveDisplay() {
-  const { readings, loading, deleteReading } = useReadings()
-
+  const { readings, loading, deleteReading } = useArchiveReadings()
   const [openId, setOpenId] = useState<number | null>(null)
-
-  // estado para paginação
   const [page, setPage] = useState(1)
-  const itemsPerPage = 10
 
-  // cálculos de paginação
+  const itemsPerPage = 15
   const start = (page - 1) * itemsPerPage
   const end = start + itemsPerPage
   const paginatedReadings = readings.slice(start, end)
   const totalPages = Math.ceil(readings.length / itemsPerPage)
 
   return (
-    <div className="w-full space-y-2">
+    <div className="w-full space-y-4">
       {loading ? (
         <div className="flex justify-center items-center h-full w-full">
           <LoadingSpinner />
@@ -47,11 +43,11 @@ export default function ArchiveDisplay() {
 
           {/* Controlo de paginação */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-4">
+            <div className="flex justify-center items-center gap-4 mt-4 ">
               <button
                 disabled={page === 1}
                 onClick={() => setPage((p) => p - 1)}
-                className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50"
+                className="cursor-pointer px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50 "
               >
                 Anterior
               </button>
@@ -61,7 +57,7 @@ export default function ArchiveDisplay() {
               <button
                 disabled={page === totalPages}
                 onClick={() => setPage((p) => p + 1)}
-                className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50"
+                className="cursor-pointer px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50"
               >
                 Seguinte
               </button>

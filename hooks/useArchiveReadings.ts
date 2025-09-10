@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import type { ReadingView } from '@/lib/types/hexagramTypes'
 
-export function useReadings() {
+export function useArchiveReadings() {
   const [readings, setReadings] = useState<ReadingView[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -11,15 +11,16 @@ export function useReadings() {
       try {
         const res = await fetch('/api/readings', { credentials: 'include' })
         if (!res.ok) throw new Error('Fetch failed')
-        const arr: ReadingView[] = await res.json()
+        const json = await res.json()
+        const arr: ReadingView[] = json.data
 
         const validArr = arr
           .filter((r) => !!r.id)
-          .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-
-        if (validArr.length !== arr.length) {
-          console.warn('Algumas leituras não têm ID definido!')
-        }
+          .sort((a, b) => {
+            const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0
+            const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0
+            return dateB - dateA
+          })
 
         setReadings(validArr)
       } catch (err) {

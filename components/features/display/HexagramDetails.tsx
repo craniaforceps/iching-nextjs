@@ -1,13 +1,8 @@
 'use client'
 
+import { HexagramDetailsProps } from '@/lib/types/hexagramTypes'
 import { Minus, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
-
-type HexagramDetailsProps = {
-  hexagramId: number
-  title: string
-  content: string[] | string[][]
-}
 
 function HexagramDetails({ title, content, hexagramId }: HexagramDetailsProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,11 +27,11 @@ function HexagramDetails({ title, content, hexagramId }: HexagramDetailsProps) {
       </div>
 
       {isOpen && (
-        <div className="py-1 border-t-1 space-y-1 text-justify tracking-wide leading ">
+        <div className="py-1 border-t space-y-1 text-justify tracking-wide leading ">
           {isGrouped
             ? (content as string[][]).map((block, i) => (
                 <div
-                  className="py-1 pb-3 border-b-1 space-y-1 text-left tracking-wide leading"
+                  className="py-1 pb-3 border-b space-y-1 text-left tracking-wide leading"
                   key={i}
                 >
                   {block.map((line, j) => (

@@ -1,8 +1,9 @@
+import SettingsDisplay from '@/components/settings/SettingsDisplay'
 import Title from '@/components/ui/Title'
 
 export default function DefiniçoesPage() {
   return (
-    <>
+    <div className="lg:py-2 py-4">
       <Title title="Definições" />
 
       <div className="prose dark:prose-invert lg:max-w-3xl mx-auto text-justify">
@@ -15,7 +16,8 @@ export default function DefiniçoesPage() {
           nihil, nemo, facilis blanditiis eius iste, reiciendis velit
           voluptatem. Distinctio omnis iure laudantium.
         </p>
+        <SettingsDisplay />
       </div>
-    </>
+    </div>
   )
 }

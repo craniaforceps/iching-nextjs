@@ -1,13 +1,17 @@
 import type { HexagramObject } from '@/lib/types/hexagramTypes'
 
 export async function handleHexagramClick(
-  partialHexagram: { number: number },
+  hexagramNumber: { number: number },
   setSelectedHexagram: (hex: HexagramObject | null) => void
 ) {
   try {
-    const res = await fetch(`/api/hexagram/${partialHexagram.number}`)
-    if (!res.ok) throw new Error('Failed to fetch hexagram')
-    const fullHexagram: HexagramObject = await res.json()
+    const res = await fetch(`/api/hexagram/${hexagramNumber.number}`)
+    const json = await res.json()
+
+    if (!res.ok || !json.success)
+      throw new Error(json.error || 'Failed to fetch hexagram')
+
+    const fullHexagram: HexagramObject = json.data
     setSelectedHexagram(fullHexagram)
   } catch (error) {
     console.error(error)
@@ -21,8 +25,12 @@ export async function handleHexagramHover(
 ) {
   try {
     const res = await fetch(`/api/hexagram/${hexagram.number}`)
-    if (!res.ok) throw new Error('Failed to fetch hexagram')
-    const data: HexagramObject = await res.json()
+    const json = await res.json()
+
+    if (!res.ok || !json.success)
+      throw new Error(json.error || 'Failed to fetch hexagram')
+
+    const data: HexagramObject = json.data
     setHoveredHexagram(data)
   } catch (error) {
     console.error(error)

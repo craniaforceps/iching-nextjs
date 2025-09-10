@@ -3,10 +3,10 @@ import Title from '@/components/ui/Title'
 
 export default function LeituraPage() {
   return (
-    <>
+    <div className="lg:py-2 py-4">
       <Title title="Leituras" />
 
-      <div className="prose dark:prose-invert lg:max-w-3xl mx-auto text-justify">
+      <div className="prose dark:prose-invert max-w-3xl mx-auto text-justify">
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas amet,
           quaerat sunt praesentium soluta nulla ex est deleniti animi. Fugit
@@ -18,9 +18,9 @@ export default function LeituraPage() {
         </p>
       </div>
 
-      <div className="w-full">
+      <div className="w-full py-4">
         <ReadingDisplay />
       </div>
-    </>
+    </div>
   )
 }

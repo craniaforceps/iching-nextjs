@@ -23,7 +23,7 @@ const TabelasPage = () => {
   const [open, setOpen] = useState<string>('')
 
   return (
-    <>
+    <div className="lg:py-2 py-4">
       <Title title="Tabelas" />
 
       {/* <div className="flex justify-center">
@@ -37,7 +37,7 @@ const TabelasPage = () => {
 
       {/* Container centralizado para acordeão */}
       <div className="flex justify-center">
-        <div className="w-full max-w-[55rem] space-y-4 ">
+        <div className="w-full  max-w-3xl space-y-4 ">
           {TABLES.map(({ key, title, component }) => (
             <div key={key} className="border rounded-lg overflow-hidden ">
               {/* Botão do acordeão */}
@@ -68,7 +68,7 @@ const TabelasPage = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

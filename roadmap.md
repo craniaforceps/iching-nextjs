@@ -35,26 +35,26 @@ A phased breakdown of the application's development plan.
 
 - [x] Add basic hexagram data (names, numbers)
 - [x] Add simplified interpretation texts (initial version)
-- [ ] Enable user-added commentary per reading
+- [x] Enable user-added commentary per reading
 - [ ] Show transition from static to dynamic hexagram
 
 ---
 
 ## 📊 Phase 5: Reference Tables
 
-- [ ] Create 8x8 Trigram Cross Table
-- [ ] Enable hover/click to preview hexagram info
-- [ ] Create Hexagram Sequence Index (1–64)
+- [x] Create 8x8 Trigram Cross Table
+- [x] Enable hover/click to preview hexagram info
+- [x] Create Hexagram Sequence Index (1–64)
 - [ ] Link table items to hexagram detail pages
 
 ---
 
 ## 🔐 Phase 6: User Features
 
-- [ ] Add authentication (NextAuth or similar)
-- [ ] Setup database (PostgreSQL, SQLite, or MongoDB)
-- [ ] Save readings with date, notes, and line values
-- [ ] View history and previous readings
+- [x] Add authentication (NextAuth or similar)
+- [x] Setup database (PostgreSQL, SQLite, or MongoDB)
+- [x] Save readings with date, notes, and line values
+- [x] View history and previous readings
 
 ---
 

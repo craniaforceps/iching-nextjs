@@ -1,10 +1,12 @@
 'use client'
 
-import { Trash, Minus, Plus } from 'lucide-react'
+import { Trash, Minus, Plus, Edit2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 import HexagramCard from '@/components/features/display/HexagramCard'
+import NotesEditor from '@/components/features/display/NotesEditor'
 import type { ReadingItemProps } from '@/lib/types/hexagramTypes'
 import Swal from 'sweetalert2'
+import { useState, useEffect, useRef } from 'react'
 import DOMPurify from 'dompurify'
 
 export default function ReadingItem({
@@ -13,9 +15,19 @@ export default function ReadingItem({
   isOpen,
   onToggle,
 }: ReadingItemProps) {
-  const date = new Date(reading.createdAt).toLocaleString()
+  const date = reading.createdAt
+    ? new Date(reading.createdAt).toLocaleString()
+    : ''
 
-  // Apaga da base de dados
+  const [isEditing, setIsEditing] = useState(false)
+  const [layout, setLayout] = useState<'stacked' | 'horizontal' | 'vertical'>(
+    'horizontal'
+  )
+  const [notes, setNotes] = useState(reading.notes ?? '')
+
+  const wasOpen = useRef(isOpen)
+
+  // Apagar leitura
   const handleDelete = async () => {
     const result = await Swal.fire({
       title: 'Tens a certeza?',
@@ -45,6 +57,52 @@ export default function ReadingItem({
     handleDelete()
   }
 
+  // Guardar notas
+  const handleSaveNotes = async () => {
+    const res = await fetch(`/api/readings/${reading.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ notes }),
+    })
+
+    if (res.ok) {
+      toast.success('Notas atualizadas!')
+      setIsEditing(false)
+    } else {
+      toast.error('Erro ao atualizar notas.')
+    }
+  }
+
+  // Modal antes de fechar se editor estiver aberto
+  const showCloseModal = async () => {
+    const { isConfirmed } = await Swal.fire({
+      title: 'Notas não guardadas!',
+      text: 'Deseja guardar as alterações antes de fechar?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Descartar',
+    })
+
+    if (isConfirmed) {
+      await handleSaveNotes()
+    }
+  }
+
+  // Intercepta fechamento do acordeão
+  useEffect(() => {
+    if (wasOpen.current && !isOpen && isEditing) {
+      showCloseModal()
+    }
+    wasOpen.current = isOpen
+  }, [isOpen])
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (!isOpen) onToggle() // abrir acordeão se estiver fechado
+    setIsEditing(true)
+  }
+
   return (
     <div className="w-full border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
       {/* Cabeçalho clicável */}
@@ -53,54 +111,102 @@ export default function ReadingItem({
         onClick={onToggle}
       >
         <div className="text-left">
-          <div className="font-semibold text-sm lg:text-base ">
+          <div className="font-semibold text-sm lg:text-base">
             {reading.question}
           </div>
           <div className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">
             {date} - {reading.originalHexagram.unicode}{' '}
             {reading.mutantHexagram.unicode}
           </div>
-          {/* <div className="lg:text-base text-sm text-gray-600 dark:text-gray-400 ">
-            {reading.originalHexagram.unicode} {reading.mutantHexagram.unicode}
-          </div> */}
         </div>
 
         <div className="ml-4 flex gap-2 items-center">
           <button
-            className=" hover:text-red-500"
-            onClick={handleClickDelete}
+            className="hover:text-red-500"
+            onClick={(e) => handleClickDelete(e)}
             title="Apagar leitura"
           >
             <Trash size={18} />
           </button>
+
+          <button
+            className="hover:text-gray-700"
+            onClick={(e) => handleEditClick(e)}
+            title="Editar notas"
+          >
+            <Edit2 size={18} />
+          </button>
+
           {isOpen ? <Minus size={20} /> : <Plus size={20} />}
         </div>
       </div>
 
-      {/* Conteúdo colapsável (sempre presente no DOM, animado via CSS) */}
+      {/* Conteúdo do acordeão */}
       <div
-        className={`transition-all duration-300 overflow-hidden  w-full ${
+        className={`transition-all duration-300 overflow-hidden w-full ${
           isOpen ? 'p-4' : 'max-h-0 p-0'
         }`}
       >
-        {/* Original + Mutante + Notas */}
-        <div className="">
-          {' '}
-          <div className="space-y-6 w-full md:grid md:grid-cols-2 md:gap-4">
+        {/* Botões de layout md+ */}
+        {isOpen && (
+          <div className="hidden md:flex flex-wrap gap-2 justify-center mb-4">
+            {['stacked', 'horizontal', 'vertical'].map((m) => (
+              <button
+                type="button"
+                key={m}
+                className={`cursor-pointer px-2 py-1 text-xs border rounded text-black dark:text-white hover:bg-amber-500`}
+                onClick={() => setLayout(m as typeof layout)}
+              >
+                {m === 'stacked'
+                  ? 'Empilhado'
+                  : m === 'horizontal'
+                    ? 'Horizontal'
+                    : 'Vertical'}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Hexagramas e notas */}
+        <div
+          className={`flex flex-col gap-6 ${
+            layout === 'vertical' ? 'md:flex-row' : 'flex-col'
+          }`}
+        >
+          <div
+            className={`
+              ${layout === 'stacked' ? 'w-full grid grid-cols-1 gap-6' : ''}
+              ${layout === 'horizontal' ? 'w-full grid grid-cols-1 md:grid-cols-2 gap-6' : ''}
+              ${layout === 'vertical' ? 'flex-1 grid grid-cols-1 gap-6' : ''}
+            `}
+          >
             <HexagramCard
               title="Original"
               hexagram={reading.originalHexagram}
             />
             <HexagramCard title="Mutante" hexagram={reading.mutantHexagram} />
           </div>
-          <div className="w-full ">
-            <h4 className="font-semibold mb-2">Notas</h4>
-            <div
-              className="prose dark:prose-invert max-w-none w-full mx-auto items-center justify-center"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(reading.notes ?? ''),
-              }}
-            />
+
+          <div
+            className={`
+              ${layout === 'vertical' ? 'w-full md:w-60 lg:w-90 xl:w-[28rem] sticky md:top-28 lg:top-28 h-min' : 'w-full'}
+            `}
+          >
+            {isEditing ? (
+              <NotesEditor
+                notes={notes}
+                setNotes={setNotes}
+                onSave={handleSaveNotes}
+                layout={layout}
+              />
+            ) : (
+              <div
+                className="prose dark:prose-invert max-w-none w-full border p-2 rounded-md text-gray-800 dark:text-gray-200"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(notes),
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

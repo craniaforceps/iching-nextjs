@@ -19,6 +19,7 @@ export default function HexagramCard({ title, hexagram }: HexagramCardProps) {
     // info,
     details,
   } = hexagram
+
   const { image = [], judgment = [], lines = [] } = details ?? {}
 
   return (

@@ -13,7 +13,7 @@ export const findMatchingHexagrams = async ({
   try {
     const stmt = db.prepare('SELECT * FROM hexagrams WHERE binary = ?')
 
-    // Os match1Row e match2Row são
+    // o .get retorna undefined caso não encontre o hexagrama
     const match1Row = stmt.get(binary1) as HexagramRow | undefined
     const match2Row = stmt.get(binary2) as HexagramRow | undefined
 

@@ -1,39 +1,49 @@
-// considerar guardar id, name, email dos users para além do isAuthenticated
-
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import type { AuthContextType } from '@/lib/types/authTypes'
-
-// Criar o contexto global que gere a autenticação
+import type { AuthContextType, User } from '@/lib/types/authTypes'
 
 const AuthContext = createContext<AuthContextType>({
-  isAuthenticated: false, // guarda o state de autenticação
-  refreshAuth: () => {}, // é igual ao checkAuth - verifica se o user está logado
+  isAuthenticated: false,
+  user: null,
+  loading: true,
+  refreshAuth: () => {},
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const checkAuth = async () => {
+    setLoading(true)
     try {
-      // Usa o /api/me para saber se o utilizador está autenticado e atualiza o estado
       const res = await fetch('/api/me', { credentials: 'include' })
-      setIsAuthenticated(res.ok)
+      if (res.ok) {
+        const data = await res.json()
+        setUser(data.user)
+        setIsAuthenticated(true)
+      } else {
+        setUser(null)
+        setIsAuthenticated(false)
+      }
     } catch (err) {
-      console.log(err)
-      // Silencia o erro, pois 401 é normal quando não autenticado
+      console.error(err)
+      setUser(null)
       setIsAuthenticated(false)
+    } finally {
+      setLoading(false)
     }
   }
 
-  // Garante que o checkAuth é sempre passado aquando do primeiro render (mount inicial)
   useEffect(() => {
     checkAuth()
   }, [])
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, refreshAuth: checkAuth }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, loading, refreshAuth: checkAuth }}
+    >
       {children}
     </AuthContext.Provider>
   )

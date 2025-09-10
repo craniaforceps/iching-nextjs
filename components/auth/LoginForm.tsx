@@ -3,13 +3,13 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useActionState } from 'react'
-import { login } from '@/lib/auth/actions'
+import { loginUser } from '@/lib/auth/actions'
 import { useAuth } from '@/context/AuthProvider'
 import type { LoginState } from '@/lib/types/authTypes'
 import { SubmitButton } from '../ui/button/SubmitButton'
 
 export default function LoginForm() {
-  const [state, loginAction] = useActionState<LoginState, FormData>(login, {
+  const [state, loginAction] = useActionState<LoginState, FormData>(loginUser, {
     errors: {},
   })
 

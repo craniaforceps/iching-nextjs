@@ -1,59 +1,31 @@
-import { NextResponse } from 'next/server'
-import bcrypt from 'bcrypt'
-import db from '@/data/db/db'
-import { registerSchema } from '@/lib/schemas/authSchemas'
+import { registerUser } from '@/lib/auth/actions'
+// import { setSecurityHeaders } from '@/lib/api/securityHeaders'
+import { successResponse, errorResponse } from '@/lib/api/responses'
+import { encrypt, setSessionCookie } from '@/lib/auth/session'
 
-const SALT_ROUNDS = 10
-
-async function validateRequest(req: Request) {
-  const body = await req.json()
-  const parsed = registerSchema.safeParse(body)
-  if (!parsed.success) {
-    throw new Error(
-      `Invalid request body: ${parsed.error.issues.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')}`
-    )
-  }
-  return parsed.data
-}
-
-async function checkEmailExists(email: string) {
-  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email)
-  if (existing) {
-    throw new Error(`Este email já está registado: ${email}`)
-  }
-}
-
-async function hashPassword(password: string) {
-  return await bcrypt.hash(password, SALT_ROUNDS)
-}
-
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    // Recebe a requisição e valida se é um objeto com email e password (registerSchema)
-    const { email, password } = await validateRequest(request)
+    const body = await req.json()
 
-    // Limpa o email e passwords de espaços vazios e afins
-    const cleanEmail = email.trim().toLowerCase()
-    const cleanPassword = password.trim()
+    // Cria usuário na base de dados
+    const result = await registerUser(body)
 
-    // Verificar se já existe um utilizador com este email
-    await checkEmailExists(cleanEmail)
+    // Gera token JWT para login automático
+    const token = await encrypt({ userId: Number(result.id) })
 
-    // Hash da password
-    const hashed = await hashPassword(cleanPassword)
+    // Cria a resposta com success
+    const response = successResponse({ id: result.id }, 201)
 
-    // Inserir novo utilizador na base de dados (email e password hashed)
-    const result = db
-      .prepare('INSERT INTO users (email, password) VALUES (?, ?)')
-      .run(cleanEmail, hashed)
+    // Seta o cookie de sessão
+    setSessionCookie(response, token)
 
-    return NextResponse.json({ success: true, id: result.lastInsertRowid })
+    // Seta headers de segurança
+    // setSecurityHeaders(response)
+
+    return response
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      return NextResponse.json(
-        { error: `Erro ao processar o pedido ${err.message}` },
-        { status: 500 }
-      )
-    }
+    console.error(err)
+    const message = err instanceof Error ? err.message : 'Erro desconhecido'
+    return errorResponse(message, 400)
   }
 }

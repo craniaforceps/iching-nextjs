@@ -14,10 +14,18 @@
 │   │   │   └── route.ts
 │   │   ├── me
 │   │   │   └── route.ts
-│   │   └── readings
-│   │       ├── [id]
+│   │   ├── readings
+│   │   │   ├── [id]
+│   │   │   │   └── route.ts
+│   │   │   └── route.ts
+│   │   └── settings
+│   │       ├── change-email
 │   │       │   └── route.ts
-│   │       └── route.ts
+│   │       ├── change-password
+│   │       │   └── route.ts
+│   │       └── delete-account
+│   │           └── route.ts
+│   ├── AppContent.tsx
 │   ├── dashboard
 │   │   ├── arquivo
 │   │   │   └── page.tsx
@@ -64,23 +72,23 @@
 │   │   │   ├── HexagramCard.tsx
 │   │   │   ├── HexagramDetails.tsx
 │   │   │   ├── HexagramDisplay.tsx
-│   │   │   ├── HexagramMobileDisplay.tsx
-│   │   │   ├── HexagramPairDisplay.tsx
-│   │   │   ├── HexagramSideEditorDisplay.tsx
-│   │   │   ├── ReadingDisplay.tsx
-│   │   │   └── ResponsiveHexagramLayout.tsx
+│   │   │   ├── HexagramGrid.tsx
+│   │   │   ├── NotesEditor.tsx
+│   │   │   └── ReadingDisplay.tsx
 │   │   └── tables
 │   │       ├── HexagramCell.tsx
 │   │       ├── HexagramListTable.tsx
-│   │       └── HexagramReferenceTable.tsx
+│   │       ├── HexagramReferenceTable.tsx
+│   │       ├── HexagramTable.tsx
+│   │       └── ResponsiveHexagramLayout.tsx
+│   ├── settings
+│   │   ├── DeleteAccount.tsx
+│   │   └── SettingsDisplay.tsx
 │   └── ui
 │       ├── button
-│       │   ├── AuthButtons.tsx
 │       │   ├── Button.tsx
 │       │   ├── DarkModeButton.tsx
-│       │   ├── LogoutButton.tsx
 │       │   └── SubmitButton.tsx
-│       ├── DashboardMenu.tsx
 │       ├── editor
 │       │   └── TextEditor.tsx
 │       ├── Footer.tsx
@@ -114,14 +122,17 @@
 │   ├── useHexagramDisplay.ts
 │   ├── useHexagramSelection.tsx
 │   ├── useHexagram.ts
-│   ├── useLayoutMode.ts
-│   ├── useMediaQuery.ts
 │   └── useTextEditor.ts
 ├── lib
+│   ├── api
+│   │   ├── responses.ts
+│   │   └── securityHeaders.ts
 │   ├── auth
 │   │   ├── actions.ts
+│   │   ├── authHelpers.ts
 │   │   ├── session.ts
-│   │   └── user.ts
+│   │   ├── user.ts
+│   │   └── validation.ts
 │   ├── divinationMethods
 │   │   ├── coinMethodLogic
 │   │   │   ├── client.ts
@@ -137,26 +148,36 @@
 │   │   │   └── simulateCoinToss.ts
 │   │   ├── yarrowStalkMethod
 │   │   └── yarrowStalkMethodModified
+│   ├── hexagram
+│   │   ├── getHexagramByBinary.ts
+│   │   ├── getHexagramByNumber.ts
+│   │   ├── getMatchingHexagrams.ts
+│   │   └── helpers.ts
 │   ├── mappers
 │   │   └── mapHexagramRow.ts
 │   ├── queries
-│   │   ├── getHexagramByBinary.ts
-│   │   └── getHexagramByNumber.ts
+│   ├── readings
+│   │   ├── dbReadings.ts
+│   │   └── readingHelpers.ts
 │   ├── schemas
 │   │   ├── authSchemas.ts
-│   │   └── hexagramSchemas.ts
+│   │   ├── hexagramSchemas.ts
+│   │   └── readingSchemas.ts
+│   ├── services
 │   ├── table
 │   │   └── tableHandlers.ts
-│   └── types
-│       ├── authTypes.ts
-│       └── hexagramTypes.ts
+│   ├── types
+│   │   ├── authTypes.ts
+│   │   ├── hexagramTypes.ts
+│   │   └── tableTypes.ts
+│   └── utils
 ├── middleware.ts
 ├── next.config.ts
 ├── next-env.d.ts
 ├── package.json
 ├── package-lock.json
 ├── postcss.config.mjs
-├── project-structure.txt
+├── project-structure-full.txt
 ├── public
 │   ├── images
 │   │   └── chinese-mountains.webp
@@ -167,4 +188,4 @@
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-57 directories, 110 files
+67 directories, 121 files

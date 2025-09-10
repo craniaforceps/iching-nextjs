@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 
 const menuLinks = [
+  { href: '/dashboard/', label: 'Dashboard' },
   { href: '/dashboard/leituras', label: 'Leituras' },
   { href: '/dashboard/tabelas', label: 'Tabelas' },
   { href: '/dashboard/arquivo', label: 'Arquivo' },
@@ -20,7 +21,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <Link
               key={href}
               href={href}
-              className="px-3 py-1 rounded hover:text-amber-700 dark:hover:text-amber-200 transition text-md text-center"
+              className="px-1 py-1 rounded hover:text-amber-700 dark:hover:text-amber-200 transition text-md text-center text-xs"
             >
               {label}
             </Link>
@@ -32,7 +33,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="flex flex-col md:flex-row gap-4 min-h-screen">
         {/* Sidebar desktop */}
         <aside className="hidden md:flex md:flex-col md:w-60 xl:w-64">
-          <div className="sticky top-24 px-3 flex flex-col space-y-2">
+          <div className="sticky top-30 px-3 flex flex-col space-y-2">
             {menuLinks.map(({ href, label }) => (
               <Link
                 key={href}
@@ -46,7 +47,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </aside>
 
         {/* Conteúdo */}
-        <main className="flex-1 px-4 lg:px-6 flex flex-col gap-6 pt-6 md:pt-0">
+        <main className="flex-1 px-4 flex flex-col gap-6 mt-3 md:pt-0">
           {children}
         </main>
       </div>

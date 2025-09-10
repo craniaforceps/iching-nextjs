@@ -78,7 +78,33 @@ export type ReadingRow = {
   user_id: number
   question: string
   notes: string | null
-  createdAt: string
+  createdAt?: string
   originalBinary: string
   mutantBinary: string
+}
+
+export type ErrorResponse = {
+  error: string
+}
+
+export type ReadingInput = {
+  user_id: number
+  question: string
+  notes?: string | null
+  originalBinary: string
+  mutantBinary: string
+}
+
+export type HexagramDisplayProps = {
+  hexagrams: { match1: HexagramObject; match2: HexagramObject }
+  notes: string
+  setNotes: (value: string) => void
+  onSave: () => void
+  layout: 'stacked' | 'horizontal' | 'vertical'
+}
+
+export type HexagramDetailsProps = {
+  hexagramId: number
+  title: string
+  content: string[] | string[][]
 }

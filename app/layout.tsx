@@ -1,18 +1,17 @@
+// app/layout.tsx
 import './globals.css'
 import { ToastProvider } from './providers/toast-provider'
 import { AuthProvider } from '@/context/AuthProvider'
 import type { Metadata } from 'next'
 import { Inter, Lora } from 'next/font/google'
 import ThemeProvider from './theme/theme-provider'
-import Header from '@/components/ui/navbar/Header'
-import Footer from '@/components/ui/Footer'
+import AppContent from './AppContent'
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 })
-
 const lora = Lora({
   subsets: ['latin'],
   variable: '--font-lora',
@@ -23,14 +22,14 @@ export const metadata: Metadata = {
   title: 'I Ching',
   description: 'Um website para consulta e divinação com I Ching',
   keywords: 'Hexagramas, I Ching, Filosofia Chinesa',
-  icons: {
-    icon: '/yin-yang.svg',
-  },
+  icons: { icon: '/yin-yang.svg' },
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html
       lang="en"
@@ -46,9 +45,7 @@ export default function RootLayout({
         >
           <AuthProvider>
             <ToastProvider />
-            <Header />
-            <main className="mt-10 min-h-screen px-4">{children}</main>
-            <Footer />
+            <AppContent>{children}</AppContent>
           </AuthProvider>
         </ThemeProvider>
       </body>

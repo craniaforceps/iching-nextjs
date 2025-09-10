@@ -11,13 +11,15 @@ export const loginSchema = z.object({
   email: z.string().email({ message: 'Email inválido' }),
   password: z
     .string()
-    .min(8, { message: 'Password deve ter pelo menos 8 caracteres' })
+    .min(6, { message: 'Password deve ter pelo menos 6 caracteres' })
     .trim(),
 })
-
 export const registerSchema = z.object({
-  email: z.string().email({ message: 'Email inválido' }),
+  email: z
+    .string()
+    .email({ message: 'O email não é válido' })
+    .transform((e) => e.toLowerCase()),
   password: z
     .string()
-    .min(6, { message: 'A palavra-passe deve ter no mínimo 6 caracteres' }),
+    .min(6, { message: 'A palavra-passe deve ter pelo menos 6 caracteres' }),
 })

@@ -3,19 +3,11 @@
 import dynamic from 'next/dynamic'
 import HexagramCard from './HexagramCard'
 import Button from '@/components/ui/button/Button'
-import { HexagramObject } from '@/lib/types/hexagramTypes'
+import { HexagramDisplayProps } from '@/lib/types/hexagramTypes'
 
 const TextEditor = dynamic(() => import('@/components/ui/editor/TextEditor'), {
   ssr: false,
 })
-
-interface Props {
-  hexagrams: { match1: HexagramObject; match2: HexagramObject }
-  notes: string
-  setNotes: (value: string) => void
-  onSave: () => void
-  layout: 'stacked' | 'horizontal' | 'vertical'
-}
 
 export default function HexagramDisplay({
   hexagrams,
@@ -23,7 +15,7 @@ export default function HexagramDisplay({
   setNotes,
   onSave,
   layout,
-}: Props) {
+}: HexagramDisplayProps) {
   const isVertical = layout === 'vertical'
   const isHorizontal = layout === 'horizontal'
   const isStacked = layout === 'stacked'

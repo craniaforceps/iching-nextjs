@@ -1,15 +1,5 @@
+import { HexagramCellProps } from '@/lib/types/tableTypes'
 import React from 'react'
-
-interface HexagramCellProps {
-  number: number
-  symbol: string
-  englishName: string
-  isSelected: boolean
-  isHovered: boolean
-  onClick: (number: number, symbol: string, englishName: string) => void
-  onMouseEnter: (number: number, symbol: string, englishName: string) => void
-  onMouseLeave: () => void
-}
 
 const HexagramCell: React.FC<HexagramCellProps> = ({
   number,
