@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import Button from '@/components/ui/button/Button'
 
+// Importa o editor de texto dinamicamente para evitar problemas com SSR
 const TextEditor = dynamic(() => import('@/components/ui/editor/TextEditor'), {
   ssr: false,
 })
@@ -14,6 +15,7 @@ interface Props {
   layout: 'stacked' | 'horizontal' | 'vertical'
 }
 
+// O componente que mostra o editor de notas
 export default function NotesEditor({
   notes,
   setNotes,

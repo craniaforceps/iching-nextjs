@@ -2,6 +2,7 @@ type ButtonProps = {
   type?: 'button' | 'submit' | 'reset'
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   text: string
+  disabled?: boolean
 }
 
 export default function Button({ type, onClick, text }: ButtonProps) {

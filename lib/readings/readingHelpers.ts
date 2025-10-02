@@ -7,6 +7,7 @@ import type {
 } from '@/lib/types/hexagramTypes'
 import { ReadingInputSchema } from '@/lib/schemas/hexagramSchemas'
 
+// Valida o input da leitura
 export function validateReadingInput(payload: unknown): ReadingInput {
   const parsed = ReadingInputSchema.safeParse(payload)
   if (!parsed.success) {
@@ -15,6 +16,7 @@ export function validateReadingInput(payload: unknown): ReadingInput {
   return parsed.data
 }
 
+// Mapeia uma row para view - converte formato BD para formato API
 export function mapRowToView(row: ReadingRow): ReadingView {
   return {
     ...row,
@@ -23,10 +25,12 @@ export function mapRowToView(row: ReadingRow): ReadingView {
   }
 }
 
+// Mapeia um array de rows para views - converte formato BD para formato API
 export function mapRowsToViews(rows: ReadingRow[]): ReadingView[] {
   return rows.map(mapRowToView)
 }
 
+// Função para obter todas as leituras de um utilizador
 export function getUserReadings(userId: number): ReadingView[] {
   const rows: ReadingRow[] = db
     .prepare('SELECT * FROM readings WHERE user_id = ? ORDER BY createdAt DESC')
@@ -34,9 +38,8 @@ export function getUserReadings(userId: number): ReadingView[] {
 
   return mapRowsToViews(rows)
 }
-
+// Função para inserir uma nova leitura do utilizador na base de dados
 export function insertUserReading(data: ReadingInput): ReadingView {
-  // const createdAt = new Date().toISOString()
   const stmt = db.prepare(`
     INSERT INTO readings (user_id, question, notes, originalBinary, mutantBinary)
     VALUES (?, ?, ?, ?, ?)
@@ -46,7 +49,7 @@ export function insertUserReading(data: ReadingInput): ReadingView {
     data.user_id,
     data.question,
     data.notes ?? null,
-    // createdAt,
+
     data.originalBinary,
     data.mutantBinary
   )
@@ -55,8 +58,7 @@ export function insertUserReading(data: ReadingInput): ReadingView {
     id: Number(info.lastInsertRowid),
     user_id: data.user_id,
     question: data.question,
-    notes: data.notes ?? null, // garante string | null
-    // createdAt,
+    notes: data.notes ?? null,
     originalBinary: data.originalBinary,
     mutantBinary: data.mutantBinary,
     originalHexagram: getHexagramByBinary(data.originalBinary)!,
@@ -64,6 +66,7 @@ export function insertUserReading(data: ReadingInput): ReadingView {
   }
 }
 
+// Função para apagar uma leitura do utilizador pelo id
 export function deleteUserReading(id: number, userId: number) {
   const row = db
     .prepare('SELECT user_id FROM readings WHERE id = ?')
@@ -79,6 +82,7 @@ export function deleteUserReading(id: number, userId: number) {
   return { success: true }
 }
 
+// Função para atualizar uma leitura do utilizador pelo id
 export function updateUserReading(
   id: number,
   userId: number,
@@ -110,4 +114,18 @@ export function updateUserReading(
     .prepare('SELECT * FROM readings WHERE id = ?')
     .get(id) as ReadingRow
   return mapRowToView(updatedRow)
+}
+
+// Função para obter uma leitura específica do utilizador pelo id
+export function getUserReadingById(
+  id: number,
+  userId: number
+): ReadingView | null {
+  const row = db
+    .prepare('SELECT * FROM readings WHERE id = ? AND user_id = ?')
+    .get(id, userId) as ReadingRow | undefined
+
+  if (!row) return null
+
+  return mapRowToView(row)
 }

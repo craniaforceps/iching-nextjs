@@ -35,3 +35,12 @@ export type ErrorResponse = {
   success: false
   error: unknown
 }
+
+export type RegisterState = {
+  errors: {
+    email?: string[]
+    password?: string[]
+  }
+  success?: boolean
+  userId?: number
+}

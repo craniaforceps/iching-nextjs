@@ -6,6 +6,7 @@ const secretKey = process.env.SESSION_SECRET
 if (!secretKey) throw new Error('SESSION_SECRET não definida')
 const encodedKey = new TextEncoder().encode(secretKey)
 
+// Faz encrypt do payload num token JWT
 export async function encrypt(
   payload: Record<string, string | number | boolean>
 ) {
@@ -16,6 +17,7 @@ export async function encrypt(
     .sign(encodedKey)
 }
 
+//Faz decrypt do token JWT e retorna o payload ou null se inválido
 export async function decrypt(token: string | undefined) {
   if (!token) return null
   try {
@@ -29,6 +31,7 @@ export async function decrypt(token: string | undefined) {
   }
 }
 
+// Define o cookie de sessão no response
 export function setSessionCookie(response: NextResponse, token: string) {
   const maxAge = 60 * 60 * 24 * 7 // 7 dias
   response.cookies.set({

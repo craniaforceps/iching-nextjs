@@ -17,11 +17,12 @@ export function findUserByEmail(email: string): User | null {
   return parsed.data
 }
 
+// Função service para obter um utilizador pelo seu id
 export function findUserById(id: number): User | null {
-  console.log('findUserById chamado com id:', id)
+  // console.log('findUserById chamado com id:', id)
   const stmt = db.prepare('SELECT * FROM users WHERE id = ?')
   const user = stmt.get(id)
-  console.log('Resultado BD:', user)
+  // console.log('Resultado BD:', user)
   if (!user) return null
 
   const parsed = userSchema.safeParse(user)

@@ -9,6 +9,7 @@ type Props = {
   onChange: (html: string) => void
 }
 
+// O componente que mostra o editor de textos
 export default function TextEditor({ value, onChange }: Props) {
   const editor = useTextEditor(value, onChange)
 

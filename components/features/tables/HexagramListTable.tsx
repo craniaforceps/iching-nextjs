@@ -14,6 +14,7 @@ import {
   clearHexagramHover,
 } from '@/lib/table/tableHandlers'
 
+// O componente que mostra a tabela de hexagramas sequenciais com seleção e hover
 const HexagramListTable: React.FC = () => {
   const {
     selectedHexagram,

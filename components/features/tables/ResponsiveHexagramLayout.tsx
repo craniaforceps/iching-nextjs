@@ -5,6 +5,7 @@
 import HexagramCard from '@/components/features/display/HexagramCard'
 import { ResponsiveHexagramLayoutProps } from '@/lib/types/tableTypes'
 
+// O componente que ajusta o layout da tabela de hexagramas e do card de seleção
 export default function ResponsiveHexagramLayout({
   table,
   selectedHexagram,

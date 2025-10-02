@@ -1,8 +1,9 @@
 import { successResponse } from '@/lib/api/responses'
-// import { setSecurityHeaders } from '@/lib/api/securityHeaders'
+import { setSecurityHeaders } from '@/lib/api/securityHeaders'
 
 const COOKIE_NAME = 'session'
 
+// POST /api/auth/logout - Elimina cookie de sessão (logout)
 export async function POST() {
   const response = successResponse({ success: true }, 200)
 
@@ -14,6 +15,6 @@ export async function POST() {
     sameSite: 'lax',
   })
 
-  // setSecurityHeaders(response)
+  setSecurityHeaders(response)
   return response
 }

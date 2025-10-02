@@ -3,9 +3,12 @@
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import Button from '@/components/ui/button/Button'
+import { useAuth } from '@/context/AuthProvider'
 
+// O componente que mostra o botão para eliminar a conta do utilizador
 export default function DeleteAccount() {
   const router = useRouter()
+  const { refreshAuth } = useAuth()
 
   const handleDelete = async () => {
     // Modal de confirmação
@@ -40,10 +43,13 @@ export default function DeleteAccount() {
         'success'
       )
 
-      // Força atualização do header / Server Components
+      // 🔹 Atualiza estado de autenticação no cliente
+      await refreshAuth()
+
+      // 🔹 Força atualização dos Server Components (navbar, etc.)
       router.refresh()
 
-      // Redireciona para a homepage
+      // 🔹 Redireciona para homepage
       router.push('/')
     } catch (err) {
       Swal.fire('Erro', (err as Error).message, 'error')

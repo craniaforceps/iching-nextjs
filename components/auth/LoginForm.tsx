@@ -7,6 +7,7 @@ import { loginUser } from '@/lib/auth/actions'
 import { useAuth } from '@/context/AuthProvider'
 import type { LoginState } from '@/lib/types/authTypes'
 import { SubmitButton } from '../ui/button/SubmitButton'
+import { toast } from 'react-toastify'
 
 export default function LoginForm() {
   const [state, loginAction] = useActionState<LoginState, FormData>(loginUser, {
@@ -17,9 +18,20 @@ export default function LoginForm() {
   const router = useRouter()
 
   useEffect(() => {
-    if (state?.success) {
-      refreshAuth() // Atualiza o contexto
-      router.push('/dashboard') // Ou dashboard, etc.
+    if (!state) return
+
+    if (state.success) {
+      toast.success('Sessão iniciada com sucesso!')
+      refreshAuth()
+      router.push('/dashboard')
+      return
+    }
+
+    const emailErrors = state.errors?.email ?? []
+    const passwordErrors = state.errors?.password ?? []
+
+    if (emailErrors.length || passwordErrors.length) {
+      toast.error([...emailErrors, ...passwordErrors].join(' • '))
     }
   }, [state, refreshAuth, router])
 
@@ -29,23 +41,27 @@ export default function LoginForm() {
         <h1 className="text-3xl font-bold text-center">Iniciar Sessão</h1>
 
         <form action={loginAction} className="space-y-4 w-full">
-          <div className="w-full">
+          <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
               Email
             </label>
             <input
               id="email"
               name="email"
-              type="email"
+              type="text"
               required
+              placeholder="Ex: user@email.com"
+              title="Email do utilizador"
               className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
-            {state?.errors?.email && (
-              <p className="text-red-500">{state.errors.email}</p>
-            )}
+            {state.errors?.email?.map((msg, idx) => (
+              <p key={idx} className="text-red-500 text-sm">
+                {msg}
+              </p>
+            ))}
           </div>
 
-          <div className="w-full">
+          <div>
             <label
               htmlFor="password"
               className="block text-sm font-medium mb-1"
@@ -57,11 +73,15 @@ export default function LoginForm() {
               name="password"
               type="password"
               required
+              placeholder="Mínimo 6 caracteres"
+              title="Palavra-passe do utilizador"
               className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
-            {state?.errors?.password && (
-              <p className="text-red-500">{state.errors.password}</p>
-            )}
+            {state.errors?.password?.map((msg, idx) => (
+              <p key={idx} className="text-red-500 text-sm">
+                {msg}
+              </p>
+            ))}
           </div>
 
           <div className="pt-4">

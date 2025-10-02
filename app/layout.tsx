@@ -1,6 +1,6 @@
 // app/layout.tsx
 import './globals.css'
-import { ToastProvider } from './providers/toast-provider'
+import { ToastProvider } from '@/providers/toast-provider'
 import { AuthProvider } from '@/context/AuthProvider'
 import type { Metadata } from 'next'
 import { Inter, Lora } from 'next/font/google'

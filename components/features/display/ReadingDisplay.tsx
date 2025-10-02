@@ -11,6 +11,7 @@ import LoadingSpinner from '@/components/ui/loading/LoadingSpinner'
 //   ssr: false,
 // })
 
+// O componente que mostra a página de leitura com input, botões de modo, hexagramas e editor de notas
 export default function ReadingDisplay() {
   const {
     question,

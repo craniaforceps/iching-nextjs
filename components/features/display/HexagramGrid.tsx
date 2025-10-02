@@ -3,6 +3,7 @@
 import { HexagramLayoutProps } from '@/lib/types/tableTypes'
 import HexagramCard from './HexagramCard'
 
+// O componente que mostra os hexagramas em diferentes layouts
 export default function HexagramGrid({
   hexagrams,
   layout,

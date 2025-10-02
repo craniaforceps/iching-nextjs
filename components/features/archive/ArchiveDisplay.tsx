@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import { useArchiveReadings } from '@/hooks/useArchiveReadings'
-import ReadingItem from './ReadingItem'
+import ReadingList from './ReadingList'
+import PaginationControl from './PaginationControl'
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner'
 
+// O display da página do arquivo com a lista de leituras e paginação
 export default function ArchiveDisplay() {
   const { readings, loading, deleteReading } = useArchiveReadings()
   const [openId, setOpenId] = useState<number | null>(null)
@@ -16,54 +18,32 @@ export default function ArchiveDisplay() {
   const paginatedReadings = readings.slice(start, end)
   const totalPages = Math.ceil(readings.length / itemsPerPage)
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-full w-full">
+        <LoadingSpinner />
+      </div>
+    )
+  }
+
+  if (readings.length === 0) {
+    return <p className="text-center">Sem leituras.</p>
+  }
+
   return (
     <div className="w-full space-y-4">
-      {loading ? (
-        <div className="flex justify-center items-center h-full w-full">
-          <LoadingSpinner />
-        </div>
-      ) : readings.length === 0 ? (
-        <p className="text-center">Sem leituras.</p>
-      ) : (
-        <>
-          {paginatedReadings.map((reading) => (
-            <ReadingItem
-              key={reading.id}
-              reading={reading}
-              isOpen={reading.id === openId}
-              onToggle={() =>
-                setOpenId(openId === reading.id ? null : reading.id)
-              }
-              onDelete={(id) => {
-                deleteReading(id)
-                if (openId === id) setOpenId(null)
-              }}
-            />
-          ))}
-
-          {/* Controlo de paginação */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-4 ">
-              <button
-                disabled={page === 1}
-                onClick={() => setPage((p) => p - 1)}
-                className="cursor-pointer px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50 "
-              >
-                Anterior
-              </button>
-              <span>
-                Página {page} de {totalPages}
-              </span>
-              <button
-                disabled={page === totalPages}
-                onClick={() => setPage((p) => p + 1)}
-                className="cursor-pointer px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50"
-              >
-                Seguinte
-              </button>
-            </div>
-          )}
-        </>
+      <ReadingList
+        readings={paginatedReadings}
+        openId={openId}
+        setOpenId={setOpenId}
+        onDelete={deleteReading}
+      />
+      {totalPages > 1 && (
+        <PaginationControl
+          page={page}
+          totalPages={totalPages}
+          setPage={setPage}
+        />
       )}
     </div>
   )

@@ -1,5 +1,6 @@
 import { useFormStatus } from 'react-dom'
 
+// O componente que mostra o botão de submissão do formulário de login
 export function SubmitButton() {
   const { pending } = useFormStatus()
 

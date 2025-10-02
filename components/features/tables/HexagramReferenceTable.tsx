@@ -15,6 +15,7 @@ import {
   clearHexagramHover,
 } from '@/lib/table/tableHandlers'
 
+// O componente que mostra a tabela de hexagramas com cruzamento entre trigramas e seleção e hover
 const HexagramReferenceTable: React.FC = () => {
   const {
     selectedHexagram,

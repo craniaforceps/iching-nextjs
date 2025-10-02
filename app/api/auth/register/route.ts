@@ -1,26 +1,27 @@
 import { registerUser } from '@/lib/auth/actions'
-// import { setSecurityHeaders } from '@/lib/api/securityHeaders'
+import { setSecurityHeaders } from '@/lib/api/securityHeaders'
 import { successResponse, errorResponse } from '@/lib/api/responses'
 import { encrypt, setSessionCookie } from '@/lib/auth/session'
 
+// POST /api/auth/register - Regista novo utilizador
 export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    // Cria usuário na base de dados
+    // 1. Cria usuário na base de dados
     const result = await registerUser(body)
 
-    // Gera token JWT para login automático
+    // 2. Gera token JWT para login automático
     const token = await encrypt({ userId: Number(result.id) })
 
-    // Cria a resposta com success
+    // 3. Cria a resposta com success
     const response = successResponse({ id: result.id }, 201)
 
-    // Seta o cookie de sessão
+    // 4. Define o cookie de sessão
     setSessionCookie(response, token)
 
-    // Seta headers de segurança
-    // setSecurityHeaders(response)
+    // 5. Define headers de segurança
+    setSecurityHeaders(response)
 
     return response
   } catch (err: unknown) {

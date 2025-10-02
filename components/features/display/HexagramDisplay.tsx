@@ -9,6 +9,7 @@ const TextEditor = dynamic(() => import('@/components/ui/editor/TextEditor'), {
   ssr: false,
 })
 
+// O componente que mostra os hexagramas e o editor de notas
 export default function HexagramDisplay({
   hexagrams,
   notes,

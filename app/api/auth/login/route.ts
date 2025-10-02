@@ -1,41 +1,26 @@
 import { successResponse, errorResponse } from '@/lib/api/responses'
-import { setSecurityHeaders } from '@/lib/api/securityHeaders'
 import { loginUser } from '@/lib/auth/actions'
-import { encrypt, setSessionCookie } from '@/lib/auth/session'
 import type { LoginState } from '@/lib/types/authTypes'
 
+// POST /api/auth/login - Valida e autentica utilizador
 export async function POST(req: Request) {
   try {
+    // 1. Lê os dados do request do frontend através do formData
     const formData = await req.formData()
-
-    // Estado inicial compatível com LoginState
     const initialState: LoginState = {
       errors: { email: [], password: [] },
       success: false,
     }
 
-    // Chama a ação de login
+    // 2. Valida e autentica utilizador - o loginUser trata do JWT
     const result = await loginUser(initialState, formData)
 
+    // 3. Se falhar, retorna erros. Se sucesso, retorna ID do utilizador
     if (!result.success) {
       return errorResponse({ errors: result.errors }, 401)
     }
 
-    // Pega o userId retornado pelo loginUser
-    const userId = result.userId
-    if (!userId) {
-      return errorResponse('User ID not found', 500)
-    }
-
-    // Gera token JWT
-    const token = await encrypt({ userId })
-
-    // Cria a resposta com cookie de sessão
-    const response = successResponse({ id: userId }, 200)
-    setSessionCookie(response, token)
-    setSecurityHeaders(response)
-
-    return response
+    return successResponse({ id: result.userId }, 200)
   } catch (err: unknown) {
     console.error(err)
     return errorResponse((err as Error)?.message || 'Invalid request', 400)

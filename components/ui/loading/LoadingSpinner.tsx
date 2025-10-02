@@ -1,5 +1,6 @@
 'use client'
 
+// Spinner de loading simples
 export default function LoadingSpinner() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#191919]">

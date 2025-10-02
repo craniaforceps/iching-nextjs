@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes'
 import { Sun, Moon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+// O componente que mostra o botão para alternar entre modo claro e escuro
 export default function DarkModeToggle() {
   const { theme, setTheme, systemTheme } = useTheme()
   const [mounted, setMounted] = useState(false)

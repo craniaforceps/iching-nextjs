@@ -1,27 +1,9 @@
 import { cookies } from 'next/headers'
-import { decrypt } from '@/lib/auth/session'
-import { findUserById } from '@/lib/auth/user'
 import { errorResponse, successResponse } from '@/lib/api/responses'
+import { authenticateSession } from '@/lib/auth/authHelpers'
 
-export async function authenticateSession(sessionValue: string | undefined) {
-  try {
-    const payload = await decrypt(sessionValue)
-    if (!payload || typeof payload.userId !== 'number') {
-      errorResponse('Sessão inválida', 401)
-      throw new Error('Sessão inválida')
-    }
-    const user = await findUserById(payload.userId)
-    if (!user) {
-      throw new Error('Utilizador não encontrado')
-    }
-    return user
-  } catch (error) {
-    throw new Error(
-      `Erro ao validar sessão: ${error instanceof Error ? error.message : 'Erro desconhecido'}`
-    )
-  }
-}
-
+// GET /api/me
+// Este endpoint verifica a sessão do utilizador através de um cookie e retorna os detalhes do utilizador autenticado.
 export async function GET() {
   const cookieStore = await cookies()
   const session = cookieStore.get('session')

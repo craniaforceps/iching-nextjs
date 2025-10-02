@@ -4,6 +4,7 @@ import { HexagramDetailsProps } from '@/lib/types/hexagramTypes'
 import { Minus, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+// O componente que mostra os detalhes (Judgment, Image, Lines) de um hexagrama
 function HexagramDetails({ title, content, hexagramId }: HexagramDetailsProps) {
   const [isOpen, setIsOpen] = useState(false)
 

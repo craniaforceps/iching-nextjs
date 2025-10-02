@@ -6,9 +6,11 @@ import {
   insertUserReading,
 } from '@/lib/readings/readingHelpers'
 
+// GET /api/readings - todas as leituras do utilizador
 export async function GET() {
   try {
     const userId: number = await authenticateUser()
+    // Função que devolve todas as leituras do utilizador
     const readings = getUserReadings(userId)
     return successResponse(readings)
   } catch (err) {
@@ -18,6 +20,7 @@ export async function GET() {
   }
 }
 
+// POST /api/readings - cria uma nova leitura do utilizador
 export async function POST(req: Request) {
   try {
     const userId = await authenticateUser()
@@ -34,10 +37,9 @@ export async function POST(req: Request) {
     if (!parsed.success) {
       return errorResponse({ error: parsed.error.message }, 400)
     }
-
+    // Chama a função para inserir a leitura na base de dados
     insertUserReading(parsed.data)
 
-    // ✅ Nada a devolver, só status 204
     return successResponse({ success: true }, 201)
   } catch (err) {
     const error = err instanceof Error ? err.message : 'Erro desconhecido'

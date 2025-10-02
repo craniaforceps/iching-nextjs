@@ -1,6 +1,7 @@
 import ArchiveDisplay from '@/components/features/archive/ArchiveDisplay'
 import Title from '@/components/ui/Title'
 
+// Página do arquivo
 export default function ArquivoPage() {
   return (
     <div className="lg:py-2 py-4">
