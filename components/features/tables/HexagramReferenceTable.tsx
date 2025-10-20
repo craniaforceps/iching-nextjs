@@ -1,12 +1,16 @@
 'use client'
+
 import React from 'react'
-import HexagramTable from './HexagramTable'
+import { ArrowRight, ArrowDown } from 'lucide-react'
+import HexagramCell from './HexagramCell'
 import ResponsiveHexagramLayout from '@/components/features/tables/ResponsiveHexagramLayout'
 import {
   hexagramsNumbersReference,
   hexagramsSymbolsReference,
   hexagramsEnglishReference,
   trigramsSymbolsReference,
+  trigramsChineseReference,
+  trigramsEnglishReference,
 } from '@/data/table/dataTable'
 import useHexagramSelection from '@/hooks/useHexagramSelection'
 import {
@@ -15,7 +19,6 @@ import {
   clearHexagramHover,
 } from '@/lib/table/tableHandlers'
 
-// O componente que mostra a tabela de hexagramas com cruzamento entre trigramas e seleção e hover
 const HexagramReferenceTable: React.FC = () => {
   const {
     selectedHexagram,
@@ -24,19 +27,67 @@ const HexagramReferenceTable: React.FC = () => {
     setHoveredHexagram,
   } = useHexagramSelection()
 
+  // --- Tabela com cabeçalhos horizontais e verticais ---
   const table = (
-    <HexagramTable
-      hexagramNumbers={hexagramsNumbersReference}
-      hexagramSymbols={hexagramsSymbolsReference}
-      hexagramNames={hexagramsEnglishReference}
-      selectedHexagram={selectedHexagram}
-      hoveredHexagram={hoveredHexagram}
-      onClick={(num) => handleHexagramClick(num, setSelectedHexagram)}
-      onHover={(num) => handleHexagramHover(num, setHoveredHexagram)}
-      onHoverLeave={() => clearHexagramHover(setHoveredHexagram)}
-    />
+    <div className="overflow-x-auto">
+      <table className="border-collapse border border-gray-400 table-auto w-full">
+        <thead>
+          <tr>
+            <th className="border border-gray-400 px-2 py-1 space-y-1 "></th>
+            {trigramsSymbolsReference.map((sym, colIdx) => (
+              <th
+                key={colIdx}
+                className="border border-gray-400 px-2 py-1 lg:text-5xl text-xs"
+                title={`${trigramsEnglishReference[colIdx]} (${trigramsChineseReference[colIdx]})`}
+              >
+                {sym}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {hexagramsNumbersReference.map((rowNums, rowIdx) => (
+            <tr key={rowIdx}>
+              {/* cabeçalho vertical */}
+              <th
+                className="border border-gray-400 px-2 py-1 lg:text-5xl md:text-lg text-xs"
+                title={`${trigramsEnglishReference[rowIdx]} (${trigramsChineseReference[rowIdx]})`}
+              >
+                {trigramsSymbolsReference[rowIdx]}
+              </th>
+
+              {rowNums.map((number, colIdx) => {
+                const symbol = hexagramsSymbolsReference[rowIdx][colIdx]
+                const name = hexagramsEnglishReference[rowIdx][colIdx]
+                const isSelected = selectedHexagram?.number === number
+                const isHovered = hoveredHexagram?.number === number
+
+                return (
+                  <HexagramCell
+                    key={colIdx}
+                    number={number}
+                    symbol={symbol}
+                    englishName={name}
+                    isSelected={isSelected}
+                    isHovered={isHovered}
+                    onClick={() =>
+                      handleHexagramClick({ number }, setSelectedHexagram)
+                    }
+                    onMouseEnter={() =>
+                      handleHexagramHover({ number }, setHoveredHexagram)
+                    }
+                    onMouseLeave={() => clearHexagramHover(setHoveredHexagram)}
+                  />
+                )
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 
+  // --- Layout com card lateral de seleção ---
   return (
     <ResponsiveHexagramLayout
       table={table}

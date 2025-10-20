@@ -1,0 +1,38 @@
+import dynamic from 'next/dynamic'
+import Button from '@/components/ui/button/Button'
+
+// Importa o editor de texto dinamicamente para evitar problemas com SSR
+const TextEditor = dynamic(() => import('@/components/ui/editor/TextEditor'), {
+  ssr: false,
+})
+
+interface Props {
+  notes: string
+  setNotes: (value: string) => void
+  onSave: () => void
+  layout: 'stacked' | 'horizontal' | 'vertical'
+}
+
+// O componente que mostra o editor de notas
+export default function NotesEditor({
+  notes,
+  setNotes,
+  onSave,
+  layout,
+}: Props) {
+  const isVertical = layout === 'vertical'
+
+  return (
+    <div
+      className={`
+        w-full
+        ${isVertical ? 'lg:w-96 xl:w-[23rem] lg:sticky lg:top-32 md:sticky md:top-28 h-min' : ''}
+      `}
+    >
+      <TextEditor value={notes} onChange={setNotes} />
+      <div className="mt-4 flex justify-center">
+        <Button text="Guardar" type="button" onClick={onSave} />
+      </div>
+    </div>
+  )
+}

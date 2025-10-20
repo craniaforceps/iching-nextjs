@@ -1,15 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Button from '@/components/ui/button/Button'
-import Swal from 'sweetalert2'
-import DeleteAccount from './DeleteAccount'
 import AccordionItem from '../ui/AccordionItem'
 import ChangePasswordForm from './ChangePasswordForm'
 import ChangeEmailForm from './ChangeEmailForm'
 import ContactForm from './ContactForm'
+import DeleteAccount from './DeleteAccount'
 
-// O componente que mostra a página de definições com formulários para mudar password, email, eliminar conta e contactar suporte
 export default function SettingsDisplay() {
   const [open, setOpen] = useState<string | null>(null)
 
@@ -18,8 +15,7 @@ export default function SettingsDisplay() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 flex flex-col gap-4">
-      {/* Alterar Password */}
+    <div className="max-w-4xl mx-auto p-6 flex flex-col gap-4 items-center">
       <AccordionItem
         title="Alterar Password"
         isOpen={open === 'password'}
@@ -28,7 +24,6 @@ export default function SettingsDisplay() {
         <ChangePasswordForm />
       </AccordionItem>
 
-      {/* Alterar Email */}
       <AccordionItem
         title="Alterar Email"
         isOpen={open === 'email'}
@@ -37,7 +32,6 @@ export default function SettingsDisplay() {
         <ChangeEmailForm />
       </AccordionItem>
 
-      {/* Eliminar Conta */}
       <AccordionItem
         title="Eliminar Conta"
         isOpen={open === 'delete'}
@@ -46,7 +40,6 @@ export default function SettingsDisplay() {
         <DeleteAccount />
       </AccordionItem>
 
-      {/* Formulário de Contacto */}
       <AccordionItem
         title="Formulário de Contacto"
         isOpen={open === 'contact'}
@@ -57,7 +50,3 @@ export default function SettingsDisplay() {
     </div>
   )
 }
-
-/* --- Reusable Accordion Item --- */
-
-/* --- Forms simples --- */

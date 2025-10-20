@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useHexagram } from './useHexagram'
-import type { BinaryMatchOutput } from '@/lib/types/hexagramTypes'
+import type { BinaryMatchOutput } from '@/lib/hexagram/hexagramTypes'
 
 export function useHexagramGenerator() {
   const { generateHexagram } = useHexagram()

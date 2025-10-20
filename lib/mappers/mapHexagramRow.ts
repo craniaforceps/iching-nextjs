@@ -1,4 +1,4 @@
-import type { HexagramObject, HexagramRow } from '@/lib/types/hexagramTypes'
+import type { HexagramRow, HexagramObject } from '@/lib/hexagram/hexagramTypes'
 
 // Esta função converte os dados de HexagramRow para HexagramObject
 export const mapHexagramRow = (row: HexagramRow): HexagramObject => {

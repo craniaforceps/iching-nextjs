@@ -2,8 +2,8 @@
 
 'use client'
 
-import HexagramCard from '@/components/features/display/HexagramCard'
-import { ResponsiveHexagramLayoutProps } from '@/lib/types/tableTypes'
+import { ResponsiveHexagramLayoutProps } from '@/lib/hexagram/hexagramTypes'
+import HexagramCard from '../hexagram/HexagramCard'
 
 // O componente que ajusta o layout da tabela de hexagramas e do card de seleção
 export default function ResponsiveHexagramLayout({

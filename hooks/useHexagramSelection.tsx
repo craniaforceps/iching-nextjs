@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { HexagramObject } from '@/lib/types/hexagramTypes'
+import type { HexagramObject } from '@/lib/hexagram/hexagramTypes'
 
 export default function useHexagramSelection() {
   const [selectedHexagram, setSelectedHexagram] =

@@ -1,20 +1,15 @@
-import { successResponse } from '@/lib/api/responses'
-import { setSecurityHeaders } from '@/lib/api/securityHeaders'
+import { successResponse } from '@/lib/utils/responses'
+import { setSecurityHeaders } from '@/lib/utils/security'
+import { setSession } from '@/lib/auth/session'
 
-const COOKIE_NAME = 'session'
+// POST /api/auth/logout
+// O logout é a única acção em que foram usados endpoints. Em login e registo usa-se  "server actions" para testar uma abordagem tendo em conta as ferramentas que o Next.js oferece.
 
-// POST /api/auth/logout - Elimina cookie de sessão (logout)
 export async function POST() {
+  // Remove a sessão do lado do servidor
+  await setSession('')
+
   const response = successResponse({ success: true }, 200)
-
-  response.cookies.delete({
-    name: COOKIE_NAME,
-    path: '/',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-  })
-
   setSecurityHeaders(response)
   return response
 }

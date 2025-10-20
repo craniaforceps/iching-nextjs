@@ -1,22 +1,25 @@
-import { getHexagramByNumber } from '@/lib/hexagram/getHexagramByNumber'
-import { successResponse, errorResponse } from '@/lib/api/responses'
-import { validateNumber } from '@/lib/hexagram/helpers'
+import { successResponse, errorResponse } from '@/lib/utils/responses'
+import { validateNumber } from '@/lib/hexagram/hexagramHelpers'
+import { getHexagramByNumber } from '@/lib/hexagram/hexagramServices'
 
-// GET /api/hexagram/:number
-// Este endpoint utiliza como param o número do hexagrama (1-64).
-// Retorna as informações do hexagrama correspondente presentes na base de dados.
+// GET /api/hexagram/:number - Este endpoint retorna o hexagrama correspondente ao número fornecido (1-64).
 export async function GET(
-  req: Request,
-  context: { params: { number: string } }
+  _req: Request,
+  { params }: { params: { number: string } }
 ) {
-  const params = await context.params
-  const number = params.number
-  // Validar o número do hexagrama (1-64)
-  const num = validateNumber(number)
-  if (!num) return errorResponse('Invalid number', 400)
-  // Buscar o hexagrama pelo número na base de dados
-  const hexagram = await getHexagramByNumber(num)
-  if (!hexagram) return errorResponse('Not found', 404)
+  try {
+    // Validar número do hexagrama
+    const num = validateNumber(params.number)
+    if (!num) return errorResponse('Número inválido (1-64)', 400)
 
-  return successResponse(hexagram, 200)
+    // Obter hexagrama pelo número
+    const hexagram = getHexagramByNumber(num)
+    if (!hexagram) return errorResponse('Hexagrama não encontrado', 404)
+
+    return successResponse(hexagram, 200)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Erro desconhecido'
+    console.error('Erro no GET /hexagram/:number:', message)
+    return errorResponse({ error: message }, 500)
+  }
 }

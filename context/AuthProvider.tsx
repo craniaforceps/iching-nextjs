@@ -1,34 +1,42 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
-import type { AuthContextType, User } from '@/lib/types/authTypes'
+import { createContext, useContext, useState, useEffect, useMemo } from 'react'
+import type { AuthContextType, SafeUser } from '@/lib/auth/types'
+import { getCurrentUser } from '@/lib/auth/session'
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   user: null,
   loading: true,
-  refreshAuth: () => {},
+  refreshAuth: async () => {},
 })
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+interface AuthProviderProps {
+  children: React.ReactNode
+  initialUser?: SafeUser | null
+}
 
-  const checkAuth = async () => {
+export function AuthProvider({
+  children,
+  initialUser = null,
+}: AuthProviderProps) {
+  const [user, setUser] = useState<SafeUser | null>(initialUser)
+  const [isAuthenticated, setIsAuthenticated] = useState(!!initialUser)
+  const [loading, setLoading] = useState(!initialUser)
+
+  const refreshAuth = async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/me', { credentials: 'include' })
-      if (res.ok) {
-        const data = await res.json()
-        setUser(data.user)
+      const currentUser = await getCurrentUser()
+      if (currentUser) {
+        setUser(currentUser)
         setIsAuthenticated(true)
       } else {
         setUser(null)
         setIsAuthenticated(false)
       }
     } catch (err) {
-      console.error(err)
+      console.error('Erro ao obter utilizador:', err)
       setUser(null)
       setIsAuthenticated(false)
     } finally {
@@ -37,15 +45,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    checkAuth()
+    if (!user) refreshAuth()
   }, [])
 
+  // Memoiza o contexto para evitar re-renders desnecessários
+  const contextValue = useMemo(
+    () => ({ isAuthenticated, user, loading, refreshAuth }),
+    [isAuthenticated, user, loading]
+  )
+
   return (
-    <AuthContext.Provider
-      value={{ isAuthenticated, user, loading, refreshAuth: checkAuth }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   )
 }
 

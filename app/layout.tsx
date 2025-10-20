@@ -1,21 +1,22 @@
-// app/layout.tsx
 import './globals.css'
-import { ToastProvider } from '@/providers/toast-provider'
 import { AuthProvider } from '@/context/AuthProvider'
 import type { Metadata } from 'next'
-import { Inter, Lora } from 'next/font/google'
+import { Cormorant_Garamond, Inter } from 'next/font/google'
 import ThemeProvider from './theme/theme-provider'
 import AppContent from './AppContent'
+import { getCurrentUser } from '@/lib/auth/session'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-const inter = Inter({
+const serif = Cormorant_Garamond({
   subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
+  weight: ['400', '500', '700'],
+  variable: '--font-serif',
 })
-const lora = Lora({
+
+const sans = Inter({
   subsets: ['latin'],
-  variable: '--font-lora',
-  display: 'swap',
+  variable: '--font-sans',
 })
 
 export const metadata: Metadata = {
@@ -25,26 +26,28 @@ export const metadata: Metadata = {
   icons: { icon: '/yin-yang.svg' },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const initialUser = await getCurrentUser()
+
   return (
     <html
-      lang="en"
-      className={`${inter.variable} ${lora.variable}`}
+      lang="pt"
+      className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
-      <body className="bg-white dark:bg-[#191919] text-[#37352f] dark:text-[#ffffffcf]">
+      <body className="bg-white dark:bg-stone-900 text-stone-900 dark:text-gray-200 transition-colors">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <ToastProvider />
+          <AuthProvider initialUser={initialUser}>
+            {/* AppContent mantém header, footer e main */}
             <AppContent>{children}</AppContent>
           </AuthProvider>
         </ThemeProvider>

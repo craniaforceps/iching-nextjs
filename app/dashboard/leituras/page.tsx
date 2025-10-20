@@ -1,26 +1,32 @@
-import ReadingDisplay from '@/components/features/display/ReadingDisplay'
-import Title from '@/components/ui/Title'
+import ReadingDisplay from '@/components/features/reading/ReadingDisplay'
 
 export default function LeituraPage() {
   return (
-    <div className="lg:py-2 py-4">
-      <Title title="Leituras" />
-
-      <div className="prose dark:prose-invert max-w-3xl mx-auto text-justify">
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas amet,
-          quaerat sunt praesentium soluta nulla ex est deleniti animi. Fugit
-          itaque obcaecati saepe. Error voluptates aperiam vel ex modi atque.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium,
-          itaque tempore! Necessitatibus saepe aliquam similique doloribus sed
-          nihil, nemo, facilis blanditiis eius iste, reiciendis velit
-          voluptatem. Distinctio omnis iure laudantium.
-        </p>
-      </div>
+    <main className="main-dashboard">
+      <p className="p-primary">
+        Aqui poderás fazer uma nova leitura do I Ching. Para tal, sugerimos que
+        faças o seguinte:
+      </p>
+      <ol className="list-text">
+        <li>Formula uma pergunta clara e específica.</li>
+        <li>
+          Clica no botão para gerar um hexagrama original e o seu mutante.
+        </li>
+        <li>
+          Explora os textos associados ao Julgamento, Imagem e Linhas dos
+          hexagramas.
+        </li>
+        <li>Escreve a tua interpretação e reflexão acerca da leitura</li>
+        <li>Guarda a leitura para consulta futura.</li>
+      </ol>
+      <p className="p-primary">
+        Se precisares de ajuda ou orientação, não hesites em contactar-nos
+        através do Formulário de Contacto presente no separador Definições.
+      </p>
 
       <div className="w-full py-4">
         <ReadingDisplay />
       </div>
-    </div>
+    </main>
   )
 }

@@ -2,10 +2,12 @@ import type {
   BinaryMatchInput,
   BinaryMatchOutput,
   HexagramRow,
-} from '@/lib/types/hexagramTypes'
+} from '@/lib/hexagram/hexagramTypes'
 import db from '@/data/db/db'
 import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
 
+// Encontra os hexagramas correspondentes na DB a partir dos valores binários.
+// Retorna null se não encontrar ambos os hexagramas ou em caso de erro.
 export const findMatchingHexagrams = async ({
   binary1,
   binary2,

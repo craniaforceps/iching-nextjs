@@ -1,12 +1,5 @@
 import ReadingItem from './ReadingItem'
-import { ReadingView } from '@/lib/types/hexagramTypes'
-
-interface ReadingListProps {
-  readings: ReadingView[]
-  openId: number | null
-  setOpenId: (id: number | null) => void
-  onDelete: (id: number) => void
-}
+import type { ReadingListProps } from '@/lib/readings/readingsTypes'
 
 // A lista de leituras no arquivo com itens expansíveis
 export default function ReadingList({

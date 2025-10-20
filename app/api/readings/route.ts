@@ -1,49 +1,41 @@
-import { ReadingInputSchema } from '@/lib/schemas/hexagramSchemas'
-import { authenticateUser } from '@/lib/auth/authHelpers'
-import { successResponse, errorResponse } from '@/lib/api/responses'
+import { successResponse, errorResponse } from '@/lib/utils/responses'
+import {
+  validateReadingInput,
+  mapRowToView,
+} from '@/lib/readings/readingHelpers'
 import {
   getUserReadings,
   insertUserReading,
-} from '@/lib/readings/readingHelpers'
+} from '@/lib/readings/readingsRepository'
+import { getCurrentUser } from '@/lib/auth/session'
 
-// GET /api/readings - todas as leituras do utilizador
+// GET /api/readings - Retorna todas as leituras do utilizador autenticado
+// POST /api/readings - Cria uma nova leitura para o utilizador autenticado
 export async function GET() {
   try {
-    const userId: number = await authenticateUser()
-    // Função que devolve todas as leituras do utilizador
-    const readings = getUserReadings(userId)
-    return successResponse(readings)
+    const user = await getCurrentUser()
+    if (!user) return errorResponse({ error: 'Não autenticado' }, 401)
+
+    const rows = getUserReadings(user.id)
+    return successResponse(rows.map(mapRowToView))
   } catch (err) {
-    const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    console.error('Erro no GET readings:', error)
-    return errorResponse({ error }, 500)
+    const message = err instanceof Error ? err.message : 'Erro desconhecido'
+    return errorResponse({ error: message }, 500)
   }
 }
 
-// POST /api/readings - cria uma nova leitura do utilizador
 export async function POST(req: Request) {
   try {
-    const userId = await authenticateUser()
-    const body: unknown = await req.json()
+    const user = await getCurrentUser()
+    if (!user) return errorResponse({ error: 'Não autenticado' }, 401)
 
-    if (typeof body !== 'object' || body === null) {
-      return errorResponse({ error: 'Payload inválido' }, 400)
-    }
+    const body = await req.json()
+    const data = validateReadingInput({ ...body, user_id: user.id })
+    const row = insertUserReading(data)
 
-    const parsed = ReadingInputSchema.safeParse({
-      ...(body as Record<string, unknown>),
-      user_id: userId,
-    })
-    if (!parsed.success) {
-      return errorResponse({ error: parsed.error.message }, 400)
-    }
-    // Chama a função para inserir a leitura na base de dados
-    insertUserReading(parsed.data)
-
-    return successResponse({ success: true }, 201)
+    return successResponse(mapRowToView(row), 201)
   } catch (err) {
-    const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    console.error('Erro no POST readings:', error)
-    return errorResponse({ error }, 500)
+    const message = err instanceof Error ? err.message : 'Erro desconhecido'
+    return errorResponse({ error: message }, 400)
   }
 }

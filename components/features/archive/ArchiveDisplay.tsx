@@ -6,7 +6,6 @@ import ReadingList from './ReadingList'
 import PaginationControl from './PaginationControl'
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner'
 
-// O display da página do arquivo com a lista de leituras e paginação
 export default function ArchiveDisplay() {
   const { readings, loading, deleteReading } = useArchiveReadings()
   const [openId, setOpenId] = useState<number | null>(null)
@@ -26,18 +25,18 @@ export default function ArchiveDisplay() {
     )
   }
 
-  if (readings.length === 0) {
-    return <p className="text-center">Sem leituras.</p>
-  }
-
   return (
     <div className="w-full space-y-4">
-      <ReadingList
-        readings={paginatedReadings}
-        openId={openId}
-        setOpenId={setOpenId}
-        onDelete={deleteReading}
-      />
+      {readings.length === 0 ? (
+        <p className="text-center">Sem leituras.</p>
+      ) : (
+        <ReadingList
+          readings={paginatedReadings}
+          openId={openId}
+          setOpenId={setOpenId}
+          onDelete={deleteReading}
+        />
+      )}
       {totalPages > 1 && (
         <PaginationControl
           page={page}

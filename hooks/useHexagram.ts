@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BinaryMatchOutput } from '@/lib/types/hexagramTypes'
+import { BinaryMatchOutput } from '@/lib/hexagram/hexagramTypes'
 import {
   generateRawHexagram,
   generateBinary,

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import HexagramCell from './HexagramCell'
-import { HexagramTableProps } from '@/lib/types/tableTypes'
+import { HexagramTableProps } from '@/lib/hexagram/hexagramTypes'
 
 // A tabela que mostra os hexagramas com seleção e hover
 const HexagramTable: React.FC<HexagramTableProps> = ({

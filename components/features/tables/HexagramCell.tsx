@@ -1,4 +1,4 @@
-import { HexagramCellProps } from '@/lib/types/tableTypes'
+import { HexagramCellProps } from '@/lib/hexagram/hexagramTypes'
 import React from 'react'
 
 // A célula individual da tabela de hexagramas, com número, símbolo e nome em inglês

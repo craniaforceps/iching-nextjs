@@ -1,5 +1,5 @@
 // validators.ts
-import { registerSchema } from '@/lib/schemas/authSchemas'
+import { registerSchema } from '@/lib/auth/authSchemas'
 
 export function validateRegister(data: unknown) {
   const result = registerSchema.safeParse(data)

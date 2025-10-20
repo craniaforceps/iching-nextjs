@@ -1,6 +1,6 @@
 // hooks/useReadings.ts
 import { useEffect, useState } from 'react'
-import type { ReadingView } from '@/lib/types/hexagramTypes'
+import type { ReadingView } from '@/lib/readings/readingsTypes'
 import { useAuth } from '@/context/AuthProvider'
 
 // Hook personalizado para gerir leituras arquivadas do utilizador

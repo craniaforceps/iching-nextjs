@@ -1,6 +1,6 @@
 import db from '@/data/db/db'
-import type { User } from '@/lib/types/authTypes'
-import { userSchema } from '@/lib/schemas/authSchemas'
+import type { User } from '@/lib/auth/types'
+import { userSchema } from '@/lib/auth/authSchemas'
 
 export function findUserByEmail(email: string): User | null {
   const stmt = db.prepare('SELECT * FROM users WHERE email = ?')

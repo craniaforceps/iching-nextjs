@@ -1,4 +1,4 @@
-import type { HexagramObject } from '@/lib/types/hexagramTypes'
+import type { HexagramObject } from '@/lib/hexagram/hexagramTypes'
 
 export async function handleHexagramClick(
   hexagramNumber: { number: number },
