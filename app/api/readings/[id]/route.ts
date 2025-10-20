@@ -7,25 +7,16 @@ import {
 } from '@/lib/readings/readingsRepository'
 import { getCurrentUser } from '@/lib/auth/session'
 
-// GET /api/readings/:id - Retorna a leitura pelo ID
-// PUT /api/readings/:id - Atualiza a leitura pelo ID
-// DELETE /api/readings/:id - Elimina a leitura pelo ID
-
-export async function GET(
-  _req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_req: Request, context: any) {
+  const { params } = context
   try {
     const user = await getCurrentUser()
-    // Validar ID
     const id = Number(params.id)
-    if (isNaN(id)) throw new Error('ID inválido')
+    if (isNaN(id)) return errorResponse({ error: 'ID inválido' }, 400)
 
-    // Obter leitura pelo ID
     const reading = getReadingById(id)
     if (!reading) return errorResponse({ error: 'Leitura não encontrada' }, 404)
 
-    // Retornar leitura mapeada para a view
     return successResponse(mapRowToView(reading))
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Erro desconhecido'
@@ -33,14 +24,12 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: Request, context: any) {
+  const { params } = context
   try {
     const user = await getCurrentUser()
     const id = Number(params.id)
-    if (isNaN(id)) throw new Error('ID inválido')
+    if (isNaN(id)) return errorResponse({ error: 'ID inválido' }, 400)
 
     const body = await req.json()
     const updated = updateReading(id, body)
@@ -51,14 +40,12 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  _req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(_req: Request, context: any) {
+  const { params } = context
   try {
     const user = await getCurrentUser()
     const id = Number(params.id)
-    if (isNaN(id)) throw new Error('ID inválido')
+    if (isNaN(id)) return errorResponse({ error: 'ID inválido' }, 400)
 
     deleteReading(id)
     return successResponse({ success: true })

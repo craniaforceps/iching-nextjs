@@ -1,7 +1,7 @@
 import { binaryMatchSchema } from '@/lib/hexagram/hexagramSchemas'
 
 // Valida e converte o parâmetro de número do hexagrama
-export function validateNumber(param: string): number | null {
+export function validateNumber(param: number): number | null {
   const num = Number(param)
   if (isNaN(num) || num < 1 || num > 64) return null
   return num
