@@ -1,4 +1,4 @@
-interface ModeSelectorProps {
+type ModeSelectorProps = {
   userMode: 'stacked' | 'horizontal' | 'vertical'
   setUserMode: (mode: 'stacked' | 'horizontal' | 'vertical') => void
 }

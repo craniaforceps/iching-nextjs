@@ -1,8 +1,6 @@
-'use client'
-
 import { ReactNode } from 'react'
 
-interface SettingsFormContainerProps {
+type SettingsFormContainerProps = {
   children: ReactNode
   error?: string
   success?: string
@@ -16,7 +14,7 @@ export default function SettingsFormContainer({
   title,
 }: SettingsFormContainerProps) {
   return (
-    <div className="flex flex-col gap-3 w-full max-w-sm items-center justify-center mx-auto">
+    <div className="flex flex-col gap-3 w-full max-w-sm items-center justify-center mx-auto p-2">
       {error && <p className="text-red-600 text-sm">{error}</p>}
       {success && <p className="text-green-600 text-sm">{success}</p>}
 

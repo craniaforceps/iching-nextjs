@@ -1,11 +1,10 @@
-import ArchiveDisplay from '@/components/features/archive/ArchiveDisplay'
-import Title from '@/components/ui/Title'
+import ArchiveDisplay from '@/components/archive/ArchiveDisplay'
 
 // Página do arquivo
 export default function ArquivoPage() {
   return (
     <main className="main-dashboard">
-      {/* <Title title="Arquivo" /> */}
+      <h2 className="h2-title">Arquivo</h2>
 
       <ArchiveDisplay />
     </main>

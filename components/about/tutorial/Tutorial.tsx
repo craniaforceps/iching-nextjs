@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic'
 import Button from '@/components/ui/button/Button'
 import Link from 'next/link'
-import AccordionItem from '../../ui/AccordionItem'
 import LineTable from '../fundamentals/LineTable'
 import Image from 'next/image'
 
@@ -28,8 +27,8 @@ export default function Tutorial() {
           {' '}
           <Image
             src="/images/leibniz-diagrams.webp"
-            width={300}
-            height={300}
+            width={250}
+            height={240}
             alt="Um diagrama com os hexagramas do I Ching enviado a G. W. Leibniz pelo jesuíta Joachim Bouvet em 1701. O diagrama mostra a relação entre o I Ching e a aritmética binária."
             quality={75}
             priority
@@ -64,7 +63,7 @@ export default function Tutorial() {
           <Image
             src="/images/yin-yang-scroll.jpg"
             width={300}
-            height={300}
+            height={413}
             alt=" Pintura num pergaminho com três sábios a estudarem o Yin Yang com
             três crianças e um veado (Século XVIII)."
             quality={75}

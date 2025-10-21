@@ -1,6 +1,6 @@
 import NavbarLinks from './NavbarLinks'
 
-interface MobileMenuProps {
+type MobileMenuProps = {
   isOpen: boolean
   closeMenu: () => void
 }

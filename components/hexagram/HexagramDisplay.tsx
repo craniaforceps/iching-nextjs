@@ -1,5 +1,3 @@
-'use client'
-
 import dynamic from 'next/dynamic'
 import clsx from 'clsx'
 import HexagramCard from './HexagramCard'

@@ -1,6 +1,3 @@
-// hooks/useTextEditor.ts
-'use client'
-
 import { useEffect } from 'react'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'

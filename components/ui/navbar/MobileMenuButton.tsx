@@ -1,6 +1,6 @@
 import { Menu, X } from 'lucide-react'
 
-interface MobileMenuButtonProps {
+type MobileMenuButtonProps = {
   isOpen: boolean
   onClick: () => void
 }

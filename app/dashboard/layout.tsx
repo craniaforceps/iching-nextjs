@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import LayoutContainer from '@/components/ui/sidebar/LayoutContainer'
-
 import SidebarWrapper from '@/components/ui/sidebar/SidebarWrapper'
 
 const menuLinks = [

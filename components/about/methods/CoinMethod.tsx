@@ -43,8 +43,8 @@ export default function CoinMethod() {
       <div className="content-side">
         <Image
           src="/images/coins.jpg"
-          width={300}
-          height={300}
+          width={250}
+          height={188}
           alt="Exemplo do tipo de moedas tipicamente utilizada no método das moedas"
           quality={75}
           sizes="(max-width: 768px) 100vw, 40vw"

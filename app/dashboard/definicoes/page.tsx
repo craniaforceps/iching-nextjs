@@ -4,6 +4,7 @@ import SettingsDisplay from '@/components/settings/SettingsDisplay'
 export default function DefinicoesPage() {
   return (
     <main className="main-dashboard">
+      <h2 className="h2-title">Definição</h2>
       <div className="w-full">
         <SettingsDisplay />
       </div>

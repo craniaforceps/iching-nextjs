@@ -1,5 +1,3 @@
-'use client'
-
 import YinYangSymbol from '@/public/yin-yang.svg'
 
 export default function Logo() {

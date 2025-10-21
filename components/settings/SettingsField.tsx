@@ -1,8 +1,4 @@
-'use client'
-
-import { ReactNode } from 'react'
-
-interface SettingsFieldProps {
+type SettingsFieldProps = {
   name: string
   type?: string
   placeholder?: string

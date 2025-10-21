@@ -1,8 +1,9 @@
 import Button from '@/components/ui/button/Button'
 import Title from '@/components/ui/Title'
 import Link from 'next/link'
-import RandomHexagram from '@/components/ui/exp/RandomHexagram'
+import SequentialHexagram from '@/components/ui/exp/SequentialHexagram'
 
+// Homepage
 export default function Homepage() {
   return (
     <section className="space-y-10">
@@ -15,7 +16,7 @@ export default function Homepage() {
 
         <div className="random-hexagram-container">
           <div className="random-hexagram">
-            <RandomHexagram />
+            <SequentialHexagram />
           </div>
           <p className="p-caption">
             Sequência dos 64 hexagramas ordenados. Para mais informação acerca

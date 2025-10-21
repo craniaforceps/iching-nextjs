@@ -1,5 +1,3 @@
-'use client'
-
 import { HexagramLayoutProps } from '@/lib/hexagram/hexagramTypes'
 import HexagramCard from './HexagramCard'
 

@@ -1,5 +1,3 @@
-'use client'
-
 import { toast } from 'react-toastify'
 import { ui } from '@/lib/ui/alerts'
 import { useRouter } from 'next/navigation'

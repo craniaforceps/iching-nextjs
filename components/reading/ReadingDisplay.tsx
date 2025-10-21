@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useHexagramDisplay } from '@/hooks/useHexagramDisplay'
 import ReadingInput from './ReadingInput'
-import ModeSelector from '@/components/features/reading/ModeSelector'
+import ModeSelector from '@/components/reading/ModeSelector'
 import HexagramDisplay from '../hexagram/HexagramDisplay'
 
 export default function ReadingDisplay() {

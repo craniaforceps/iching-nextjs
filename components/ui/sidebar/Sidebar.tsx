@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-interface SidebarProps {
+type SidebarProps = {
   links: { href: string; label: string }[]
   activePath: string
 }

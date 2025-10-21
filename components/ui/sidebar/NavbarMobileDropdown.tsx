@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 
-interface NavbarMobileDropdownProps {
+type NavbarMobileDropdownProps = {
   links: { href: string; label: string }[]
 }
 

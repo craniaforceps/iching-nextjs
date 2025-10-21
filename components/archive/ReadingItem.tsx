@@ -3,7 +3,7 @@ import ReadingHeader from './ReadingHeader'
 import ReadingHexagrams from './ReadingHexagrams'
 import ReadingNotes from './ReadingNotes'
 import { useReadingNotes } from '@/hooks/useReadingNotes'
-import { useDeleteReading } from '@/hooks/useDeleteReading'
+import { useArchiveReadings } from '@/hooks/useReadings'
 import type { ReadingItemProps } from '@/lib/readings/readingsTypes'
 import { useState } from 'react'
 import ModeSelector from '../reading/ModeSelector'
@@ -16,7 +16,7 @@ export default function ReadingItem({
 }: ReadingItemProps) {
   const { notes, setNotes, isEditing, setIsEditing, saveNotes } =
     useReadingNotes(reading.id, reading.notes ?? '', isOpen)
-  const deleteReading = useDeleteReading(onDelete)
+  const { deleteReadingWithConfirm } = useArchiveReadings()
   const [layout, setLayout] = useState<'stacked' | 'horizontal' | 'vertical'>(
     'horizontal'
   )
@@ -35,7 +35,7 @@ export default function ReadingItem({
           isOpen={isOpen}
           onToggle={onToggle}
           onEdit={() => setIsEditing(true)}
-          onDelete={() => deleteReading(reading.id)}
+          onDelete={() => deleteReadingWithConfirm(reading.id, onDelete)}
         />
       }
       isOpen={isOpen}

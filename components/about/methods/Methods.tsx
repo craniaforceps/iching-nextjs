@@ -37,8 +37,8 @@ export default function Methods() {
         <div className="content-side">
           <Image
             src="/images/achillea.jpeg"
-            width={300}
-            height={300}
+            width={250}
+            height={375}
             alt="A planta Achillea millefolium usada no método dos talos de miléfolio. Em Portugal esta planta é frequente no norte do país."
             quality={75}
             priority

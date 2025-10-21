@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 
 // Lista completa de hexagramas Unicode (64)
 
-export default function RandomHexagramSequential() {
+export default function SequentialHexagram() {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {

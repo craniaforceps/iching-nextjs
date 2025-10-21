@@ -6,7 +6,7 @@ const TextEditor = dynamic(() => import('@/components/ui/editor/TextEditor'), {
   ssr: false,
 })
 
-interface Props {
+type Props = {
   notes: string
   setNotes: (value: string) => void
   onSave: () => void

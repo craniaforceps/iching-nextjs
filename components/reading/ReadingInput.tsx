@@ -1,8 +1,6 @@
-'use client'
-
 import Button from '@/components/ui/button/Button'
 
-interface ReadingInputProps {
+type ReadingInputProps = {
   question: string
   setQuestion: (q: string) => void
   onGenerate: () => void

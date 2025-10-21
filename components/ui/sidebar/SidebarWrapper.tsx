@@ -10,7 +10,7 @@ type Link = {
   label: string
 }
 
-interface SidebarWrapperProps {
+type SidebarWrapperProps = {
   links: Link[]
 }
 

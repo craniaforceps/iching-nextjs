@@ -1,7 +1,7 @@
 import DarkModeToggle from '@/components/ui/button/DarkModeButton'
 import MobileMenuButton from './MobileMenuButton'
 
-interface HeaderActionsProps {
+type HeaderActionsProps = {
   menuOpen: boolean
   toggleMenu: () => void
 }

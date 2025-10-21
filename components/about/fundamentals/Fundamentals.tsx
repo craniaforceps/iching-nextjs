@@ -55,8 +55,8 @@ export default function Fundamentals() {
           </p>
           <Image
             src="/images/trigrams-tibet.jpg"
-            width={300}
-            height={300}
+            width={250}
+            height={188}
             alt="Ilustração de um diagrama presente no Gujin Tushu Jicheng
                 (1700-1725)"
             quality={75}

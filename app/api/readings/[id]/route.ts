@@ -7,6 +7,7 @@ import {
 } from '@/lib/readings/readingsRepository'
 import { getCurrentUser } from '@/lib/auth/session'
 
+// GET /api/readings/:id - Retorna uma leitura individual por ID
 export async function GET(_req: Request, context: any) {
   const { params } = context
   try {
@@ -24,6 +25,7 @@ export async function GET(_req: Request, context: any) {
   }
 }
 
+// PUT /api/readings/:id - Atualiza uma leitura individual por ID
 export async function PUT(req: Request, context: any) {
   const { params } = context
   try {
@@ -40,6 +42,7 @@ export async function PUT(req: Request, context: any) {
   }
 }
 
+// DELETE /api/readings/:id - Apaga uma leitura individual por ID
 export async function DELETE(_req: Request, context: any) {
   const { params } = context
   try {

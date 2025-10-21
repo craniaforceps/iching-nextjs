@@ -11,7 +11,7 @@ const AuthContext = createContext<AuthContextType>({
   refreshAuth: async () => {},
 })
 
-interface AuthProviderProps {
+type AuthProviderProps = {
   children: React.ReactNode
   initialUser?: SafeUser | null
 }

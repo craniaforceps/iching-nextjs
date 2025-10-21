@@ -8,9 +8,10 @@ import { useAuth } from '@/context/AuthProvider'
 import { SubmitButton } from '../ui/button/SubmitButton'
 import FormContainer from './FormContainer'
 import FormField from './FormField'
-import { useRegisterFeedback } from '@/hooks/useRegisterFeedback'
 import type { RegisterState } from '@/lib/auth/types'
+import { useAuthFeedback } from '@/hooks/useAuthFeedback'
 
+// Formulário de registo - criação de uma nova conta com email e password
 export default function RegisterForm() {
   const { refreshAuth } = useAuth()
   const router = useRouter()
@@ -22,7 +23,13 @@ export default function RegisterForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  useRegisterFeedback(state, refreshAuth, router)
+  useAuthFeedback(
+    state,
+    'Conta criada com sucesso! Bem-vindo(a)!',
+    '/dashboard',
+    refreshAuth,
+    router
+  )
 
   // useCallback evita recriar funções em cada render
   const handleEmailChange = useCallback(

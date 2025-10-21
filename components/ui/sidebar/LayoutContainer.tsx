@@ -1,8 +1,10 @@
 import { ReactNode } from 'react'
 
-interface LayoutContainerProps {
+type LayoutContainerProps = {
   children: ReactNode
 }
+
+// LayoutContainer montado apenas uma vez
 
 export default function LayoutContainer({ children }: LayoutContainerProps) {
   return (

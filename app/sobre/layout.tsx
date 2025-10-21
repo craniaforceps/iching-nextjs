@@ -1,10 +1,8 @@
 'use client'
 
 import { ReactNode } from 'react'
-import AppContent from '../AppContent'
 import LayoutContainer from '@/components/ui/sidebar/LayoutContainer'
 import Sidebar from '@/components/ui/sidebar/Sidebar'
-import NavbarMobile from '@/components/ui/sidebar/NavbarMobile'
 import { usePathname } from 'next/navigation'
 import NavbarMobileDropdown from '@/components/ui/sidebar/NavbarMobileDropdown'
 

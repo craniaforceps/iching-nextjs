@@ -1,7 +1,6 @@
-'use client'
 import React from 'react'
 import HexagramTable from './HexagramTable'
-import ResponsiveHexagramLayout from '@/components/features/tables/ResponsiveHexagramLayout'
+import ResponsiveHexagramLayout from '@/components/tables/ResponsiveHexagramLayout'
 import {
   hexagramsNumbersList,
   hexagramsSymbolsList,

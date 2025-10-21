@@ -1,6 +1,6 @@
 'use client'
 
-interface FormContainerProps {
+type FormContainerProps = {
   title: string
   children: React.ReactNode
 }

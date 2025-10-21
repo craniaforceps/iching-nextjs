@@ -1,7 +1,7 @@
 // frontend/components/ui/AccordionItem.tsx
 import { ReactNode } from 'react'
 
-interface AccordionItemProps {
+type AccordionItemProps = {
   title: ReactNode
   isOpen: boolean
   onToggle: () => void

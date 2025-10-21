@@ -66,8 +66,8 @@ export default function Contexto() {
         <div className="content-side">
           <Image
             src="/images/fuxi-nuwa.jpg"
-            width={223}
-            height={321}
+            width={250}
+            height={360}
             quality={75}
             alt="Os irmãos Nüwa (à esquerda) e Fuxi (à direita). Fuxi (伏羲) é visto como o primeiro imperador mítico da China, e com a irmã é creditado por ter criado a humanidade, entre outras coisas. É a Fuxi que é associada a observação dos padrões do universo e criados os oito trigramas."
             className="rounded-full border border-white w-[225px] h-auto m-2"
@@ -107,8 +107,8 @@ export default function Contexto() {
         <div className="content-side">
           <Image
             src="/images/king-wen.jpg"
-            width={225}
-            height={225}
+            width={250}
+            height={430}
             quality={75}
             alt="O Rei Wên (周文王) (1112 a.C. – 1046 a.C.) é o pai da dinastia Zhou. Para além de ser visto como um dos responsáveis por criar os hexagramas através da combinação dos trigramas do Ba Gua."
             className="rounded-2xl border border-white w-[225px] h-auto m-2"
@@ -143,8 +143,8 @@ export default function Contexto() {
         <div className="content-side">
           <Image
             src="/images/tortoise-shell.jpg"
-            width={225}
-            height={225}
+            width={250}
+            height={412}
             quality={75}
             alt="Inscrição antiga em carapaça de tartaruga usada em práticas divinatórias e também associada à origem do Ba Gua"
             className="rounded-full border border-white w-[225px] h-auto m-2"

@@ -1,9 +1,6 @@
-'use client'
-
 import React from 'react'
-import { ArrowRight, ArrowDown } from 'lucide-react'
 import HexagramCell from './HexagramCell'
-import ResponsiveHexagramLayout from '@/components/features/tables/ResponsiveHexagramLayout'
+import ResponsiveHexagramLayout from '@/components/tables/ResponsiveHexagramLayout'
 import {
   hexagramsNumbersReference,
   hexagramsSymbolsReference,

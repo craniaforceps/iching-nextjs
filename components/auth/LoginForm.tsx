@@ -8,8 +8,9 @@ import type { LoginState } from '@/lib/auth/types'
 import { SubmitButton } from '../ui/button/SubmitButton'
 import FormContainer from './FormContainer'
 import FormField from './FormField'
-import { useLoginFeedback } from '@/hooks/useLoginFeedback'
+import { useAuthFeedback } from '@/hooks/useAuthFeedback'
 
+// Formulário de login - inicia sessão com email e password
 export default function LoginForm() {
   const [state, loginAction] = useActionState<LoginState, FormData>(loginUser, {
     errors: {},
@@ -18,7 +19,13 @@ export default function LoginForm() {
   const { refreshAuth } = useAuth()
   const router = useRouter()
 
-  useLoginFeedback(state, refreshAuth, router)
+  useAuthFeedback(
+    state,
+    'Sessão iniciada com sucesso!',
+    '/dashboard',
+    refreshAuth,
+    router
+  )
 
   return (
     <main className="flex justify-center px-4 pt-16">

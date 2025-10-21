@@ -1,7 +1,5 @@
 // Serve para ajustar o layout se houver a selecção de um hexagrama na tabela
 
-'use client'
-
 import { ResponsiveHexagramLayoutProps } from '@/lib/hexagram/hexagramTypes'
 import HexagramCard from '../hexagram/HexagramCard'
 

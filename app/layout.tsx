@@ -3,10 +3,8 @@ import { AuthProvider } from '@/context/AuthProvider'
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import ThemeProvider from './theme/theme-provider'
-import AppContent from './AppContent'
 import { getCurrentUser } from '@/lib/auth/session'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import AppLayout from '@/components/AppContent/AppLayout'
 
 const serif = Cormorant_Garamond({
   subsets: ['latin'],
@@ -39,7 +37,7 @@ export default async function RootLayout({
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
-      <body className="bg-white dark:bg-stone-900 text-stone-900 dark:text-gray-200 transition-colors">
+      <body className="min-h-screen flex flex-col bg-white dark:bg-stone-900 text-stone-900 dark:text-gray-200 transition-colors">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -47,8 +45,8 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider initialUser={initialUser}>
-            {/* AppContent mantém header, footer e main */}
-            <AppContent>{children}</AppContent>
+            {/* AppLayout mantém Header, Footer e Main */}
+            <AppLayout>{children}</AppLayout>
           </AuthProvider>
         </ThemeProvider>
       </body>

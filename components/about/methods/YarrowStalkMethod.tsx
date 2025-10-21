@@ -9,12 +9,6 @@ export default function YarrowStalkMethod() {
   const [isOpen, setIsOpen] = useState(false)
 
   const onToggle = () => setIsOpen(!isOpen)
-  const imageStyle = {
-    borderRadius: '50%',
-    border: '1px solid #fff',
-    width: '225px',
-    height: 'auto',
-  }
 
   return (
     <div className="content-split">
@@ -58,8 +52,8 @@ export default function YarrowStalkMethod() {
       <div className="content-side">
         <Image
           src="/images/yarrow-stalks.jpg"
-          width={300}
-          height={300}
+          width={250}
+          height={333}
           alt="A planta Achillea millefolium usada no método dos talos de miléfolio. Em Portugal esta planta é frequente no norte do país."
           quality={75}
           sizes="(max-width: 768px) 100vw, 40vw"

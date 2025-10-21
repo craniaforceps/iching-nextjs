@@ -45,7 +45,7 @@ export default function DeleteAccount() {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center p-2">
       <Button text="Eliminar Conta" type="button" onClick={handleDelete} />
     </div>
   )

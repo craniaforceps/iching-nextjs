@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import RandomHexagramSequential from '../ui/exp/RandomHexagram'
+import RandomHexagramSequential from '../ui/exp/SequentialHexagram'
 import AnimatedHexagrams from '../ui/exp/Experimento'
 
 export default function Project() {

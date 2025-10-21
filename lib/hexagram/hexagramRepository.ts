@@ -1,6 +1,5 @@
 import db from '@/data/db/db'
 import type { HexagramRow } from '@/lib/hexagram/hexagramTypes'
-import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
 
 export function getHexagramRowByNumber(number: number) {
   const stmt = db.prepare('SELECT * FROM hexagrams WHERE number = ?')

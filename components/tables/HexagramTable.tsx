@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import HexagramCell from './HexagramCell'
 import { HexagramTableProps } from '@/lib/hexagram/hexagramTypes'

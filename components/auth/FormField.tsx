@@ -1,6 +1,6 @@
 'use client'
 
-interface FormFieldProps {
+type FormFieldProps = {
   id: string
   label: string
   type?: string

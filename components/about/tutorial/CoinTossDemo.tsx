@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Button from '@/components/ui/button/Button'
 import { simulateCoinToss } from '@/lib/divinationMethods/coinMethodLogic'
-import { useHexagramFromLines } from '@/hooks/useHexagramFromLines'
+import { useHexagram } from '@/hooks/useHexagram'
 import CoinLinesTable from './CoinLinesTable'
 import HexagramDisplayDemo from './HexagramDisplayDemo'
 
@@ -26,7 +26,7 @@ export default function CoinTossDemo() {
     { tosses: number[]; sum: number; symbol: string }[]
   >([])
   const [hexagrams, setHexagrams] = useState<any | null>(null)
-  const { generateHexagramFromLines, error } = useHexagramFromLines()
+  const { generateHexagramFromLines, error } = useHexagram()
 
   const handleToss = () => {
     if (lines.length >= 6) return

@@ -1,4 +1,4 @@
-import HexagramCard from '@/components/features/hexagram/HexagramCard'
+import HexagramCard from '@/components/hexagram/HexagramCard'
 
 interface ReadingHexagramsProps {
   originalHexagram: any
