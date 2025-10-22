@@ -43,7 +43,7 @@ export async function setSession(token?: string) {
       name: 'session',
       value: token,
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.COOKIE_SECURE === 'true',
       path: '/',
       sameSite: 'lax',
       maxAge: MAX_AGE,

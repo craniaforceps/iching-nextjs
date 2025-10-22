@@ -1,5 +1,4 @@
 import {
-  getUserById,
   getUserByEmail,
   updateEmail,
   updatePassword,
@@ -14,7 +13,7 @@ import {
 } from './settingsHelpers'
 import { emailSchema, passwordSchema, contactSchema } from './settingsSchemas'
 
-// Serviços
+// Serviço para mudar email
 export async function changeEmailService(
   userId: number,
   newEmail: string,
@@ -22,16 +21,17 @@ export async function changeEmailService(
 ) {
   validate(emailSchema, newEmail)
 
-  if (getUserByEmail(newEmail))
-    throw new Error('Já existe uma conta com esse email')
+  const existing = await getUserByEmail(newEmail)
+  if (existing) throw new Error('Já existe uma conta com esse email')
 
-  const user = getUserOrFail(userId)
+  const user = await getUserOrFail(userId)
   await verifyPassword(password, user.password)
 
-  updateEmail(userId, newEmail)
+  await updateEmail(userId, newEmail)
   return { success: true }
 }
 
+// Serviço para mudar password
 export async function changePasswordService(
   userId: number,
   currentPassword: string,
@@ -39,42 +39,36 @@ export async function changePasswordService(
 ) {
   validate(passwordSchema, newPassword)
 
-  const user = getUserOrFail(userId)
+  const user = await getUserOrFail(userId)
   await verifyPassword(currentPassword, user.password)
 
   const newHash = await hashPassword(newPassword)
-  updatePassword(userId, newHash)
+  await updatePassword(userId, newHash)
 
   return { success: true }
 }
 
+// Serviço para enviar mensagem de contacto
 export async function sendContactMessageService(
   userId: number,
   email: string,
   subject: string,
   message: string
 ) {
-  console.log('Validando e enviando mensagem...', {
-    subject,
-    message,
-    contactSchema,
-  })
-
   if (!contactSchema) {
     throw new Error('contactSchema está undefined')
   }
 
-  // valida os dados
   validate(contactSchema, { subject, message })
 
-  // insere na DB
-  insertContactMessage(userId, email, subject, message)
+  await insertContactMessage(userId, email, subject, message)
   return { success: true }
 }
 
+// Serviço para apagar conta
 export async function deleteAccountService(userId: number) {
   if (!userId) throw new Error('Não autenticado')
 
-  deleteUser(userId)
+  await deleteUser(userId)
   return { success: true }
 }

@@ -1,18 +1,22 @@
 import {
-  getHexagramRowByBinary,
   getHexagramRowByNumber,
+  getHexagramRowByBinary,
 } from './hexagramRepository'
 import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
 import { findMatchingHexagrams } from '@/lib/divinationMethods/coinMethodLogic/server'
-import type { HexagramObject } from '@/lib/hexagram/hexagramTypes'
+import type { HexagramObject } from './hexagramTypes'
 
-export function getHexagramByNumber(number: number): HexagramObject | null {
-  const row = getHexagramRowByNumber(number)
+export async function getHexagramByNumber(
+  number: number
+): Promise<HexagramObject | null> {
+  const row = await getHexagramRowByNumber(number)
   return row ? mapHexagramRow(row) : null
 }
 
-export function getHexagramByBinary(binary: string): HexagramObject | null {
-  const row = getHexagramRowByBinary(binary)
+export async function getHexagramByBinary(
+  binary: string
+): Promise<HexagramObject | null> {
+  const row = await getHexagramRowByBinary(binary)
   return row ? mapHexagramRow(row) : null
 }
 

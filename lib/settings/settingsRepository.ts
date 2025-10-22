@@ -1,44 +1,54 @@
 import db from '@/data/db/db'
 
-export type DBUser = { id: number; email: string; password: string }
-
-export function getUserById(userId: number): DBUser | undefined {
-  return db
-    .prepare('SELECT id, email, password FROM users WHERE id = ?')
-    .get(userId) as DBUser | undefined
+export type DBUser = {
+  id: number
+  email: string
+  password: string
+  createdAt: string
 }
 
-export function getUserByEmail(email: string): DBUser | undefined {
-  return db
-    .prepare('SELECT id, email, password FROM users WHERE email = ?')
-    .get(email) as DBUser | undefined
+export async function getUserById(userId: number): Promise<DBUser | undefined> {
+  return await db.get<DBUser>(
+    'SELECT id, email, password, createdAt FROM users WHERE id = ?',
+    [userId]
+  )
 }
 
-export function updateEmail(userId: number, email: string) {
-  return db
-    .prepare('UPDATE users SET email = ? WHERE id = ?')
-    .run(email, userId)
+export async function getUserByEmail(
+  email: string
+): Promise<DBUser | undefined> {
+  return await db.get<DBUser>(
+    'SELECT id, email, password, createdAt FROM users WHERE email = ?',
+    [email]
+  )
 }
 
-export function updatePassword(userId: number, hash: string) {
-  return db
-    .prepare('UPDATE users SET password = ? WHERE id = ?')
-    .run(hash, userId)
+export async function updateEmail(userId: number, email: string) {
+  return await db.run('UPDATE users SET email = ? WHERE id = ?', [
+    email,
+    userId,
+  ])
 }
 
-export function insertContactMessage(
+export async function updatePassword(userId: number, hash: string) {
+  return await db.run('UPDATE users SET password = ? WHERE id = ?', [
+    hash,
+    userId,
+  ])
+}
+
+export async function insertContactMessage(
   userId: number,
   email: string,
   subject: string,
   message: string
 ) {
-  return db
-    .prepare(
-      'INSERT INTO contacts (user_id, email, subject, message) VALUES (?, ?, ?, ?)'
-    )
-    .run(userId, email, subject, message)
+  return await db.run(
+    'INSERT INTO contacts (user_id, email, subject, message) VALUES (?, ?, ?, ?)',
+    [userId, email, subject, message]
+  )
 }
 
-export function deleteUser(userId: number) {
-  return db.prepare('DELETE FROM users WHERE id = ?').run(userId)
+export async function deleteUser(userId: number) {
+  return await db.run('DELETE FROM users WHERE id = ?', [userId])
 }

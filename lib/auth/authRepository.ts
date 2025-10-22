@@ -1,33 +1,40 @@
 import db from '@/data/db/db'
+import { userSchema } from './authSchemas'
 import type { User } from './types'
-import { userSchema } from '@/lib/auth/authSchemas'
 
-/** Busca user por email, retorna null se não existir */
-export function findUserByEmail(email: string): User | null {
-  const stmt = db.prepare('SELECT * FROM users WHERE email = ?')
-  const raw = stmt.get(email)
+export async function findUserByEmail(email: string): Promise<User | null> {
+  const raw = await db.get<User>('SELECT * FROM users WHERE email = ?', [email])
   if (!raw) return null
 
   const parsed = userSchema.safeParse(raw)
-  if (!parsed.success) return null
+  if (!parsed.success) {
+    console.error(parsed.error.format())
+    return null
+  }
 
   return parsed.data
 }
 
-/** Busca user por ID, retorna null se não existir */
-export function findUserById(id: number): User | null {
-  const stmt = db.prepare('SELECT * FROM users WHERE id = ?')
-  const raw = stmt.get(id)
+export async function findUserById(id: number): Promise<User | null> {
+  const raw = await db.get<User>('SELECT * FROM users WHERE id = ?', [id])
   if (!raw) return null
 
   const parsed = userSchema.safeParse(raw)
-  if (!parsed.success) return null
+  if (!parsed.success) {
+    console.error(parsed.error.format())
+    return null
+  }
 
   return parsed.data
 }
 
-/** Insere um novo user e retorna o resultado da query */
-export function insertUser(email: string, hashedPassword: string) {
-  const stmt = db.prepare('INSERT INTO users (email, password) VALUES (?, ?)')
-  return stmt.run(email, hashedPassword)
+export async function insertUser(
+  email: string,
+  hashedPassword: string
+): Promise<number> {
+  const result = await db.run(
+    'INSERT INTO users (email, password, createdAt) VALUES (?, ?, ?)',
+    [email, hashedPassword, new Date().toISOString()]
+  )
+  return Number(result.lastInsertRowid)
 }

@@ -1,22 +1,19 @@
-// components/TextEditor.tsx
+// components/ui/editor/TextEditor.tsx
 'use client'
-
-import { EditorContent } from '@tiptap/react'
-import { useTextEditor } from '@/hooks/useTextEditor'
 
 type Props = {
   value: string
-  onChange: (html: string) => void
+  onChange: (value: string) => void
+  placeholder?: string
 }
 
-// O componente que mostra o editor de textos
-export default function TextEditor({ value, onChange }: Props) {
-  const editor = useTextEditor(value, onChange)
-
+export default function TextEditor({ value, onChange, placeholder }: Props) {
   return (
-    <EditorContent
-      editor={editor}
-      className="min-h-[200px] w-full min-w-[100px] max-w-[1000px] prose dark:prose-invert py-0 p-2 border rounded-md placeholder-gray-400"
+    <textarea
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder ?? 'Escreve as tuas notas…'}
+      className="min-h-[200px] w-full min-w-[100px] max-w-[1000px] py-2 px-3 border rounded-md placeholder-gray-400 resize-none"
     />
   )
 }

@@ -18,8 +18,8 @@ export function validate<T>(schema: ZodType<T>, data: unknown): T {
 }
 
 // Função auxiliar para obter o utilizador ou lançar erro
-export function getUserOrFail(userId: number) {
-  const user = getUserById(userId)
+export async function getUserOrFail(userId: number) {
+  const user = await getUserById(userId)
   if (!user) throw new Error('Utilizador não encontrado')
   return user
 }

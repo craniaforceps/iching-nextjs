@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { useArchiveReadings } from '@/hooks/useArchiveReadings'
 import ReadingList from './ReadingList'
 import PaginationControl from './PaginationControl'
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner'
+import { useArchiveReadings } from '@/hooks/useReadings'
 
 export default function ArchiveDisplay() {
   const { readings, loading, deleteReading } = useArchiveReadings()

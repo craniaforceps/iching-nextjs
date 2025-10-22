@@ -9,7 +9,7 @@ export async function GET(_req: Request, context: any) {
     const num = validateNumber(Number(params.number))
     if (!num) return errorResponse('Número inválido (1-64)', 400)
 
-    const hexagram = getHexagramByNumber(num)
+    const hexagram = await getHexagramByNumber(num)
     if (!hexagram) return errorResponse('Hexagrama não encontrado', 404)
 
     return successResponse(hexagram, 200)

@@ -34,7 +34,7 @@ export default function FormField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500  placeholder-opacity-50"
       />
       {errors.map((msg, idx) => (
         <p key={idx} className="text-red-500 text-sm">

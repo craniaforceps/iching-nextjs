@@ -1,14 +1,4 @@
-import Database from 'better-sqlite3'
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-const dbPath = path.resolve(__dirname, 'iching.sqlite')
-
-console.log('📂 DB Path:', dbPath)
-
-const db = new Database(dbPath)
+// data/db/db.ts
+import db from './adapter'
 
 export default db

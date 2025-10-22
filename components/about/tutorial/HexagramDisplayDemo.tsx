@@ -15,12 +15,12 @@ export default function HexagramDisplayDemo({
 }: HexagramDisplayProps) {
   if (lines.length !== 6) return null
 
+  // ✅ DEBUG 1: mostra o estado completo de hexagrams
+  console.log('DEBUG → Hexagrams received in HexagramDisplayDemo:', hexagrams)
+
   return (
     <>
       <div className="mt-4 text-center">
-        {/* <p className="text-sm mb-2 font-semibold underline">
-          Hexagrama mestre - valores e linhas
-        </p> */}
         <div className="font-mono text-base tracking-widest mb-3 border w-max mx-auto px-2">
           {lines.map((l) => l.sum).join('  ')}
         </div>
@@ -41,19 +41,22 @@ export default function HexagramDisplayDemo({
 
       {hexagrams && (
         <div className="mt-4 text-center">
-          {/* <p className="text-sm mb-0 pb-0 font-semibold ">
-            Hexagramas raíz e dinâmico
-          </p> */}
           <div className="flex justify-center mt-0">
-            {[hexagrams.match1, hexagrams.match2].map((hex: any, i: number) => (
-              <div key={i} className="p-4">
-                <p className="lg:text-9xl md:text-8xl text-8xl">
-                  {hex.unicode}
-                </p>
-                {/* <p className="text-xs">{hex.number}</p>
-                <p className="text-xs">{hex.name}</p> */}
-              </div>
-            ))}
+            {[hexagrams.match1, hexagrams.match2].map((hex: any, i: number) => {
+              // ✅ DEBUG 2: mostra o conteúdo de cada hexagrama individualmente
+              console.log(`DEBUG → match${i + 1}:`, hex)
+
+              // ✅ DEBUG 3: mostra apenas o unicode
+              console.log(`DEBUG → unicode (match${i + 1}):`, hex?.unicode)
+
+              return (
+                <div key={i} className="p-4">
+                  <p className="lg:text-9xl md:text-8xl text-8xl">
+                    {hex.unicode}
+                  </p>
+                </div>
+              )
+            })}
           </div>
         </div>
       )}

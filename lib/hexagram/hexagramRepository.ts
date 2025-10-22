@@ -1,17 +1,28 @@
 import db from '@/data/db/db'
 import type { HexagramRow } from '@/lib/hexagram/hexagramTypes'
 
-export function getHexagramRowByNumber(number: number) {
-  const stmt = db.prepare('SELECT * FROM hexagrams WHERE number = ?')
-  return stmt.get(number) as HexagramRow | undefined
+export async function getHexagramRowByNumber(
+  number: number
+): Promise<HexagramRow | null> {
+  const row = await db.get<HexagramRow>(
+    'SELECT * FROM hexagrams WHERE number = ?',
+    [number]
+  )
+  return row ?? null
 }
 
-export function getHexagramRowByBinary(binary: string) {
-  const stmt = db.prepare('SELECT * FROM hexagrams WHERE binary = ?')
-  return stmt.get(binary) as HexagramRow | undefined
+export async function getHexagramRowByBinary(
+  binary: string
+): Promise<HexagramRow | null> {
+  const row = await db.get<HexagramRow>(
+    'SELECT * FROM hexagrams WHERE binary = ?',
+    [binary]
+  )
+  return row ?? null
 }
 
-export function getAllHexagrams(): HexagramRow[] {
-  const stmt = db.prepare('SELECT * FROM hexagrams ORDER BY number ASC')
-  return stmt.all() as HexagramRow[]
+export async function getAllHexagrams(): Promise<HexagramRow[]> {
+  return await db.all<HexagramRow>(
+    'SELECT * FROM hexagrams ORDER BY number ASC'
+  )
 }

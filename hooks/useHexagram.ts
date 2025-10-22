@@ -9,15 +9,33 @@ async function fetchHexagram(lines?: number[]): Promise<BinaryMatchOutput> {
   const binaries = lines
     ? generateBinary(lines)
     : generateBinary(generateRawHexagram())
+
   const res = await fetch('/api/hexagram', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(binaries),
   })
+
   if (!res.ok) throw new Error(`Erro HTTP: ${res.status}`)
+
   const data = await res.json()
+  console.log('Response from API:', data)
+
   if (!data.success) throw new Error('Hexagrama não encontrado')
-  return { match1: data.data.match1, match2: data.data.match2 }
+
+  // 🧠 Normaliza os campos para garantir que o frontend usa sempre "unicode"
+  const normalize = (hex: any) =>
+    hex
+      ? {
+          ...hex,
+          unicode: hex.unicode_hexagram || hex.unicode || null,
+        }
+      : null
+
+  return {
+    match1: normalize(data.data.match1),
+    match2: normalize(data.data.match2),
+  }
 }
 
 export function useHexagram() {

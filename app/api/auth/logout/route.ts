@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'
+
 import { successResponse } from '@/lib/utils/responses'
 import { setSecurityHeaders } from '@/lib/utils/security'
 import { setSession } from '@/lib/auth/session'

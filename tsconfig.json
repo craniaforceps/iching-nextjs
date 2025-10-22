@@ -33,7 +33,8 @@
     "data/importHexagrams.js",
     "data/convertHexagrams.js",
     "data/db/populate_hexagrams.Js",
-    "data/db/db.ts"
+    "data/db/db.ts",
+    "test-turso.js"
   ],
   "exclude": ["node_modules"]
 }

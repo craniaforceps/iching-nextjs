@@ -1,32 +1,27 @@
-import type {
-  BinaryMatchInput,
-  BinaryMatchOutput,
-  HexagramRow,
-} from '@/lib/hexagram/hexagramTypes'
 import db from '@/data/db/db'
-import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
+import type { HexagramRow } from '@/lib/hexagram/hexagramTypes'
 
-// Encontra os hexagramas correspondentes na DB a partir dos valores binários.
-// Retorna null se não encontrar ambos os hexagramas ou em caso de erro.
-export const findMatchingHexagrams = async ({
+export async function findMatchingHexagrams({
   binary1,
   binary2,
-}: BinaryMatchInput): Promise<BinaryMatchOutput | null> => {
-  try {
-    const stmt = db.prepare('SELECT * FROM hexagrams WHERE binary = ?')
+}: {
+  binary1: string
+  binary2: string
+}): Promise<{ match1: HexagramRow; match2: HexagramRow } | null> {
+  const match1Row = await db.get<HexagramRow>(
+    'SELECT * FROM hexagrams WHERE binary = ?',
+    [binary1]
+  )
 
-    // o .get retorna undefined caso não encontre o hexagrama
-    const match1Row = stmt.get(binary1) as HexagramRow | undefined
-    const match2Row = stmt.get(binary2) as HexagramRow | undefined
+  const match2Row = await db.get<HexagramRow>(
+    'SELECT * FROM hexagrams WHERE binary = ?',
+    [binary2]
+  )
 
-    if (!match1Row || !match2Row) return null
+  if (!match1Row || !match2Row) return null
 
-    return {
-      match1: mapHexagramRow(match1Row),
-      match2: mapHexagramRow(match2Row),
-    }
-  } catch (err) {
-    console.error('Erro ao procurar hexagramas na DB', err)
-    return null
+  return {
+    match1: match1Row,
+    match2: match2Row,
   }
 }

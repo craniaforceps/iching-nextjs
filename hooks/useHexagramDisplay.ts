@@ -2,7 +2,11 @@ import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { useHexagram } from './useHexagram'
 import { useHexagramSaver } from './useHexagramSaver'
-import type { BinaryMatchOutput } from '@/lib/hexagram/hexagramTypes'
+import type {
+  BinaryMatchOutput,
+  HexagramObject,
+} from '@/lib/hexagram/hexagramTypes'
+import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
 
 export function useHexagramDisplay() {
   const [question, setQuestion] = useState('')
@@ -18,10 +22,25 @@ export function useHexagramDisplay() {
       toast.error('Escreve a pergunta antes de lançar o I Ching.')
       return
     }
+
     try {
-      const newHexagrams = await generateHexagram()
-      setHexagrams(newHexagrams)
+      const rawHexagrams = await generateHexagram()
+
+      // ✅ Garantir que temos ambos os hexagramas
+      if (!rawHexagrams.match1 || !rawHexagrams.match2) {
+        throw new Error('Erro ao gerar hexagramas: dados incompletos')
+      }
+
+      // ✅ Converte os dados do servidor para HexagramObject
+      const parsedHexagrams: BinaryMatchOutput = {
+        match1: mapHexagramRow(rawHexagrams.match1 as any),
+        match2: mapHexagramRow(rawHexagrams.match2 as any),
+      }
+
+      setHexagrams(parsedHexagrams)
       setError(null)
+
+      // Scroll para botão (opcional)
       setTimeout(
         () => buttonRef.current?.scrollIntoView({ behavior: 'smooth' }),
         100

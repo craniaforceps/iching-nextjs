@@ -15,6 +15,7 @@ export default function HexagramDisplay({
   onSave,
   layout, // stacked | horizontal | vertical
 }: HexagramDisplayProps) {
+  console.log('Hexagrams in display:', hexagrams)
   const isVertical = layout === 'vertical'
   const isHorizontal = layout === 'horizontal'
   const isStacked = layout === 'stacked'

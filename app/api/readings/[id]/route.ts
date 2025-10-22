@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'
+
 import { successResponse, errorResponse } from '@/lib/utils/responses'
 import { mapRowToView } from '@/lib/readings/readingHelpers'
 import {
@@ -7,7 +9,7 @@ import {
 } from '@/lib/readings/readingsRepository'
 import { getCurrentUser } from '@/lib/auth/session'
 
-// GET /api/readings/:id - Retorna uma leitura individual por ID
+// GET /api/readings/:id
 export async function GET(_req: Request, context: any) {
   const { params } = context
   try {
@@ -15,7 +17,7 @@ export async function GET(_req: Request, context: any) {
     const id = Number(params.id)
     if (isNaN(id)) return errorResponse({ error: 'ID inválido' }, 400)
 
-    const reading = getReadingById(id)
+    const reading = await getReadingById(id)
     if (!reading) return errorResponse({ error: 'Leitura não encontrada' }, 404)
 
     return successResponse(mapRowToView(reading))
@@ -25,7 +27,7 @@ export async function GET(_req: Request, context: any) {
   }
 }
 
-// PUT /api/readings/:id - Atualiza uma leitura individual por ID
+// PUT /api/readings/:id
 export async function PUT(req: Request, context: any) {
   const { params } = context
   try {
@@ -34,7 +36,7 @@ export async function PUT(req: Request, context: any) {
     if (isNaN(id)) return errorResponse({ error: 'ID inválido' }, 400)
 
     const body = await req.json()
-    const updated = updateReading(id, body)
+    const updated = await updateReading(id, body)
     return successResponse(mapRowToView(updated!))
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Erro desconhecido'
