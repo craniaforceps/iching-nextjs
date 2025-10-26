@@ -1,37 +1,50 @@
 import {
   trigramsSymbolsReference,
   trigramsChineseReference,
-  trigramsEnglishReference,
+  trigramsPortugueseReference,
+  trigramsNamePortugueseReference,
+  trigramsAttributePortugueseReference,
+  trigramsFamilyPortugueseReference,
 } from '@/data/table/dataTable'
 
 export const TrigramTable: React.FC = () => (
-  <div className="table-wrapper">
-    <p className="table-caption">
-      A lista dos 8 trigramas do I Ching, com seus respectivos significados.
-    </p>
-    <table className="table-base">
+  <div className="table-wrapper max-w-fit px-2 ">
+    <caption className="table-caption w-full caption-top">
+      A lista dos 8 trigramas do I Ching, com seus respectivos significados e
+      imagens associadas.
+    </caption>
+    <table className="table-base text-xs md:text-sm">
       <thead>
         <tr className="text-center">
-          <th className="border border-gray-400 p-2 text-center">Símbolo</th>
-          <th className="border border-gray-400 p-2 text-center">
-            Nome <br></br>(chinês)
+          <th className="border  p-2 text-center">Símbolo</th>
+          <th className="border  p-2 text-center  hidden  ">
+            Nome <br></br>Chinês
           </th>
-          <th className="border border-gray-400 p-2 text-center">
-            Nome <br></br> (inglês)
-          </th>
+          <th className="border  p-2 text-center">Nome</th>
+          <th className="border  p-2 text-center ">Atributo</th>
+          <th className="border  p-2 text-center">Imagem</th>
+          <th className="border  p-2 text-center ">Família</th>
         </tr>
       </thead>
       <tbody>
         {trigramsSymbolsReference.map((symbol, index) => (
           <tr key={index} className="">
-            <td className="border border-gray-400 text-center text-2xl p-2">
-              {symbol}
-            </td>
-            <td className="border border-gray-400 p-2 text-center">
+            <td className="border  text-center text-2xl p-2">{symbol}</td>
+            <td className="border  p-2 text-center hidden  ">
               {trigramsChineseReference[index]}
             </td>
-            <td className="border border-gray-400 p-2 text-center">
-              {trigramsEnglishReference[index]}
+            <td className="border  p-2 text-center">
+              {trigramsNamePortugueseReference[index]}
+            </td>
+            <td className="border  p-2 text-center wrap-break-word whitespace-normal">
+              {trigramsAttributePortugueseReference[index]}
+            </td>
+
+            <td className="border  p-2 text-center">
+              {trigramsPortugueseReference[index]}
+            </td>
+            <td className="border  p-2 text-center ">
+              {trigramsFamilyPortugueseReference[index]}
             </td>
           </tr>
         ))}

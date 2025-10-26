@@ -10,7 +10,7 @@ export const baseLinks: LinkItem[] = [
 
 // Links auth / not auth
 export const authNavLinks: NavItem[] = [
-  { type: 'link', href: '/dashboard', label: 'Dashboard' },
+  { type: 'link', href: '/dashboard', label: 'Painel' },
   { type: 'action', label: 'Logout', onClick: () => {} }, // substituir pelo handleLogout
 ]
 

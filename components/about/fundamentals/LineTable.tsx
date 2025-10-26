@@ -1,15 +1,11 @@
 export default function LineTable() {
   return (
-    <div className="table-wrapper">
-      <p className="table-caption">
+    <div className="table-wrapper max-w-fit">
+      <caption className="table-caption">
         Os oito trigramas e os valores e tipos de linhas. Yin para linhas
         quebradas e Yang para linhas inteiras.
-      </p>
-      <table className="table-base">
-        <caption className="sr-only">
-          Tabela com a representação de cada linha para cada valor.
-        </caption>
-
+      </caption>
+      <table className="table-base lg:text-sm">
         <thead>
           <tr className="border">
             <th className="border text-center px-4 py-2  font-medium ">

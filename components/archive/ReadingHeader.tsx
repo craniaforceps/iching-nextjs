@@ -6,6 +6,7 @@ interface ReadingHeaderProps {
   originalHexagram: string
   mutantHexagram: string
   isOpen: boolean
+  isEditing: boolean
   onEdit: () => void
   onDelete: () => void
   onToggle: () => void
@@ -17,6 +18,7 @@ export default function ReadingHeader({
   originalHexagram,
   mutantHexagram,
   isOpen,
+  isEditing,
   onEdit,
   onDelete,
   onToggle,
@@ -46,13 +48,15 @@ export default function ReadingHeader({
             onEdit()
           }}
           title="Editar notas"
-          className="cursor-pointer hover:text-amber-500"
+          className={`cursor-pointer ${
+            isEditing ? 'text-amber-500' : 'hover:text-amber-500'
+          }`}
         >
           <Edit2 size={18} />
         </button>
         <button
           onClick={onToggle}
-          className="cursor-pointer  hover:text-amber-500"
+          className="cursor-pointer hover:text-amber-500"
         >
           {isOpen ? <Minus size={20} /> : <Plus size={20} />}
         </button>

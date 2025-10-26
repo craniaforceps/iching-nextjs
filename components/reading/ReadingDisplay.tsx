@@ -5,6 +5,7 @@ import { useHexagramDisplay } from '@/hooks/useHexagramDisplay'
 import ReadingInput from './ReadingInput'
 import ModeSelector from '@/components/reading/ModeSelector'
 import HexagramDisplay from '../hexagram/HexagramDisplay'
+import ReadingLogs from './ReadingLogs'
 
 export default function ReadingDisplay() {
   const {
@@ -12,6 +13,7 @@ export default function ReadingDisplay() {
     setQuestion,
     notes,
     setNotes,
+    lines,
     hexagrams,
     error,
     handleGenerate,
@@ -43,7 +45,7 @@ export default function ReadingDisplay() {
     handleGenerate()
   }
 
-  if (!mounted) return null // ou LoadingSpinner se quiseres
+  if (!mounted) return null
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col gap-6 px-4 min-h-screen">
@@ -53,6 +55,8 @@ export default function ReadingDisplay() {
         onGenerate={onGenerate}
         error={error ?? undefined}
       />
+
+      {hexagrams && <ReadingLogs lines={lines ?? []} />}
 
       {hexagrams && (
         <ModeSelector userMode={userMode} setUserMode={setUserMode} />

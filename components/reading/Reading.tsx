@@ -3,8 +3,6 @@ import ReadingDisplay from '@/components/reading/ReadingDisplay'
 export default function Reading() {
   return (
     <section className="space-y-5">
-      <h2 className="h2-title">Leituras</h2>
-
       <h2 className="h3-title">Instruções:</h2>
       <div className="">
         <ol className="list-text list-decimal space-y-2 text-left">

@@ -3,9 +3,9 @@ import LayoutContainer from '@/components/ui/sidebar/LayoutContainer'
 import SidebarWrapper from '@/components/ui/sidebar/SidebarWrapper'
 
 const menuLinks = [
-  { href: '/dashboard/', label: 'Dashboard' },
-  { href: '/dashboard/leituras', label: 'Leituras' },
-  { href: '/dashboard/arquivo', label: 'Arquivo' },
+  { href: '/dashboard/', label: 'Painel' },
+  { href: '/dashboard/leituras', label: 'Nova leitura' },
+  { href: '/dashboard/arquivo', label: 'Histórico de leituras' },
   { href: '/dashboard/definicoes', label: 'Definições' },
 ]
 

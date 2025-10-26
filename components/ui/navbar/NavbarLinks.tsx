@@ -46,7 +46,7 @@ export default function NavbarLinks({ onLinkClick }: NavbarLinksProps) {
   // Links por autenticação
   // ------------------------
   const authNavLinks: NavItem[] = [
-    { type: 'link', href: '/dashboard', label: 'Dashboard' },
+    { type: 'link', href: '/dashboard', label: 'Painel' },
     { type: 'action', label: 'Logout', onClick: handleLogout },
   ]
 

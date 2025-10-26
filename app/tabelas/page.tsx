@@ -9,7 +9,7 @@ const Tabelas = dynamic(() => import('@/components/tables/Tables'), {
 
 export default function TabelasPage() {
   return (
-    <main className="page-content">
+    <main className="page-content mt-5 lg:mt-0">
       <Title title="Tabelas" />
       <div className="flex justify-center">
         <Tabelas />

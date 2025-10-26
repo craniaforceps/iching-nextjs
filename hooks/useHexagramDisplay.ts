@@ -1,21 +1,35 @@
+'use client'
+
 import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
-import { useHexagram } from './useHexagram'
 import { useHexagramSaver } from './useHexagramSaver'
-import type {
-  BinaryMatchOutput,
-  HexagramObject,
-} from '@/lib/hexagram/hexagramTypes'
 import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
+import type { Line, BinaryMatchOutput } from '@/lib/hexagram/hexagramTypes'
+import {
+  simulateCoinToss,
+  generateBinary,
+} from '@/lib/divinationMethods/coinMethodLogic/client'
+import { getLineSymbol } from '@/lib/divinationMethods/coinMethodLogic/getLineSymbol'
+
+const generateLine = (): Line => {
+  const tosses = [simulateCoinToss(), simulateCoinToss(), simulateCoinToss()]
+  const sum = tosses.reduce((a, b) => a + b, 0)
+  const symbol = getLineSymbol(sum)
+  return { tosses, sum, symbol }
+}
+
+const generateHexagramLines = (): Line[] =>
+  Array.from({ length: 6 }, () => generateLine())
 
 export function useHexagramDisplay() {
   const [question, setQuestion] = useState('')
   const [notes, setNotes] = useState('')
-  const [error, setError] = useState<string | null>(null)
-
-  const { generateHexagram } = useHexagram()
+  const [lines, setLines] = useState<Line[] | null>(null)
   const [hexagrams, setHexagrams] = useState<BinaryMatchOutput | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const buttonRef = useRef<HTMLDivElement>(null)
+
+  const { handleSave } = useHexagramSaver({ hexagrams, question, notes })
 
   const handleGenerate = async () => {
     if (!question.trim()) {
@@ -24,23 +38,35 @@ export function useHexagramDisplay() {
     }
 
     try {
-      const rawHexagrams = await generateHexagram()
+      // 1️⃣ Gera linhas detalhadas
+      const rawLines = generateHexagramLines()
+      setLines(rawLines)
 
-      // ✅ Garantir que temos ambos os hexagramas
-      if (!rawHexagrams.match1 || !rawHexagrams.match2) {
-        throw new Error('Erro ao gerar hexagramas: dados incompletos')
-      }
+      // 2️⃣ Converte para binários
+      const sums = rawLines.map((l) => l.sum)
+      const binaryMatch = generateBinary(sums)
 
-      // ✅ Converte os dados do servidor para HexagramObject
+      // 3️⃣ Chama a API route server-side
+      const res = await fetch('/api/hexagram/match', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(binaryMatch),
+      })
+      if (!res.ok) throw new Error(`Erro HTTP: ${res.status}`)
+
+      const data = await res.json()
+      if (!data.success) throw new Error('Hexagrama não encontrado')
+
+      // 4️⃣ Mapear para objetos frontend
       const parsedHexagrams: BinaryMatchOutput = {
-        match1: mapHexagramRow(rawHexagrams.match1 as any),
-        match2: mapHexagramRow(rawHexagrams.match2 as any),
+        match1: mapHexagramRow(data.data.match1),
+        match2: mapHexagramRow(data.data.match2),
       }
 
       setHexagrams(parsedHexagrams)
       setError(null)
 
-      // Scroll para botão (opcional)
+      // Scroll opcional
       setTimeout(
         () => buttonRef.current?.scrollIntoView({ behavior: 'smooth' }),
         100
@@ -52,17 +78,14 @@ export function useHexagramDisplay() {
     }
   }
 
-  const { handleSave } = useHexagramSaver({ hexagrams, question, notes })
-
   return {
     question,
     setQuestion,
     notes,
     setNotes,
+    lines,
     hexagrams,
-    setHexagrams,
     error,
-    setError,
     buttonRef,
     handleGenerate,
     handleSave,

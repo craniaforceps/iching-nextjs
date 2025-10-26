@@ -95,3 +95,9 @@ export type BinaryMatchOutput = {
 }
 
 export type LayoutMode = 'stacked' | 'horizontal' | 'vertical'
+
+export type Line = {
+  tosses: number[] // Array de 3 números, cada um 2 (coroa) ou 3 (cara)
+  sum: number // Soma das 3 moedas, valor entre 6 e 9
+  symbol: string // Símbolo visual do hexagrama ('━━o━━', '━━━━━', etc.)
+}

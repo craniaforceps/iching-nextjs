@@ -5,6 +5,7 @@ import { Cormorant_Garamond, Inter } from 'next/font/google'
 import ThemeProvider from './theme/theme-provider'
 import { getCurrentUser } from '@/lib/auth/session'
 import AppLayout from '@/components/AppContent/AppLayout'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const serif = Cormorant_Garamond({
   subsets: ['latin'],
@@ -46,7 +47,10 @@ export default async function RootLayout({
         >
           <AuthProvider initialUser={initialUser}>
             {/* AppLayout mantém Header, Footer e Main */}
-            <AppLayout>{children}</AppLayout>
+            <AppLayout>
+              {children}
+              <SpeedInsights />
+            </AppLayout>
           </AuthProvider>
         </ThemeProvider>
       </body>

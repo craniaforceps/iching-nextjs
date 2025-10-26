@@ -45,7 +45,7 @@ export default function HexagramLines({ lines }: HexagramLinesProps) {
                   className="flex justify-between items-center mb-1 cursor-pointer group"
                   onClick={() => toggleLine(idx)}
                 >
-                  <h4 className="font-semibold tracking-wide leading-loose">
+                  <h4 className="pl-1 font-semibold tracking-wide leading-loose">
                     Line {idx + 1}
                   </h4>
                   <span className="hidden group-hover:inline-flex">

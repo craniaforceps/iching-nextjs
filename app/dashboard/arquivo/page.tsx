@@ -4,7 +4,9 @@ import ArchiveDisplay from '@/components/archive/ArchiveDisplay'
 export default function ArquivoPage() {
   return (
     <main className="main-dashboard">
-      <h2 className="h2-title">Arquivo</h2>
+      <div className="hidden md:block lg:block">
+        <h2 className="h2-title">Arquivo</h2>
+      </div>
 
       <ArchiveDisplay />
     </main>

@@ -25,7 +25,7 @@ export default function AppContent({
       {/* ToastContainer montado apenas uma vez */}
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

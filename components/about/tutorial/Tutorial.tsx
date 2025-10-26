@@ -3,12 +3,20 @@ import Button from '@/components/ui/button/Button'
 import Link from 'next/link'
 import LineTable from '../fundamentals/LineTable'
 import Image from 'next/image'
+import { getCurrentUser } from '@/lib/auth/session'
+import CoinTossDemo from './CoinTossDemo'
 
-export default function Tutorial() {
-  const CoinMethodDemo = dynamic(() => import('./CoinTossDemo'), { ssr: false })
+// ✅ This is a SERVER COMPONENT
+export default async function Tutorial() {
+  // Client-only component (CoinTossDemo) must be dynamically imported with SSR disabled
+  // const CoinMethodDemo = dynamic(() => import('./CoinTossDemo'), { ssr: false })
+
+  // Fetch the currently logged-in user from your session helper
+  const user = await getCurrentUser()
 
   return (
     <section className="main-section">
+      {/* -------------------- SECTION 1 -------------------- */}
       <div className="content-split">
         <div className="content-main">
           <h2 className="h2-title">Como consultar o I Ching</h2>
@@ -19,29 +27,14 @@ export default function Tutorial() {
             formação das linhas, temos a dicotomia do yin-yang. Por sua vez, na
             soma de cada três linhas são constituidos os trigramas, que
             representam a qualidade mutante de todas as coisas. Os hexagramas
-            são assim constitúidos por um trigrama superior e um trigrama
+            são assim constituídos por um trigrama superior e um trigrama
             inferior.
           </p>
         </div>
-        <div className="content-side">
-          {' '}
-          <Image
-            src="/images/leibniz-diagrams.webp"
-            width={250}
-            height={240}
-            alt="Um diagrama com os hexagramas do I Ching enviado a G. W. Leibniz pelo jesuíta Joachim Bouvet em 1701. O diagrama mostra a relação entre o I Ching e a aritmética binária."
-            quality={75}
-            priority
-            sizes="(max-width: 768px) 100vw, 40vw"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
-          />
-          <p className="p-caption">
-            Um diagrama com os hexagramas do I Ching enviado a G. W. Leibniz
-            pelo jesuíta Joachim Bouvet em 1701. O diagrama mostra a relação
-            entre o I Ching e a aritmética binária.
-          </p>
-        </div>
+        <div className="content-side"></div>
       </div>
+
+      {/* -------------------- SECTION 2 -------------------- */}
       <div className="content-split">
         <div className="content-main">
           <h4 className="h3-title">Linhas e mudança</h4>
@@ -59,29 +52,16 @@ export default function Tutorial() {
           </p>
           <LineTable />
         </div>
-        <div className="content-side">
-          <Image
-            src="/images/yin-yang-scroll.jpg"
-            width={300}
-            height={413}
-            alt=" Pintura num pergaminho com três sábios a estudarem o Yin Yang com
-            três crianças e um veado (Século XVIII)."
-            quality={75}
-            sizes="(max-width: 768px) 100vw, 40vw"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
-          />
-          <p className="p-caption">
-            Pintura num pergaminho com três sábios a estudarem o Yin Yang com
-            três crianças e um veado (Século XVIII).
-          </p>
-        </div>
+        <div className="content-side"></div>
       </div>
+
+      {/* -------------------- SECTION 3 -------------------- */}
       <div className="content-split">
         <div className="content-main">
           <h3 className="h3-title">O método das moedas</h3>
 
           <p className="p-primary">
-            Usando o método das moedas, começamos por fazer o lançamento das com
+            Usando o método das moedas, começamos por fazer o lançamento com
             três moedas. Consoante a face, somamos diferentes valores. Para cara
             somamos 3 e para coroa somamos 2. Isto fará com que obtenhamos um
             valor por linha que pode ser 6, 7, 8 e 9, tal como referimos. Com a
@@ -97,19 +77,22 @@ export default function Tutorial() {
             assim consultar a informação de que precisamos.
           </p>
 
-          {/* Segundo Accordion */}
-
-          <CoinMethodDemo />
+          {/* Client-only demo component */}
+          <CoinTossDemo />
 
           <p className="p-primary">
             Após o registo no nosso website terás acesso a diferentes
             funcionalidades que facilitam em muito tanto o processo de divinação
             como o de interpretação do I Ching.
           </p>
+
           <div className="text-center items-center flex mx-auto mt-3">
-            <Link href="/registo">
-              <Button text="Inscreve-te" type="button" />
-            </Link>
+            {/* ✅ Button is hidden when user is logged in */}
+            {!user && (
+              <Link href="/registo">
+                <Button text="Inscreve-te" type="button" />
+              </Link>
+            )}
           </div>
         </div>
         <div className="content-side"></div>

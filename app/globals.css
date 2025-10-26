@@ -14,7 +14,7 @@
 /* Dashboard */
 
 @utility main-dashboard {
-  @apply flex flex-col w-full justify-center max-w-3xl items-center mx-auto space-y-5  text-justify lg:mt-5;
+  @apply flex flex-col w-full justify-center max-w-3xl items-center mx-auto space-y-2  text-justify md:mt-5;
 }
 
 /* Sobre */
@@ -44,11 +44,11 @@
 }
 
 @utility content-split {
-  @apply flex flex-col lg:flex-row lg:space-x-8 space-x-5;
+  @apply flex flex-col lg:flex-row lg:space-x-8 sm:space-x-0;
 }
 
 @utility content-main {
-  @apply flex flex-col lg:w-2/3;
+  @apply flex flex-col lg:w-2/3 space-y-0;
 }
 
 @utility content-side {
@@ -83,14 +83,14 @@
 
 /* Tabelas simples */
 @utility table-wrapper {
-  @apply flex flex-col items-center mx-auto my-3;
+  @apply flex flex-col items-center mx-auto my-0 max-w-full;
 }
 
 @utility table-base {
-  @apply border-collapse border text-xs m-2;
-  width: max-content; /* tabela ocupa somente a largura necessária */
+  @apply border-collapse border text-xs m-2 justify-center container;
+  /* tabela ocupa somente a largura necessária */
 }
 
 @utility table-caption {
-  @apply text-xs md:text-sm mt-2 px-2 text-justify leading-snug tracking-tight max-w-2/3 inline-block break-words;
+  @apply text-xs md:text-sm mt-2 p-1 text-justify leading-snug tracking-tight max-w-fit caption-top;
 }

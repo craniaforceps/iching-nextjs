@@ -15,10 +15,10 @@ export default function AccordionItem({
   children,
 }: AccordionItemProps) {
   return (
-    <div className="border-1 rounded-md  w-full pb-0">
+    <div className="border rounded-md  w-full pb-0">
       {/* Cabeçalho */}
       <div
-        className={`w-full p-2 pl-5 pb-2 mb-0 font-semibold flex justify-between items-center hover:bg-gray-100 dark:hover:bg-stone-800 cursor-pointer min-w-0 overflow-hidden ${isOpen ? 'border-b-1' : ''}`}
+        className={`w-full p-2 pl-5 pb-2 mb-0 font-semibold flex justify-between items-center hover:bg-gray-100 dark:hover:bg-stone-800 cursor-pointer min-w-0 overflow-hidden ${isOpen ? 'border-b' : ''}`}
         onClick={onToggle}
       >
         {/* break-smart usa overflow-wrap e word-break para quebrar palavras longas sem espaços*/}

@@ -173,33 +173,77 @@ export const hexagramsEnglishList = [
 
 export const trigramsSymbolsReference = [
   '☰',
+  '☷',
   '☳',
   '☵',
   '☶',
-  '☷',
   '☴',
   '☲',
   '☱',
 ]
 export const trigramsChineseReference = [
-  "Ch'ien",
-  'Chen',
-  "K'an",
-  'Ken',
-  'Kun',
-  'Sun',
-  'Li',
-  'Tui',
+  'Qián',
+  'Kūn',
+  'Zhèn',
+  'Kǎn',
+  'Gèn',
+  'Xùn',
+  'Lí',
+  'Duì',
 ]
 export const trigramsEnglishReference = [
   'Heaven',
+  'Earth',
   'Thunder',
   'Water',
   'Mountain',
-  'Earth',
   'Wind',
   'Flame',
   'Lake',
+]
+
+export const trigramsPortugueseReference = [
+  'Céu',
+  'Terra',
+  'Trovão',
+  'Água',
+  'Montanha',
+  'Vento',
+  'Fogo',
+  'Lago',
+]
+
+export const trigramsNamePortugueseReference = [
+  'Criativo',
+  'Acordado',
+  'Abismo',
+  'Ficar Parado',
+  'Receptivo',
+  'Gentil',
+  'Apegado',
+  'Alegre',
+]
+
+export const trigramsAttributePortugueseReference = [
+  'forte',
+  'devoto, complacente',
+  'incitador de movimento',
+  'perigo',
+  'descansado',
+  'penetrante',
+  'iluminador',
+  'alegre',
+]
+
+export const trigramsFamilyPortugueseReference = [
+  'pai',
+  'mãe',
+  '1º filho',
+  '2º filho',
+  '3º filho',
+  '1ª filha',
+  '2ª filha',
+  '3ª filha',
 ]
 
 export const hexagramsNumbersReference = [
