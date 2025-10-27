@@ -36,7 +36,9 @@ function HexagramDetails({ title, content, hexagramId }: HexagramDetailsProps) {
                   key={i}
                 >
                   {block.map((line, j) => (
-                    <p key={j}>{line}</p>
+                    <p className="text-7xl" key={j}>
+                      {line}
+                    </p>
                   ))}
                 </div>
               ))

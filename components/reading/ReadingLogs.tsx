@@ -1,68 +1,120 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AccordionItem from '@/components/ui/AccordionItem'
-import { Line } from '@/lib/hexagram/hexagramTypes'
+import type { Line } from '@/lib/hexagram/hexagramTypes'
 
 type ReadingLogsProps = {
-  lines: Line[]
+  lines?: Line[] // linhas já calculadas
   title?: string
+  binary?: string // fallback antigo
+  hexagramRaw?: string // fallback preferencial
 }
 
 export default function ReadingLogs({
   lines,
-  title = 'Dados da leitura (debug)',
+  title = 'Logs',
+  binary,
+  hexagramRaw,
 }: ReadingLogsProps) {
   const [open, setOpen] = useState(false)
 
-  const getBinary = (sum: number) => (sum % 2 === 0 ? 0 : 1)
-  const hexBinary = lines.map((l) => getBinary(l.sum)).join('')
+  const getSymbol = (sum: number) => {
+    switch (sum) {
+      case 6:
+        return '━━x━━'
+      case 7:
+        return '━━━━━'
+      case 8:
+        return '━━ ━━'
+      case 9:
+        return '━━o━━'
+      default:
+        return '?'
+    }
+  }
+
+  const isMovingLine = (sum: number) => sum === 6 || sum === 9
+
+  // 🔹 fallback: recria linhas básicas se não existirem
+  const safeLines: Line[] =
+    lines && lines.length > 0
+      ? lines
+      : hexagramRaw
+        ? hexagramRaw
+            .padStart(6, '0')
+            .split('')
+            .map((bit) => {
+              const sum = bit === '1' ? 9 : 6
+              const line = {
+                tosses: [
+                  sum === 9 ? 3 : 2,
+                  sum === 9 ? 3 : 2,
+                  sum === 9 ? 3 : 2,
+                ],
+                sum,
+                symbol: getSymbol(sum),
+              }
+              console.log('Generated line from hexagramRaw:', { bit, line })
+              return line
+            })
+        : binary
+          ? binary
+              .padStart(6, '0')
+              .split('')
+              .map((bit) => {
+                const sum = bit === '1' ? 9 : 6
+                const line = {
+                  tosses: [
+                    sum === 9 ? 3 : 2,
+                    sum === 9 ? 3 : 2,
+                    sum === 9 ? 3 : 2,
+                  ],
+                  sum,
+                  symbol: getSymbol(sum),
+                }
+                console.log('Generated line from binary:', { bit, line })
+                return line
+              })
+          : []
+
+  useEffect(() => {
+    console.log('ReadingLogs safeLines:', safeLines)
+  }, [safeLines])
+
+  const sumsSequence = safeLines.map((l) => l.sum).join('')
 
   return (
     <AccordionItem title={title} isOpen={open} onToggle={() => setOpen(!open)}>
-      <div className="flex flex-col md:flex-row gap-4">
-        {/* Mini hexagrama vertical */}
-        <div className="flex flex-col justify-end font-mono text-center">
-          {lines
-            .slice()
-            .reverse()
-            .map((line, idx) => (
-              <div
-                key={idx}
-                className={`my-0.5 ${line.sum === 6 || line.sum === 9 ? 'text-yellow-600' : ''}`}
-              >
-                {line.symbol}
-              </div>
-            ))}
+      <div className="flex lg:flex-row flex-col justify-between items-center w-full border-red-500 space-y-2">
+        {/* Sequência de somas */}
+        <div className="flex flex-col justify-center items-center font-mono text-center lg:w-1/5">
+          <p className="text-base">{sumsSequence}</p>
         </div>
 
-        {/* Tabela de log */}
-        <div className="flex-1">
-          <p className="mb-2 font-mono text-sm">
-            Binário do hexagrama: {hexBinary}
-          </p>
-          <table className="border-collapse border w-full text-sm">
-            <thead>
-              <tr>
-                <th className="border p-1">Linha</th>
-                <th className="border p-1">Moedas</th>
-                <th className="border p-1">Soma</th>
-                <th className="border p-1">Símbolo</th>
-                <th className="border p-1">Binário</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lines.map((line, idx) => (
-                <tr key={idx}>
-                  <td className="border p-1">{idx + 1}</td>
-                  <td className="border p-1">{JSON.stringify(line.tosses)}</td>
-                  <td className="border p-1">{line.sum}</td>
-                  <td className="border p-1">{line.symbol}</td>
-                  <td className="border p-1">{getBinary(line.sum)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Bloco de linhas tipo console.log */}
+        <div className="flex flex-col justify-center items-center gap-2 mt-2 lg:mt-5 font-mono text-xs text-center lg:w-3/5 mb-5">
+          {[...safeLines].reverse().map((line, idx) => (
+            <div
+              key={idx}
+              className={isMovingLine(line.sum) ? 'text-yellow-600' : ''}
+            >
+              Linha {safeLines.length - idx}: {line.tosses.join(' + ')} ={' '}
+              {line.sum}
+            </div>
+          ))}
+        </div>
+
+        {/* Símbolos visuais */}
+        <div className="flex flex-col justify-center items-center p-2 font-mono lg:w-1/5 text-center">
+          {[...safeLines].reverse().map((line, idx) => (
+            <div
+              key={idx}
+              className={isMovingLine(line.sum) ? 'text-yellow-600' : ''}
+            >
+              {line.symbol}
+            </div>
+          ))}
         </div>
       </div>
     </AccordionItem>

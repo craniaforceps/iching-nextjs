@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import Link from 'next/link'
+Link
 
 export default function Dashboard() {
   return (
@@ -8,6 +10,70 @@ export default function Dashboard() {
         Obrigado por te teres inscrito neste website, espero que possas fazer
         bom proveito do mesmo.
       </p>
+      <div className="flex lg:flex-row flex-col items-center gap-1 mx-auto justify-center">
+        <Link href="dashboard/leituras">
+          <div className="flex w-64 h-64 relative overflow-hidden rounded-lg group">
+            {/* Imagem de fundo */}
+            <Image
+              src="/images/svg/dragon.svg" // caminho da imagem
+              alt="Descrição da imagem"
+              fill // faz a imagem preencher o container
+              className="filter dark:invert 0 w-full h-auto duration-300 group-hover:scale-105"
+              style={{
+                objectFit: 'cover',
+                objectPosition: '10% 70%',
+              }}
+              // mantém proporção e cobre o quadrado
+            />
+
+            {/* Texto sobre a imagem */}
+            <div className="absolute top-8 left-16 flex items-center justify-center bg-transparent text-3xl  font-bold">
+              Leituras
+            </div>
+          </div>
+        </Link>
+        <Link href="dashboard/arquivo">
+          <div className="flex w-64 h-64 relative overflow-hidden rounded-lg group">
+            {/* Imagem de fundo */}
+            <Image
+              src="/images/svg/tiger.svg" // caminho da imagem
+              alt="Descrição da imagem"
+              fill // faz a imagem preencher o container
+              className="filter dark:invert w-full h-auto group-hover:scale-105 "
+              style={{
+                objectFit: 'cover',
+                objectPosition: '10% 85%',
+              }} // mantém proporção e cobre o quadrado
+            />
+
+            {/* Texto sobre a imagem */}
+            <div className="absolute top-8 left-16 flex items-center justify-center bg-transparent text-3xl  font-bold">
+              Histórico
+            </div>
+          </div>
+        </Link>
+
+        <Link href="dashboard/definicoes">
+          <div className="flex w-64 h-64 relative overflow-hidden rounded-lg group">
+            {/* Imagem de fundo */}
+            <Image
+              src="/images/svg/peacock_test.svg" // caminho da imagem
+              alt="Descrição da imagem"
+              fill // faz a imagem preencher o container
+              className="filter dark:invert -rotate-4 w-full h-auto group-hover:scale-105"
+              style={{
+                objectFit: 'cover',
+                objectPosition: '10% 80%',
+              }} // mantém proporção e cobre o quadrado
+            />
+
+            {/* Texto sobre a imagem */}
+            <div className="absolute top-8 left-16 flex items-center justify-center bg-transparent text-3xl   font-bold">
+              Definições
+            </div>
+          </div>
+        </Link>
+      </div>
       <p className="p-primary">
         Esta é a versão inicial e mais básica do E-Ching. Neste momento muita da
         informação ainda se encontra em inglês, mas um dos objectivos passa por

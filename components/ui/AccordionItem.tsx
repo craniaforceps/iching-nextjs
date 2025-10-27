@@ -18,7 +18,7 @@ export default function AccordionItem({
     <div className="border rounded-md  w-full pb-0">
       {/* Cabeçalho */}
       <div
-        className={`w-full p-2 pl-5 pb-2 mb-0 font-semibold flex justify-between items-center hover:bg-gray-100 dark:hover:bg-stone-800 cursor-pointer min-w-0 overflow-hidden ${isOpen ? 'border-b' : ''}`}
+        className={`w-full p-2  mb-0 font-semibold flex justify-between items-center hover:bg-gray-300 dark:hover:bg-stone-800 cursor-pointer min-w-0 overflow-hidden text-center ${isOpen ? 'border-b' : ''}`}
         onClick={onToggle}
       >
         {/* break-smart usa overflow-wrap e word-break para quebrar palavras longas sem espaços*/}

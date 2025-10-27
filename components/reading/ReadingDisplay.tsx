@@ -25,6 +25,7 @@ export default function ReadingDisplay() {
   >('horizontal')
   const [mounted, setMounted] = useState(false)
   const [hasAttempted, setHasAttempted] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
 
   useEffect(() => setMounted(true), [])
 
@@ -41,8 +42,14 @@ export default function ReadingDisplay() {
       })
       if (!res.isConfirmed) return
     }
+
     setHasAttempted(true)
-    handleGenerate()
+    setIsGenerating(true) // <-- desativa o botão
+    try {
+      await handleGenerate() // se handleGenerate for async
+    } finally {
+      setIsGenerating(false) // reativa o botão
+    }
   }
 
   if (!mounted) return null
@@ -50,13 +57,18 @@ export default function ReadingDisplay() {
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col gap-6 px-4 min-h-screen">
       <ReadingInput
+        isGenerating
         question={question}
         setQuestion={setQuestion}
         onGenerate={onGenerate}
         error={error ?? undefined}
       />
 
-      {hexagrams && <ReadingLogs lines={lines ?? []} />}
+      {hexagrams && (
+        <div className="w-2/3 text-center mx-auto items-center">
+          <ReadingLogs lines={lines ?? []} />
+        </div>
+      )}
 
       {hexagrams && (
         <ModeSelector userMode={userMode} setUserMode={setUserMode} />

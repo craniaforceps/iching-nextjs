@@ -4,6 +4,7 @@ type ReadingInputProps = {
   question: string
   setQuestion: (q: string) => void
   onGenerate: () => void
+  isGenerating: boolean
   error?: string
   maxLength?: number
 }
@@ -11,6 +12,7 @@ type ReadingInputProps = {
 export default function ReadingInput({
   question,
   setQuestion,
+  isGenerating,
   onGenerate,
   error,
   maxLength = 100,
@@ -34,7 +36,12 @@ export default function ReadingInput({
         {question.length} / {maxLength}
       </div>
       <div className="flex justify-center mt-2">
-        <Button text="Leitura" type="button" onClick={onGenerate} />
+        <Button
+          text="Leitura"
+          type="button"
+          disabled={isGenerating}
+          onClick={onGenerate}
+        />
       </div>
       {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
