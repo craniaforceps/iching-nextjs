@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { decrypt } from '@/lib/auth/session'
 
-const protectedRoutes = ['/dashboard', '/historico']
-const publicRoutes = ['/login', '/register']
+const protectedRoutes = ['/dashboard', '/historico', '/tabelas']
+const publicRoutes = ['/login', '/register', '/tutorial']
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
@@ -28,6 +28,6 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/login', '/register'],
+  matcher: ['/dashboard/:path*', '/login', '/register', '/tutorial'],
   runtime: 'nodejs',
 }

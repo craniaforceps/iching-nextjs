@@ -27,7 +27,7 @@ export default function SettingsField({
         value={value}
         onChange={onChange}
         required={required}
-        className="border p-2 rounded w-full"
+        className="border p-2 rounded w-full h-30 text-sm"
       />
     )
   }
@@ -40,7 +40,7 @@ export default function SettingsField({
       value={value}
       onChange={onChange}
       required={required}
-      className="border p-2 rounded w-full"
+      className="border p-2 rounded w-full text-sm"
     />
   )
 }

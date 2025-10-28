@@ -6,6 +6,7 @@ const menuLinks = [
   { href: '/dashboard/', label: 'Painel' },
   { href: '/dashboard/leituras', label: 'Nova leitura' },
   { href: '/dashboard/arquivo', label: 'Histórico de leituras' },
+  { href: '/dashboard/tabelas', label: 'Tabelas' },
   { href: '/dashboard/definicoes', label: 'Definições' },
 ]
 

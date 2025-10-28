@@ -1,21 +1,20 @@
+// components/reading/ReadingLogs.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import AccordionItem from '@/components/ui/AccordionItem'
 import type { Line } from '@/lib/hexagram/hexagramTypes'
 
 type ReadingLogsProps = {
   lines?: Line[] // linhas já calculadas
   title?: string
-  binary?: string // fallback antigo
-  hexagramRaw?: string // fallback preferencial
+  binary?: string // se não houver linhas, podemos gerar a partir do binário
 }
 
 export default function ReadingLogs({
   lines,
   title = 'Logs',
   binary,
-  hexagramRaw,
 }: ReadingLogsProps) {
   const [open, setOpen] = useState(false)
 
@@ -40,13 +39,13 @@ export default function ReadingLogs({
   const safeLines: Line[] =
     lines && lines.length > 0
       ? lines
-      : hexagramRaw
-        ? hexagramRaw
+      : binary
+        ? binary
             .padStart(6, '0')
             .split('')
             .map((bit) => {
               const sum = bit === '1' ? 9 : 6
-              const line = {
+              return {
                 tosses: [
                   sum === 9 ? 3 : 2,
                   sum === 9 ? 3 : 2,
@@ -55,32 +54,8 @@ export default function ReadingLogs({
                 sum,
                 symbol: getSymbol(sum),
               }
-              console.log('Generated line from hexagramRaw:', { bit, line })
-              return line
             })
-        : binary
-          ? binary
-              .padStart(6, '0')
-              .split('')
-              .map((bit) => {
-                const sum = bit === '1' ? 9 : 6
-                const line = {
-                  tosses: [
-                    sum === 9 ? 3 : 2,
-                    sum === 9 ? 3 : 2,
-                    sum === 9 ? 3 : 2,
-                  ],
-                  sum,
-                  symbol: getSymbol(sum),
-                }
-                console.log('Generated line from binary:', { bit, line })
-                return line
-              })
-          : []
-
-  useEffect(() => {
-    console.log('ReadingLogs safeLines:', safeLines)
-  }, [safeLines])
+        : []
 
   const sumsSequence = safeLines.map((l) => l.sum).join('')
 

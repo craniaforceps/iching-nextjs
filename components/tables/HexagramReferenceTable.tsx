@@ -30,27 +30,40 @@ const HexagramReferenceTable: React.FC = () => {
       <table className="border-collapse border border-gray-400 table-auto w-full">
         <thead>
           <tr>
-            <th className="border border-gray-400 px-2 py-1 space-y-1 "></th>
+            <th className="border border-gray-400 px-2 py-1 text-center"></th>
             {trigramsSymbolsReference.map((sym, colIdx) => (
               <th
                 key={colIdx}
-                className="border border-gray-400 px-2 py-1 lg:text-5xl text-xs"
+                className="border border-gray-400 px-2 py-1 text-center"
                 title={`${trigramsEnglishReference[colIdx]} (${trigramsChineseReference[colIdx]})`}
               >
-                {sym}
+                <div className="flex flex-col items-center leading-tight">
+                  <span className="text-[4px] lg:text-sm hidden">
+                    {trigramsEnglishReference[colIdx]}
+                  </span>
+                  <span className="lg:text-5xl text-xl">{sym}</span>
+                </div>
               </th>
             ))}
           </tr>
         </thead>
+
         <tbody>
           {hexagramsNumbersReference.map((rowNums, rowIdx) => (
             <tr key={rowIdx}>
               {/* cabeçalho vertical */}
               <th
-                className="border border-gray-400 px-2 py-1 lg:text-5xl md:text-lg text-xs"
+                className="border border-gray-400 px-2 py-1 text-center "
                 title={`${trigramsEnglishReference[rowIdx]} (${trigramsChineseReference[rowIdx]})`}
               >
-                {trigramsSymbolsReference[rowIdx]}
+                <div className="flex flex-col items-center leading-tight">
+                  <span className="text-[4px] hidden">
+                    {trigramsEnglishReference[rowIdx]}
+                  </span>
+                  <span className="lg:text-5xl md:text-xl text-xl">
+                    {trigramsSymbolsReference[rowIdx]}
+                  </span>
+                </div>
               </th>
 
               {rowNums.map((number, colIdx) => {

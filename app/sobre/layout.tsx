@@ -10,7 +10,7 @@ const tabs = [
   { id: 'contexto', label: 'Contexto', href: '/sobre/contexto' },
   { id: 'fundamentos', label: 'Fundamentos', href: '/sobre/fundamentos' },
   { id: 'metodos', label: 'Métodos', href: '/sobre/metodos' },
-  { id: 'tutorial', label: 'Tutorial', href: '/sobre/tutorial' },
+
   { id: 'projecto', label: 'Projecto', href: '/sobre/projecto' },
 ]
 

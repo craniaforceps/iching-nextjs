@@ -1,6 +1,5 @@
 'use client'
 
-import Title from '@/components/ui/Title'
 import dynamic from 'next/dynamic'
 
 const Tabelas = dynamic(() => import('@/components/tables/Tables'), {
@@ -9,11 +8,11 @@ const Tabelas = dynamic(() => import('@/components/tables/Tables'), {
 
 export default function TabelasPage() {
   return (
-    <main className="page-content mt-5 lg:mt-0">
-      <Title title="Tabelas" />
-      <div className="flex justify-center">
-        <Tabelas />
+    <main className="main-dashboard">
+      <div className="hidden md:block lg:block">
+        <h2 className="h2-title">Tabelas</h2>
       </div>
+      <Tabelas />
     </main>
   )
 }

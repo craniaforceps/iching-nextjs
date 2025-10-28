@@ -53,11 +53,11 @@ export default function Dashboard() {
           </div>
         </Link>
 
-        <Link href="dashboard/definicoes">
+        <Link href="dashboard/tabelas">
           <div className="flex w-64 h-64 relative overflow-hidden rounded-lg group">
             {/* Imagem de fundo */}
             <Image
-              src="/images/svg/peacock_test.svg" // caminho da imagem
+              src="/images/svg/peacock_test2.svg" // caminho da imagem
               alt="Descrição da imagem"
               fill // faz a imagem preencher o container
               className="filter dark:invert -rotate-4 w-full h-auto group-hover:scale-105"
@@ -69,7 +69,7 @@ export default function Dashboard() {
 
             {/* Texto sobre a imagem */}
             <div className="absolute top-8 left-16 flex items-center justify-center bg-transparent text-3xl   font-bold">
-              Definições
+              Tabelas
             </div>
           </div>
         </Link>
