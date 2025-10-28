@@ -7,35 +7,23 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "ESnext",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./*"] }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "data/merge.ts",
-    "data/hexagrams/data.ts",
-    "data/legacy/oldHexagramData.js",
-    "data/importHexagrams.js",
-    "data/convertHexagrams.js",
-    "data/db/populate_hexagrams.Js",
-    "data/db/db.ts",
+    "data/**/*.{ts,js}",
     "test-turso.js",
-    "tailwind.config.js"
+    "tailwind.config.ts"
   ],
   "exclude": ["node_modules"]
 }
