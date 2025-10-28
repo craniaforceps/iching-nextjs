@@ -34,7 +34,8 @@
     "data/convertHexagrams.js",
     "data/db/populate_hexagrams.Js",
     "data/db/db.ts",
-    "test-turso.js"
+    "test-turso.js",
+    "tailwind.config.js"
   ],
   "exclude": ["node_modules"]
 }

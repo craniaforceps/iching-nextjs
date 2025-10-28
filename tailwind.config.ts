@@ -1,7 +1,5 @@
-import type { Config } from 'tailwindcss'
-// import typography from '@tailwindcss/typography'
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+const config = {
   content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -16,10 +14,12 @@ const config: Config = {
       lg: '1024px',
       xl: '1280px',
       '2xl': '1536px',
-      // Breakpoint customizado
       wide: '1483px',
     },
   },
+  plugins: [
+    // require('@tailwindcss/typography'),
+  ],
 }
 
-export default config
+module.exports = config
