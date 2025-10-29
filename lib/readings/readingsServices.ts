@@ -1,4 +1,4 @@
-import type { SafeUser } from '@/lib/auth/types'
+import type { SafeUser } from '@/lib/auth/authTypes'
 import { ReadingInputSchema } from '@/lib/hexagram/hexagramSchemas'
 
 // Tipo base usado no frontend
