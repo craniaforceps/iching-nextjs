@@ -76,8 +76,9 @@ export default function Dashboard() {
       <div>
         {' '}
         <p className="p-primary px-5">
-          Esta ainda é a versão piloto do E-Ching. Se encontrarem erros, por
-          favor comuniquem-me através do formulário nas{' '}
+          Esta ainda é a versão piloto do E-Ching. Se encontrarem erros ou
+          tiverem críticas e sugestões, podem contactar-me através do formulário
+          nas{' '}
           <Link href="dashboard/definicoes">
             <u>definições.</u>
           </Link>{' '}
@@ -88,13 +89,13 @@ export default function Dashboard() {
         <div className="flex justify-center mx-auto mt-5">
           {' '}
           <Image
-            src="/images/yin_yang_and_trigrams.gif"
+            src="/images/svg/yinyang_bagua.svg"
             width={250}
             height={250}
             quality={75}
             alt="De acordo com a tradição, o I Ching remonta a cerca de 5000 anos atrás (2800–2737 a.C.), quando o lendário imperador Fu Xi (伏羲) teria descoberto os oito trigramas, Ba Gua (八卦) ao observar padrões na natureza"
             priority
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className="rounded-full border border-white w-[225px] h-auto m-2 dark:invert"
           />
         </div>
 

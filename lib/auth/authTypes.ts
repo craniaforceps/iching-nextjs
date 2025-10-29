@@ -1,8 +1,7 @@
-// === Auth / Users ===
-
 export type User = {
   id: number
   email: string
+  name: string // adiciona name
   password: string
   createdAt: string
 }
@@ -10,27 +9,18 @@ export type User = {
 export type SafeUser = {
   id: number
   email: string
+  name?: string
 }
 
 export type LoginState = {
-  errors?: {
-    email?: string[]
-    password?: string[]
-  }
+  errors: { email?: string[]; password?: string[] }
   success?: boolean
   userId?: number
-}
-
-export type RegisterData = {
-  email: string
-  password: string
+  name?: string
 }
 
 export type RegisterState = {
-  errors?: {
-    email?: string[]
-    password?: string[]
-  }
+  errors: { name?: string[]; email?: string[]; password?: string[] }
   success?: boolean
   userId?: number
 }

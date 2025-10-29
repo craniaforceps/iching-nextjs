@@ -1,9 +1,9 @@
 // authServices.ts
 'use server'
 import bcrypt from 'bcryptjs'
-import type { LoginState, RegisterState } from './types'
+import type { LoginState, RegisterState } from './authTypes'
 import { loginSchema, registerSchema } from './authSchemas'
-import { sanitizeEmailAndPassword } from './authHelpers'
+import { sanitizeEmailPasswordName } from './authHelpers'
 import { encrypt, setSession } from './session'
 import { hashPassword } from '../utils/crypto'
 import { findUserByEmail, insertUser } from './authRepository'
@@ -39,7 +39,11 @@ export async function loginUser(
     }
   }
 
-  const token = await encrypt({ userId: user.id, email: user.email })
+  const token = await encrypt({
+    userId: user.id,
+    email: user.email,
+    name: user.name,
+  })
   await setSession(token)
 
   return { errors: {}, success: true, userId: user.id }
@@ -60,10 +64,12 @@ export async function registerUser(
     return { errors: fieldErrors, success: false }
   }
 
-  const { sanitizedEmail, sanitizedPassword } = sanitizeEmailAndPassword(
-    result.data.email,
-    result.data.password
-  )
+  const { sanitizedEmail, sanitizedPassword, sanitizedName } =
+    sanitizeEmailPasswordName(
+      result.data.email,
+      result.data.password,
+      result.data.name
+    )
 
   const existing = await findUserByEmail(sanitizedEmail)
   if (existing)
@@ -73,9 +79,13 @@ export async function registerUser(
     }
 
   const hashed = await hashPassword(sanitizedPassword, SALT_ROUNDS)
-  const newUserId = await insertUser(sanitizedEmail, hashed)
+  const newUserId = await insertUser(sanitizedEmail, hashed, sanitizedName)
 
-  const token = await encrypt({ userId: newUserId, email: sanitizedEmail })
+  const token = await encrypt({
+    userId: newUserId,
+    email: sanitizedEmail,
+    name: sanitizedName,
+  })
   await setSession(token)
 
   return { errors: {}, success: true, userId: newUserId }

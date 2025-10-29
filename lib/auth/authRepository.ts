@@ -1,6 +1,6 @@
 import db from '@/data/db/db'
 import { userSchema } from './authSchemas'
-import type { User } from './types'
+import type { User } from './authTypes'
 
 export async function findUserByEmail(email: string): Promise<User | null> {
   const raw = await db.get<User>('SELECT * FROM users WHERE email = ?', [email])
@@ -11,7 +11,6 @@ export async function findUserByEmail(email: string): Promise<User | null> {
     console.error(parsed.error.format())
     return null
   }
-
   return parsed.data
 }
 
@@ -24,17 +23,17 @@ export async function findUserById(id: number): Promise<User | null> {
     console.error(parsed.error.format())
     return null
   }
-
   return parsed.data
 }
 
 export async function insertUser(
   email: string,
-  hashedPassword: string
+  hashedPassword: string,
+  name: string
 ): Promise<number> {
   const result = await db.run(
-    'INSERT INTO users (email, password, createdAt) VALUES (?, ?, ?)',
-    [email, hashedPassword, new Date().toISOString()]
+    'INSERT INTO users (email, password, name, createdAt) VALUES (?, ?, ?, ?)',
+    [email, hashedPassword, name, new Date().toISOString()]
   )
   return Number(result.lastInsertRowid)
 }

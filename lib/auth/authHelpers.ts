@@ -1,10 +1,15 @@
 import { findUserByEmail } from './authRepository'
 
 /** Remove espaços e normaliza email e password */
-export function sanitizeEmailAndPassword(email: string, password: string) {
+export function sanitizeEmailPasswordName(
+  email: string,
+  password: string,
+  name: string
+) {
   return {
     sanitizedEmail: email.trim().toLowerCase(),
     sanitizedPassword: password.trim(),
+    sanitizedName: name.trim(),
   }
 }
 

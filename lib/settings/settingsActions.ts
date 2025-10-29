@@ -7,6 +7,7 @@ import {
   changePasswordService,
   deleteAccountService,
   sendContactMessageService,
+  changeNameService,
 } from '@/lib/settings/settingsServices'
 
 export async function changeEmailAction(
@@ -89,5 +90,43 @@ export async function deleteAccountAction(
     return { success: true }
   } catch (err: any) {
     return { success: false, error: err.message || 'Erro ao apagar conta' }
+  }
+}
+
+/**
+ * NOVA ACTION: alterar nome
+ *
+ * Recebe formData com:
+ * - newName
+ * - password (confirmação)
+ */
+export async function changeNameAction(
+  _prevState: SettingsChangeType,
+  formData: FormData
+): Promise<SettingsChangeType> {
+  const user = await getCurrentUser()
+  if (!user) return { success: false, error: 'Não autenticado' }
+
+  const newName = formData.get('newName') as string
+  const password = formData.get('password') as string
+
+  if (!newName) return { success: false, error: 'Nome é obrigatório' }
+
+  try {
+    // Atualiza o nome na base de dados
+    await changeNameService(user.id, newName, password)
+
+    // 🔑 Reemitir JWT com o novo nome
+    const { encrypt, setSession } = await import('@/lib/auth/session')
+    const token = await encrypt({
+      userId: user.id,
+      email: user.email,
+      name: newName,
+    })
+    await setSession(token)
+
+    return { success: true }
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Erro ao atualizar nome' }
   }
 }

@@ -4,12 +4,13 @@ export type DBUser = {
   id: number
   email: string
   password: string
+  name?: string | null
   createdAt: string
 }
 
 export async function getUserById(userId: number): Promise<DBUser | undefined> {
   return await db.get<DBUser>(
-    'SELECT id, email, password, createdAt FROM users WHERE id = ?',
+    'SELECT id, email, password, name, createdAt FROM users WHERE id = ?',
     [userId]
   )
 }
@@ -18,7 +19,7 @@ export async function getUserByEmail(
   email: string
 ): Promise<DBUser | undefined> {
   return await db.get<DBUser>(
-    'SELECT id, email, password, createdAt FROM users WHERE email = ?',
+    'SELECT id, email, password, name, createdAt FROM users WHERE email = ?',
     [email]
   )
 }
@@ -35,6 +36,10 @@ export async function updatePassword(userId: number, hash: string) {
     hash,
     userId,
   ])
+}
+
+export async function updateName(userId: number, name: string) {
+  return await db.run('UPDATE users SET name = ? WHERE id = ?', [name, userId])
 }
 
 export async function insertContactMessage(

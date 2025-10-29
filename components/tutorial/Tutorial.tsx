@@ -1,23 +1,31 @@
-import { getCurrentUser } from '@/lib/auth/session'
+'use client'
+
 import ReadingDisplay from '@/components/reading/ReadingDisplay'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useAuth } from '@/context/AuthProvider'
 
-export default async function Tutorial() {
-  const user = await getCurrentUser()
+export default function Tutorial() {
+  const { user } = useAuth() // hook para user
 
   return (
     <section className="main-split">
       <h2 className="h2-title">Bem-vindo ao nosso oráculo</h2>
+      {user ? (
+        <div className="relative left-10 w-full h-100 lg:h-[250px] ">
+          <Image
+            src="/images/svg/snake-crop.svg"
+            alt="Descrição da imagem"
+            fill
+            className="object-contain w-full h-full p-0 hover:scale-105 dark:invert"
+          />
+        </div>
+      ) : (
+        ''
+      )}
 
       <div className="flex md:flex-row flex-col justify-center">
-        <div className="space-y-6 justify-text md:w-2/3 p-2 ">
-          {/* <div>
-            <p className="p-primary md:pl-5 text-sm">
-              Sugiro que comeces por seguir as nossas instruções. Estas são
-              apenas algumas das funcionalidades que temos para ti.
-            </p>
-          </div> */}
+        <div className="space-y-6 justify-text md:w-2/3 p-2">
           <div>
             <ol className="list-decimal list-inside space-y-2 tracking-wider font-light text-sm md:text-base px-8 mx-auto md:mt-10">
               <li>
@@ -45,7 +53,7 @@ export default async function Tutorial() {
             </ol>
           </div>
 
-          {/* ✅ Apenas em small screens */}
+          {/* Apenas em small screens */}
           <div className="pt-6 border-t border-border w-full block md:hidden">
             <ReadingDisplay isGuest={!user} />
           </div>
@@ -63,7 +71,7 @@ export default async function Tutorial() {
         </div>
       </div>
 
-      {/* ✅ Apenas em medium e acima */}
+      {/* Apenas em medium e acima */}
       <div className="pt-6 border-t border-border w-full hidden md:block">
         <ReadingDisplay isGuest={!user} />
       </div>

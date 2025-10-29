@@ -36,7 +36,7 @@ export default function ReadingInput({
   }, [triggerScroll])
 
   return (
-    <div className="items-center flex flex-col w-full">
+    <div className="items-center flex flex-col w-full mb-0 gap-0">
       <label htmlFor="question" className="sr-only">
         Pergunta
       </label>
@@ -53,7 +53,7 @@ export default function ReadingInput({
       <div className="w-full lg:max-w-3xl text-right text-sm text-gray-500 mt-0.5 pr-1.5">
         {question.length} / {maxLength}
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-0 relative bottom-2">
         <Button
           text="Leitura"
           type="button"

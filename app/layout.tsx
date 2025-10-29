@@ -19,7 +19,7 @@ const sans = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'I Ching',
+  title: 'E Ching',
   description: 'Um website para consulta e divinação com I Ching',
   keywords: 'Hexagramas, I Ching, Filosofia Chinesa',
   icons: { icon: '/yin-yang.svg' },

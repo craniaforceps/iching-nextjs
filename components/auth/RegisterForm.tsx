@@ -8,7 +8,7 @@ import { useAuth } from '@/context/AuthProvider'
 import { SubmitButton } from '../ui/button/SubmitButton'
 import FormContainer from './FormContainer'
 import FormField from './FormField'
-import type { RegisterState } from '@/lib/auth/types'
+import type { RegisterState } from '@/lib/auth/authTypes'
 import { useAuthFeedback } from '@/hooks/useAuthFeedback'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -24,6 +24,7 @@ export default function RegisterForm() {
     }
   )
 
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -39,7 +40,6 @@ export default function RegisterForm() {
     if (!state.success) return
 
     const restoreAndRedirect = async () => {
-      // Primeiro, refresh da sessão
       await refreshAuth()
 
       const savedReading = localStorage.getItem('guestReading')
@@ -66,6 +66,10 @@ export default function RegisterForm() {
     restoreAndRedirect()
   }, [state.success, refreshAuth, router])
 
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
+    []
+  )
   const handleEmailChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
     []
@@ -78,10 +82,8 @@ export default function RegisterForm() {
   return (
     <main className="flex justify-center px-4 pt-16">
       <FormContainer title="Junta-te a nós">
-        {' '}
         <div className="flex mx-auto justify-center flex-col">
           <div className="relative w-full max-w-md aspect-square overflow-hidden rounded-lg">
-            {/* Imagem de fundo */}
             <Image
               src="/images/svg/women.svg"
               alt="Descrição da imagem"
@@ -89,23 +91,32 @@ export default function RegisterForm() {
               className="object-cover object-[10%_70%] transition duration-300 dark:invert"
               priority
             />
-
-            {/* Texto sobre a imagem */}
-            {/* <div className="absolute top-8 left-16 flex items-center justify-center bg-transparent text-3xl  font-bold">
-                          Leituras
-                        </div> */}
-          </div>{' '}
+          </div>
           <p className="p-primary text-center text-base tracking-wide leading-relaxed">
-            Já nos conhecemos? <br></br>Vai até{' '}
+            Já nos conhecemos? <br />
+            Vai até{' '}
             <Link href="/login">
               <u>ali</u>
             </Link>
-            .{' '}
+            .
           </p>
         </div>
+
         <form action={registerAction} className="space-y-4 w-full">
           <FormField
+            id="name"
+            name="name"
+            label="Nome"
+            maxLength={20}
+            value={name}
+            onChange={handleNameChange}
+            required
+            placeholder="Como te chamas?"
+            errors={state.errors?.name ?? []}
+          />
+          <FormField
             id="email"
+            name="email"
             label="Email"
             value={email}
             onChange={handleEmailChange}
@@ -115,6 +126,7 @@ export default function RegisterForm() {
           />
           <FormField
             id="password"
+            name="password"
             label="Palavra-passe"
             type="password"
             value={password}

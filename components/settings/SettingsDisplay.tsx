@@ -8,6 +8,7 @@ import ContactForm from './ContactForm'
 import DeleteAccount from './DeleteAccount'
 import Donation from './Donation'
 import Image from 'next/image'
+import ChangeNameForm from './ChangeNameForm'
 
 export default function SettingsDisplay() {
   const [open, setOpen] = useState<string | null>(null)
@@ -41,7 +42,7 @@ export default function SettingsDisplay() {
       {/* imagem decorativa */}
       <div className="relative w-full -top-3 h-100 lg:h-[350px]">
         <Image
-          src="/images/svg/lady.svg"
+          src="/images/svg/lady-png.svg"
           alt="Descrição da imagem"
           fill
           className="object-contain w-full h-full p-0 hover:scale-105 transform dark:invert"
@@ -50,6 +51,17 @@ export default function SettingsDisplay() {
 
       {/* acordeões */}
       <div className="max-w-4xl mx-auto px-6 flex flex-col gap-4 lg:w-2/3 w-full">
+        <AccordionItem
+          ref={(el) => {
+            sectionRefs.current['name'] = el
+          }}
+          title="Alterar Nome"
+          isOpen={open === 'name'}
+          onToggle={() => toggle('name')}
+        >
+          <ChangeNameForm />
+        </AccordionItem>
+
         <AccordionItem
           ref={(el) => {
             sectionRefs.current['password'] = el
@@ -85,7 +97,7 @@ export default function SettingsDisplay() {
 
         <AccordionItem
           ref={(el) => {
-            sectionRefs.current['password'] = el
+            sectionRefs.current['contact'] = el
           }}
           title="Formulário de Contacto"
           isOpen={open === 'contact'}

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import type { LoginState, RegisterState } from '@/lib/auth/types'
+import type { LoginState, RegisterState } from '@/lib/auth/authTypes'
 
 type AuthState = LoginState | RegisterState
 

@@ -8,14 +8,15 @@ type ButtonProps = {
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ type = 'button', onClick, text, disabled }, ref) => {
+  ({ type = 'submit', onClick, text, disabled }, ref) => {
+    // ← submit por defeito
     return (
       <button
         ref={ref}
         type={type}
         disabled={disabled}
-        className="text-xs lg:text-xs p-2 border cursor-pointer rounded-lg shadow-lg hover:scale-105 hover:shadow-xl hover:border-amber-500 hover:text-amber-500 w-auto disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={onClick}
+        className="text-xs lg:text-xs p-2 border cursor-pointer rounded-lg shadow-lg hover:scale-105 hover:shadow-xl hover:border-amber-500 hover:text-amber-500 w-auto disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {text}
       </button>

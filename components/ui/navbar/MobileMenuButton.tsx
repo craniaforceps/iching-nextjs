@@ -1,3 +1,4 @@
+'use client'
 import { Menu, X } from 'lucide-react'
 
 type MobileMenuButtonProps = {

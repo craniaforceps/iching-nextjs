@@ -10,3 +10,8 @@ export const contactSchema = z.object({
   subject: z.string().min(1, 'Assunto é obrigatório'),
   message: z.string().min(1, 'Mensagem é obrigatória'),
 })
+
+export const nameSchema = z
+  .string()
+  .min(1, { message: 'Nome não pode ser vazio' })
+  .max(100, { message: 'Nome demasiado longo' })

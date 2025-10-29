@@ -12,7 +12,11 @@ if (!secretKey) throw new Error('SESSION_SECRET não definida')
 const encodedKey = new TextEncoder().encode(secretKey)
 
 // Criar token JWT
-export async function encrypt(payload: { userId: number; email: string }) {
+export async function encrypt(payload: {
+  userId: number
+  email: string
+  name: string
+}) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -27,7 +31,7 @@ export async function decrypt(token?: string) {
     const { payload } = await jwtVerify(token, encodedKey, {
       algorithms: ['HS256'],
     })
-    return payload as { userId: number; email: string }
+    return payload as { userId: number; email: string; name: string }
   } catch {
     return null
   }
@@ -61,7 +65,7 @@ export async function getCurrentUser() {
   if (!payload || typeof payload.userId !== 'number' || !payload.email)
     return null
 
-  return { id: payload.userId, email: payload.email }
+  return { id: payload.userId, email: payload.email, name: payload.name }
 }
 
 export async function logoutUser() {

@@ -12,17 +12,23 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-stone-900 border-b-1">
       <div className="max-w-7xl mx-auto p-4 py-2 flex items-center justify-between">
-        <Logo />
+        <div className="w-1/4">
+          <Logo />
+        </div>
 
+        <div>
+          <nav className="hidden md:flex gap-x-6 w-2/4">
+            <NavbarLinks onLinkClick={() => setMenuOpen(false)} />
+          </nav>
+        </div>
         {/* Desktop */}
-        <nav className="hidden md:flex gap-x-6">
-          <NavbarLinks onLinkClick={() => setMenuOpen(false)} />
-        </nav>
 
-        <HeaderActions
-          menuOpen={menuOpen}
-          toggleMenu={() => setMenuOpen((prev) => !prev)}
-        />
+        <div className="w-1/4">
+          <HeaderActions
+            menuOpen={menuOpen}
+            toggleMenu={() => setMenuOpen((prev) => !prev)}
+          />
+        </div>
       </div>
 
       <MobileMenu isOpen={menuOpen} closeMenu={() => setMenuOpen(false)} />

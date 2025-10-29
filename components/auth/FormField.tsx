@@ -2,6 +2,7 @@
 
 type FormFieldProps = {
   id: string
+  name?: string
   label: string
   type?: string
   value?: string
@@ -9,6 +10,7 @@ type FormFieldProps = {
   placeholder?: string
   required?: boolean
   errors?: string[]
+  maxLength?: number
 }
 
 export default function FormField({
@@ -20,6 +22,7 @@ export default function FormField({
   placeholder,
   required = false,
   errors = [],
+  maxLength,
 }: FormFieldProps) {
   return (
     <div>
@@ -32,9 +35,10 @@ export default function FormField({
         type={type}
         required={required}
         value={value}
+        maxLength={maxLength}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500  placeholder-opacity-50"
+        className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500  placeholder-opacity-50 break-smart"
       />
       {errors.map((msg, idx) => (
         <p key={idx} className="text-red-500 text-sm">

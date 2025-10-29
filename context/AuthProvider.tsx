@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
-import type { AuthContextType, SafeUser } from '@/lib/auth/types'
+import type { AuthContextType, SafeUser } from '@/lib/auth/authTypes'
 import { getCurrentUser } from '@/lib/auth/session'
 
 const AuthContext = createContext<AuthContextType>({
