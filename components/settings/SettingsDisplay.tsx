@@ -44,6 +44,7 @@ export default function SettingsDisplay() {
         <Image
           src="/images/svg/lady-png.svg"
           alt="Descrição da imagem"
+          priority
           fill
           className="object-contain w-full h-full p-0 hover:scale-105 transform dark:invert"
         />

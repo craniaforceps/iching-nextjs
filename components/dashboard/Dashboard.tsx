@@ -95,7 +95,7 @@ export default function Dashboard() {
             quality={75}
             alt="De acordo com a tradição, o I Ching remonta a cerca de 5000 anos atrás (2800–2737 a.C.), quando o lendário imperador Fu Xi (伏羲) teria descoberto os oito trigramas, Ba Gua (八卦) ao observar padrões na natureza"
             priority
-            className="rounded-full border border-white w-[225px] h-auto m-2 dark:invert"
+            className="rounded-full  h-auto m-2 dark:invert hover:scale-105"
           />
         </div>
 

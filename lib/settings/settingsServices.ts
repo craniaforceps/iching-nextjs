@@ -59,15 +59,13 @@ export async function sendContactMessageService(
   userId: number,
   email: string,
   subject: string,
-  message: string
+  message: string,
+  topic?: string,
+  sequence?: string
 ) {
-  if (!contactSchema) {
-    throw new Error('contactSchema está undefined')
-  }
-
   validate(contactSchema, { subject, message })
 
-  await insertContactMessage(userId, email, subject, message)
+  await insertContactMessage(userId, email, subject, message, topic)
   return { success: true }
 }
 

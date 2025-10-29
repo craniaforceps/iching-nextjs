@@ -46,11 +46,14 @@ export async function insertContactMessage(
   userId: number,
   email: string,
   subject: string,
-  message: string
+  message: string,
+  topic?: string,
+  sequence?: string
 ) {
   return await db.run(
-    'INSERT INTO contacts (user_id, email, subject, message) VALUES (?, ?, ?, ?)',
-    [userId, email, subject, message]
+    `INSERT INTO contacts (user_id, email, subject, message, topic)
+     VALUES (?, ?, ?, ?, ?)`,
+    [userId, email, subject, message, topic || null]
   )
 }
 

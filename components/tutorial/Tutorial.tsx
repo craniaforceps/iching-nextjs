@@ -17,6 +17,7 @@ export default function Tutorial() {
             src="/images/svg/snake-crop.svg"
             alt="Descrição da imagem"
             fill
+            priority
             className="object-contain w-full h-full p-0 hover:scale-105 dark:invert"
           />
         </div>

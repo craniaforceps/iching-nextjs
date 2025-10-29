@@ -63,13 +63,20 @@ export async function sendContactMessageAction(
 
   const subject = formData.get('subject') as string
   const message = formData.get('message') as string
+  const topic = formData.get('topic') as string
+  const sequence = formData.get('sequence') as string | undefined
 
   if (!subject || !message)
     return { success: false, error: 'Preencha todos os campos' }
 
   try {
-    console.log('Chamando service de contacto...')
-    await sendContactMessageService(user.id, user.email, subject, message)
+    await sendContactMessageService(
+      user.id,
+      user.email,
+      subject,
+      message,
+      topic
+    )
     return { success: true }
   } catch (err: any) {
     console.error('Erro no service:', err)

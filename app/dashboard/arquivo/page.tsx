@@ -12,6 +12,7 @@ export default function ArquivoPage() {
             src="/images/svg/tiger-chop.svg"
             alt="Descrição da imagem"
             fill
+            priority
             className="object-contain w-full h-full p-0 hover:scale-105 transform dark:invert"
           />
         </div>
