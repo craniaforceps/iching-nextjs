@@ -11,7 +11,7 @@ export default function ArchiveDisplay() {
   const [openId, setOpenId] = useState<number | null>(null)
   const [page, setPage] = useState(1)
 
-  const itemsPerPage = 15
+  const itemsPerPage = 10
   const start = (page - 1) * itemsPerPage
   const end = start + itemsPerPage
   const paginatedReadings = readings.slice(start, end)

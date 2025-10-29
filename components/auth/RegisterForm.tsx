@@ -11,6 +11,7 @@ import FormField from './FormField'
 import type { RegisterState } from '@/lib/auth/types'
 import { useAuthFeedback } from '@/hooks/useAuthFeedback'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function RegisterForm() {
   const { refreshAuth } = useAuth()
@@ -78,7 +79,7 @@ export default function RegisterForm() {
     <main className="flex justify-center px-4 pt-16">
       <FormContainer title="Junta-te a nós">
         {' '}
-        <div className="flex mx-auto justify-center">
+        <div className="flex mx-auto justify-center flex-col">
           <div className="relative w-full max-w-md aspect-square overflow-hidden rounded-lg">
             {/* Imagem de fundo */}
             <Image
@@ -93,7 +94,14 @@ export default function RegisterForm() {
             {/* <div className="absolute top-8 left-16 flex items-center justify-center bg-transparent text-3xl  font-bold">
                           Leituras
                         </div> */}
-          </div>
+          </div>{' '}
+          <p className="p-primary text-center text-base tracking-wide leading-relaxed">
+            Já nos conhecemos? <br></br>Vai até{' '}
+            <Link href="/login">
+              <u>ali</u>
+            </Link>
+            .{' '}
+          </p>
         </div>
         <form action={registerAction} className="space-y-4 w-full">
           <FormField

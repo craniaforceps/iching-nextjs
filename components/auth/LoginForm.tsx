@@ -60,7 +60,7 @@ export default function LoginForm() {
     <main className="flex justify-center px-4 pt-16 flex-col">
       <FormContainer title="O que fazes aí fora?">
         <form action={loginAction} className="space-y-4 w-full">
-          <div className="flex mx-auto justify-center">
+          <div className="flex mx-auto justify-center flex-col">
             <div className="relative w-full max-w-md aspect-6/5 overflow-hidden rounded-lg">
               {/* Imagem de fundo */}
               <Image
@@ -76,6 +76,13 @@ export default function LoginForm() {
                     Leituras
                   </div> */}
             </div>
+            <p className="p-primary text-center text-base tracking-wide leading-relaxed">
+              Não sabes quem somos? <br></br>Vai até{' '}
+              <Link href="/registo">
+                <u>ali</u>
+              </Link>
+              .
+            </p>
           </div>
           <FormField
             id="email"

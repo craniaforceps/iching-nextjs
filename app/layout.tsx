@@ -38,7 +38,7 @@ export default async function RootLayout({
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col bg-white dark:bg-stone-900 text-stone-900 dark:text-gray-200 transition-colors">
+      <body className="min-h-screen flex flex-col bg-white dark:bg-stone-900 text-stone-900 dark:text-gray-200 transition-colors font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -46,7 +46,6 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider initialUser={initialUser}>
-            {/* AppLayout mantém Header, Footer e Main */}
             <AppLayout>
               {children}
               <SpeedInsights />

@@ -4,6 +4,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Para acordeão */
+body {
+  @apply font-sans;
+}
 
 .break-smart {
   overflow-wrap: anywhere;
@@ -14,7 +17,7 @@
 /* Dashboard */
 
 @utility main-dashboard {
-  @apply flex flex-col w-full justify-center max-w-3xl items-center mx-auto space-y-2  text-justify md:mt-5;
+  @apply flex flex-col w-full justify-center max-w-3xl items-center mx-auto   text-justify md:py-8;
 }
 
 /* Sobre */

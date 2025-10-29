@@ -32,7 +32,7 @@ export default function Contexto() {
             quality={75}
             alt="De acordo com a tradição, o I Ching remonta a cerca de 5000 anos atrás (2800–2737 a.C.), quando o lendário imperador Fú Xī (伏羲) teria descoberto os oito trigramas, Bāguà (八卦) ao observar padrões na natureza"
             priority
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className="rounded-full  w-[225px] h-auto m-2"
           />
           <p className="p-caption">
             De acordo com a tradição, o I Ching remonta a cerca de 5000 anos
@@ -70,7 +70,7 @@ export default function Contexto() {
             height={360}
             quality={75}
             alt="Os irmãos Nüwa (à esquerda) e Fú Xī (à direita). Fú Xī (伏羲) é visto como o primeiro imperador mítico da China, e com a irmã é creditado por ter criado a humanidade, entre outras coisas. É a Fú Xī que é associada a observação dos padrões do universo e criados os oito trigramas."
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className="rounded-full  w-[225px] h-auto m-2"
             loading="lazy" // lazy-loading abaixo da dobra
           />
           <p className="p-caption">
@@ -111,7 +111,7 @@ export default function Contexto() {
             height={430}
             quality={75}
             alt="O Rei Wên (周文王) (1112 a.C. – 1046 a.C.) é o pai da dinastia Zhou. Para além de ser visto como um dos responsáveis por criar os hexagramas através da combinação dos trigramas do Bāguà."
-            className="rounded-2xl border border-white w-[225px] h-auto m-2"
+            className="rounded-2xl w-[225px] h-auto m-2"
             loading="lazy"
           />
           <p className="p-caption">
@@ -149,9 +149,10 @@ export default function Contexto() {
             height={412}
             quality={75}
             alt="Inscrição antiga em carapaça de tartaruga usada em práticas divinatórias e também associada à origem do Bāguà"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className="rounded-full  w-[225px] h-auto m-2"
             loading="lazy"
           />
+
           <p className="p-caption">
             Inscrição antiga em carapaça de tartaruga usada em práticas
             divinatórias e também associada à origem do Bāguà.

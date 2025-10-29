@@ -21,7 +21,7 @@ const HexagramCell: React.FC<HexagramCellProps> = ({
 
   // Classes para unicode (símbolo), menor no mobile, maior em md+
   const symbolClasses =
-    'mt-1  text-2xl md:text-4xl lg:text-4xl leading-none pb-1 px-0'
+    'mt-1  text-2xl md:text-2xl lg:text-2xl leading-none pb-1 px-0'
 
   // Classes para nome em inglês, escondido em sm, visível só em lg
   // const englishNameClasses =

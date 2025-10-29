@@ -48,7 +48,7 @@ export default function CoinMethod() {
           alt="Exemplo do tipo de moedas tipicamente utilizada no método das moedas"
           quality={75}
           sizes="(max-width: 768px) 100vw, 40vw"
-          className="rounded-full border border-white w-48 md:w-[225px] h-auto"
+          className="rounded-full  w-48 md:w-[225px] h-auto"
         />
         <p className="p-caption">
           Exemplo do tipo de moedas tipicamente utilizada no método das moedas.

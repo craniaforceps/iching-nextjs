@@ -39,7 +39,7 @@ export default function Fundamentals() {
                       três crianças e um veado (Século XVIII)."
             quality={75}
             sizes="(max-width: 768px) 100vw, 40vw"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className="rounded-full dark:hover:invert-0  w-[225px] h-auto m-2"
           />
           <p className="p-caption">
             Pintura num pergaminho com três sábios a estudarem o Yin Yang com
@@ -75,18 +75,20 @@ export default function Fundamentals() {
             src="/images/trigrams-tibet.jpg"
             width={250}
             height={188}
-            alt="Ilustração de um diagrama presente no Gujin Tushu Jicheng
-                         (1700-1725)"
+            alt='Representação da "Tábua Mística". Contém o escudo da tartaruga
+            (aludindo ao animal que revelou os trigramas a Fú Xī e que foi, de
+            acordo com relatos canónicos, um cavalo-dragão), um quadro com os 8
+            trigramas, os 12 animais do zodíaco chinês.'
             quality={75}
             priority
             sizes="(max-width: 768px) 100vw, 40vw"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className="rounded-full border border-white w-[225px] h-auto m-2  dark:hover:invert-0"
           />
           <p className="p-caption">
             Representação da "Tábua Mística". Contém o escudo da tartaruga
             (aludindo ao animal que revelou os trigramas a Fú Xī e que foi, de
             acordo com relatos canónicos, um cavalo-dragão), um quadro com os 8
-            hexagramas, os 12 animais do zodíaco chinês.
+            trigramas, os 12 animais do zodíaco chinês.
           </p>
         </div>
       </div>
@@ -114,19 +116,16 @@ export default function Fundamentals() {
           <div className="flex flex-col items-center justify-center">
             {' '}
             <Image
-              src="/images/iching-diagram.jpg"
+              src="/images/svg/yinyang_bagua.svg"
               width={300}
               height={300}
               alt="Ilustração de um diagrama presente no Gujin Tushu Jicheng
                 (1700-1725)"
               quality={75}
               sizes="(max-width: 768px) 100vw, 40vw"
-              className="rounded-full border border-white w-[225px] h-auto m-2"
+              className=" w-[225px] h-auto m-2 dark:invert"
             />
-            <p className="p-caption">
-              Ilustração de um diagrama presente no Gujin Tushu Jicheng
-              (1700-1725)
-            </p>
+            <p className="p-caption">Yin-Yang e trigramas.</p>
           </div>
           <div className="flex flex-col items-center justify-center">
             {' '}
@@ -138,7 +137,7 @@ export default function Fundamentals() {
               quality={75}
               priority
               sizes="(max-width: 768px) 100vw, 40vw"
-              className="rounded-full border border-white w-[225px] h-auto m-2"
+              className="rounded-full b dark:hover:invert-0 w-[225px] h-auto m-2"
             />
             <p className="p-caption">
               Um diagrama com os hexagramas do I Ching enviado a G. W. Leibniz
@@ -177,14 +176,14 @@ export default function Fundamentals() {
         <div className="content-side">
           {' '}
           <Image
-            src="/images/iching-diagram.jpg"
+            src="/images/svg/circle-hexagrams.svg"
             width={300}
             height={300}
             alt="Ilustração de um diagrama presente no Gujin Tushu Jicheng
                 (1700-1725)"
             quality={75}
             sizes="(max-width: 768px) 100vw, 40vw"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className=" w-[225px] h-auto m-2 dark:invert"
           />
           <p className="p-caption">
             Ilustração de um diagrama presente no Gujin Tushu Jicheng
@@ -211,7 +210,7 @@ export default function Fundamentals() {
             guiar as leituras é muito aconselhável no meu entender, e permite
             tirar mais benefícios do estudo e uso do I Ching.
           </p>
-
+          {/*
           <p className="p-primary">
             O significado associado aos diferentes hexagramas foi consolidado na
             forma de um texto que contém Julgamento, Imagem e Linhas (de 1 a 6)
@@ -230,7 +229,7 @@ export default function Fundamentals() {
             tornam mais tangíveis, uma leitura e interpretação prévias dos
             hexagramas à luz das imagens representadas pelos trigramas que o
             constituem pode ser uma excelente reflexão.
-          </p>
+          </p> */}
           <p className="p-primary">
             Os hexagramas expressam situações que são simbolicamente
             caracterizadas pelas linhas, e através do movimento destas linhas
@@ -256,14 +255,14 @@ export default function Fundamentals() {
         <div className="content-side">
           {' '}
           <Image
-            src="/images/iching-diagram.jpg"
+            src="/images/svg/black-bagua.svg"
             width={300}
             height={300}
             alt="Ilustração de um diagrama presente no Gujin Tushu Jicheng
                 (1700-1725)"
             quality={75}
             sizes="(max-width: 768px) 100vw, 40vw"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className=" w-[225px] h-auto m-2 dark:invert"
           />
           <p className="p-caption">
             Ilustração de um diagrama presente no Gujin Tushu Jicheng

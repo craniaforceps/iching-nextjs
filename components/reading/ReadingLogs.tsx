@@ -61,14 +61,14 @@ export default function ReadingLogs({
 
   return (
     <AccordionItem title={title} isOpen={open} onToggle={() => setOpen(!open)}>
-      <div className="flex lg:flex-row flex-col justify-between items-center w-full border-red-500 space-y-2">
+      <div className="flex lg:flex-row flex-col justify-around items-center w-full space-y-2 lg:space-x-0">
         {/* Sequência de somas */}
-        <div className="flex flex-col justify-center items-center font-mono text-center lg:w-1/5">
+        <div className="flex flex-col justify-center items-center font-mono text-center w-fit">
           <p className="text-base">{sumsSequence}</p>
         </div>
 
         {/* Bloco de linhas tipo console.log */}
-        <div className="flex flex-col justify-center items-center gap-2 mt-2 lg:mt-5 font-mono text-xs text-center lg:w-3/5 mb-5">
+        <div className="flex flex-col justify-center items-center gap-2 mt-2 lg:mt-5 font-mono text-xs text-center  mb-5 w-fit">
           {[...safeLines].reverse().map((line, idx) => (
             <div
               key={idx}
@@ -81,7 +81,7 @@ export default function ReadingLogs({
         </div>
 
         {/* Símbolos visuais */}
-        <div className="flex flex-col justify-center items-center p-2 font-mono lg:w-1/5 text-center">
+        <div className="flex flex-col justify-center items-center p-2 font-mono w-fit text-center">
           {[...safeLines].reverse().map((line, idx) => (
             <div
               key={idx}

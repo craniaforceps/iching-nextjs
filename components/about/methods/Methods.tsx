@@ -43,7 +43,7 @@ export default function Methods() {
             quality={75}
             priority
             sizes="(max-width: 768px) 100vw, 40vw"
-            className="rounded-full border border-white w-[225px] h-auto m-2"
+            className="rounded-full   w-[225px] h-auto m-2"
           />
           <p className="p-caption">
             A espécie <i>Achillea millefolium</i> é vista como sagrada para os

@@ -23,7 +23,7 @@ export default function Tables() {
   const [open, setOpen] = useState<string>('')
 
   return (
-    <div className="w-full max-w-3xl space-y-4">
+    <div className="w-full max-w-4xl flex-col flex space-y-4 px-5 lg:px-0">
       {TABLES.map(({ key, title, component }) => (
         <div key={key} className="border rounded-lg overflow-hidden">
           <button

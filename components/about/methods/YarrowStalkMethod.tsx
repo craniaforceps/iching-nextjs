@@ -57,7 +57,7 @@ export default function YarrowStalkMethod() {
           alt="A planta Achillea millefolium usada no método dos talos de miléfolio. Em Portugal esta planta é frequente no norte do país."
           quality={75}
           sizes="(max-width: 768px) 100vw, 40vw"
-          className="rounded-full border border-white w-48 md:w-[225px] h-auto"
+          className="rounded-full   w-48 md:w-[225px] h-auto"
         />
         <p className="p-caption">
           Os talos retirados do milefólio, limpos e secos. Prontos para serem
