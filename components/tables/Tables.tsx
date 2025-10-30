@@ -28,7 +28,7 @@ export default function Tables() {
         <div key={key} className="border rounded-lg overflow-hidden">
           <button
             type="button"
-            className="w-full text-left px-4 py-3 font-semibold transition hover:text-amber-500 cursor-pointer"
+            className="w-full text-left px-4 py-3 font-semibold transition hover:text-amber-500 cursor-pointer border border-b"
             onClick={() => setOpen(open === key ? '' : key)}
           >
             {title}

@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify'
 import { ui } from '@/lib/ui/alerts'
 import { useRouter } from 'next/navigation'
-import type { BinaryMatchOutput } from '@/lib/hexagram/hexagramTypes'
+import type { BinaryMatchHexagramRawOutput } from '@/lib/hexagram/hexagramTypes'
 import { getCurrentUser } from '@/lib/auth/session'
 
 interface UseHexagramSaverProps {
-  hexagrams: BinaryMatchOutput | null
+  hexagrams: BinaryMatchHexagramRawOutput | null
   question: string
   notes: string
 }
@@ -51,10 +51,12 @@ export function useHexagramSaver({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          user_id: user.id,
           question,
           notes,
           originalBinary: hexagrams.match1.binary,
           mutantBinary: hexagrams.match2.binary,
+          hexagramRaw: hexagrams.hexagramRaw,
         }),
       })
 

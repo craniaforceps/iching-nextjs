@@ -31,12 +31,13 @@ export default function CoinMethod() {
           Apesar de ser um método mais prático, os seus resultados tecnicamente
           são diferentes dos métodos mais tradicionais.
         </p>
+        <div className="flex flex-col gap-1">
+          <CoinTable />
 
-        <CoinTable />
-
-        <AccordionItem title="Tutorial" isOpen={isOpen} onToggle={onToggle}>
-          <CoinTutorial />
-        </AccordionItem>
+          <AccordionItem title="Tutorial" isOpen={isOpen} onToggle={onToggle}>
+            <CoinTutorial />
+          </AccordionItem>
+        </div>
       </div>
 
       {/* Coluna lateral */}

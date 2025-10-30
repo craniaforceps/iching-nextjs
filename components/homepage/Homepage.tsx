@@ -72,7 +72,7 @@ export default function Homepage() {
              hover:scale-105 hover:shadow-xl hover:border-amber-500 hover:text-amber-500
              w-auto dark:bg-stone-900/85 bg-white/85 font-bold"
             >
-              Consulta o I Ching!
+              Consulta o I Ching
             </button>
           </Link>
         </div>

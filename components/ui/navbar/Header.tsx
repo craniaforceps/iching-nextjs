@@ -23,7 +23,7 @@ export default function Header() {
         </div>
         {/* Desktop */}
 
-        <div className="w-1/4">
+        <div className="lg:w-1/4">
           <HeaderActions
             menuOpen={menuOpen}
             toggleMenu={() => setMenuOpen((prev) => !prev)}

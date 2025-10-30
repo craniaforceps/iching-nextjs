@@ -111,7 +111,7 @@ export default function RegisterForm() {
             value={name}
             onChange={handleNameChange}
             required
-            placeholder="Como te chamas?"
+            placeholder="Como serás chamado?"
             errors={state.errors?.name ?? []}
           />
           <FormField

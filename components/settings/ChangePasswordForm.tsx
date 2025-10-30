@@ -37,6 +37,9 @@ export default function ChangePasswordForm() {
           placeholder="Confirmar nova password"
           required
         />
+        <p className="text-xs text-gray-500 mb-2">
+          É necessário confirmar com a tua password atual.
+        </p>
         <Button
           text={isPending ? 'A atualizar...' : 'Guardar'}
           disabled={isPending}

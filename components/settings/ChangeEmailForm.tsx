@@ -38,6 +38,9 @@ export default function ChangeEmailForm() {
           placeholder="Password atual"
           required
         />
+        <p className="text-xs text-gray-500 mb-2">
+          É necessário confirmar com a tua password atual.
+        </p>
         <Button
           text={isPending ? 'A atualizar...' : 'Atualizar Email'}
           disabled={isPending}

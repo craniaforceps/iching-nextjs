@@ -42,11 +42,12 @@ export default function YarrowStalkMethod() {
           (4/16 vs 12/16). E que dentro das linhas mutantes, a probabilidade de
           tirar uma linha ying mutante é de apenas 1/16.
         </p>
-
-        <YarrowStalkTable />
-        <AccordionItem title="Tutorial" isOpen={isOpen} onToggle={onToggle}>
-          <StalkTutorial />
-        </AccordionItem>
+        <div className="flex flex-col gap-1">
+          <YarrowStalkTable />
+          <AccordionItem title="Tutorial" isOpen={isOpen} onToggle={onToggle}>
+            <StalkTutorial />
+          </AccordionItem>
+        </div>
       </div>
 
       <div className="content-side">

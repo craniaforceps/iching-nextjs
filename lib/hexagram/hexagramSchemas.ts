@@ -21,6 +21,7 @@ const BaseReadingSchema = z.object({
   originalBinary: z.string().length(6, 'Binary inválido'),
   mutantBinary: z.string().length(6, 'Binary inválido'),
   user_id: z.number(),
+  hexagramRaw: z.string().length(6, 'HexagramRaw inválido'),
 })
 
 // Esquema para validar o input do cliente (ex: POST request)

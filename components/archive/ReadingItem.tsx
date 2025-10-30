@@ -51,6 +51,7 @@ const ReadingItem = forwardRef<HTMLDivElement, ReadingItemProps>(
               date={date}
               originalHexagram={reading.originalHexagram.unicode}
               mutantHexagram={reading.mutantHexagram.unicode}
+              hexagramRaw={reading.hexagramRaw}
               isOpen={isOpen}
               isEditing={isEditing}
               onToggle={onToggle}

@@ -89,9 +89,10 @@ export type BinaryMatchInput = {
   binary2: string
 }
 
-export type BinaryMatchOutput = {
+export type BinaryMatchHexagramRawOutput = {
   match1: HexagramObject
   match2: HexagramObject
+  hexagramRaw: string
 }
 
 export type LayoutMode = 'stacked' | 'horizontal' | 'vertical'

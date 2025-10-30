@@ -4,7 +4,10 @@ import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { useHexagramSaver } from './useHexagramSaver'
 import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
-import type { Line, BinaryMatchOutput } from '@/lib/hexagram/hexagramTypes'
+import type {
+  Line,
+  BinaryMatchHexagramRawOutput,
+} from '@/lib/hexagram/hexagramTypes'
 import {
   simulateCoinToss,
   generateBinary,
@@ -25,8 +28,10 @@ export function useHexagramDisplay() {
   const [question, setQuestion] = useState('')
   const [notes, setNotes] = useState('')
   const [lines, setLines] = useState<Line[] | null>(null)
-  const [hexagrams, setHexagrams] = useState<BinaryMatchOutput | null>(null)
+  const [hexagrams, setHexagrams] =
+    useState<BinaryMatchHexagramRawOutput | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [hexagramRaw, setHexagramRaw] = useState<string | null>(null)
   const buttonRef = useRef<HTMLDivElement>(null)
 
   const { handleSave } = useHexagramSaver({ hexagrams, question, notes })
@@ -45,6 +50,7 @@ export function useHexagramDisplay() {
       // 2️⃣ Converte para binários
       const sums = rawLines.map((l) => l.sum)
       const binaryMatch = generateBinary(sums)
+      const hexagramRaw = sums.join('')
 
       // 3️⃣ Chama a API route server-side
       const res = await fetch('/api/hexagram/match', {
@@ -58,11 +64,12 @@ export function useHexagramDisplay() {
       if (!data.success) throw new Error('Hexagrama não encontrado')
 
       // 4️⃣ Mapear para objetos frontend
-      const parsedHexagrams: BinaryMatchOutput = {
+      const parsedHexagrams: BinaryMatchHexagramRawOutput = {
         match1: mapHexagramRow(data.data.match1),
         match2: mapHexagramRow(data.data.match2),
+        hexagramRaw,
       }
-
+      console.log(hexagramRaw, 'este é o hexagramRaw')
       setHexagrams(parsedHexagrams)
       setError(null)
 

@@ -12,6 +12,7 @@ const tabs = [
   { id: 'metodos', label: 'Métodos', href: '/sobre/metodos' },
 
   { id: 'projecto', label: 'Projecto', href: '/sobre/projecto' },
+  // { id: 'faq', label: 'FAQ', href: '/sobre/faq' },
 ]
 
 export default function SobreLayout({ children }: { children: ReactNode }) {

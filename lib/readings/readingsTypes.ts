@@ -9,6 +9,7 @@ export type ReadingRow = {
   createdAt?: string
   originalBinary: string
   mutantBinary: string
+  hexagramRaw: string
 }
 
 // === Reading used in frontend with Hexagrams ===
@@ -24,6 +25,7 @@ export type ReadingInput = {
   notes?: string | null
   originalBinary: string
   mutantBinary: string
+  hexagramRaw: string
 }
 
 // Props para componentes

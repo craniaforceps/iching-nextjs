@@ -25,14 +25,15 @@ export async function insertUserReading(
   data: ReadingInput
 ): Promise<ReadingRow> {
   const result = await db.run(
-    `INSERT INTO readings (user_id, question, notes, originalBinary, mutantBinary)
-     VALUES (?, ?, ?, ?, ?)`,
+    `INSERT INTO readings (user_id, question, notes, originalBinary, mutantBinary, hexagramRaw)
+     VALUES (?, ?, ?, ?, ?, ?)`,
     [
       data.user_id,
       data.question,
       data.notes,
       data.originalBinary,
       data.mutantBinary,
+      data.hexagramRaw,
     ]
   )
 
