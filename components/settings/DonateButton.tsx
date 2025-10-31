@@ -12,6 +12,14 @@ export default function DonateButton() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount }),
     })
+
+    if (!res.ok) {
+      const text = await res.text()
+      console.error('Erro ao criar sessão:', res.status, text)
+      alert('Erro ao iniciar checkout')
+      return
+    }
+
     const data = await res.json()
     if (data.url) window.location.href = data.url
   }
