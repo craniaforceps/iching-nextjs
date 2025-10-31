@@ -25,12 +25,10 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Gera token e envia novamente
     await saveVerificationToken(user.id, user.email, user.name ?? undefined)
-
     return NextResponse.json({ success: true })
   } catch (err: any) {
-    console.error(err)
+    console.error('❌ Erro ao reenviar email de verificação:', err)
     return NextResponse.json(
       { error: 'Erro ao reenviar email de verificação' },
       { status: 500 }

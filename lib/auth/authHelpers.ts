@@ -46,7 +46,7 @@ export async function saveVerificationToken(
   )
   console.log('💾 Token guardado na DB')
 
-  const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify-email?token=${token}`
+  const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/settings/verify-email?token=${token}`
   console.log('🔗 Verification URL:', verificationUrl)
 
   try {
@@ -57,7 +57,6 @@ export async function saveVerificationToken(
       html: `
         <p>Olá ${name || 'utilizador'},</p>
         <p>Obrigado por te registares no <strong>Eu-Chingo</strong>.</p>
-        <p>Quero dar-te as boas-vindas. Espero que o I Ching te possa ajudar a lidar muito com a mudança e com o mundo que nos rodeia.</p>
         <p>Por favor confirma o teu email clicando no link abaixo:</p>
         <p><a href="${verificationUrl}" style="color: #2563eb;">Verificar Email</a></p>
         <p>Este link expira em 1 hora.</p>
