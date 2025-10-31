@@ -7,7 +7,7 @@ export default function DonateButton() {
   const [amount, setAmount] = useState(5)
 
   const handleDonate = async () => {
-    const res = await fetch('/api/donation/create-checkout-session', {
+    const res = await fetch('/api/settings/donation/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount }),
