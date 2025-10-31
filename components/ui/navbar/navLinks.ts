@@ -5,7 +5,6 @@ import { LinkItem, NavItem } from './types'
 export const baseLinks: LinkItem[] = [
   { type: 'link', href: '/', label: 'Início' },
   { type: 'link', href: '/sobre', label: 'Sobre' },
-  { type: 'link', href: '/tabelas', label: 'Tabelas' },
 ]
 
 // Links auth / not auth

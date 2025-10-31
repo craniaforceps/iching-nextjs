@@ -7,12 +7,9 @@ import { usePathname } from 'next/navigation'
 import NavbarMobileDropdown from '@/components/ui/sidebar/NavbarMobileDropdown'
 
 const tabs = [
-  { id: 'contexto', label: 'Contexto', href: '/sobre/contexto' },
-  { id: 'fundamentos', label: 'Fundamentos', href: '/sobre/fundamentos' },
-  { id: 'metodos', label: 'Métodos', href: '/sobre/metodos' },
-
+  { id: 'iching', label: 'I Ching', href: '/sobre/i-ching' },
   { id: 'projecto', label: 'Projecto', href: '/sobre/projecto' },
-  // { id: 'faq', label: 'FAQ', href: '/sobre/faq' },
+  { id: 'faq', label: 'FAQ', href: '/sobre/faq' },
 ]
 
 export default function SobreLayout({ children }: { children: ReactNode }) {

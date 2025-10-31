@@ -77,9 +77,9 @@ export default function LoginForm() {
                   </div> */}
             </div>
             <p className="p-primary text-center text-base tracking-wide leading-relaxed">
-              Não sabes quem somos? <br></br>Vai até{' '}
+              Não sabes quem somos? <br></br>Vai{' '}
               <Link href="/registo">
-                <u>ali</u>
+                <u>acolá</u>
               </Link>
               .
             </p>

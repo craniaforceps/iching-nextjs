@@ -4,10 +4,13 @@ import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import Button from '@/components/ui/button/Button'
 import { useAuth } from '@/context/AuthProvider'
+import { useState } from 'react'
+import SettingsField from './SettingsField'
 
 export default function DeleteAccount() {
   const router = useRouter()
   const { refreshAuth } = useAuth()
+  const [password, setPassword] = useState('')
 
   const handleDelete = async () => {
     const res = await Swal.fire({
@@ -24,6 +27,8 @@ export default function DeleteAccount() {
       const response = await fetch('/api/settings/delete-account', {
         method: 'POST',
         credentials: 'include',
+        body: JSON.stringify({ password }),
+        headers: { 'Content-Type': 'application/json' },
       })
       const data = await response.json()
       if (!data.success) {
@@ -45,8 +50,23 @@ export default function DeleteAccount() {
   }
 
   return (
-    <div className="flex justify-center p-2">
-      <Button text="Eliminar Conta" type="button" onClick={handleDelete} />
+    <div className="flex flex-col items-center p-2 gap-3">
+      <SettingsField
+        name="confirmPassword"
+        type="password"
+        placeholder="Confirmar nova password"
+        required
+      />
+
+      <Button
+        text="Eliminar Conta"
+        type="button"
+        onClick={handleDelete}
+        disabled={password.length < 6}
+      />
+      <p className="text-xs text-gray-500">
+        É necessário confirmar com a tua password atual (mínimo 6 caracteres).
+      </p>
     </div>
   )
 }

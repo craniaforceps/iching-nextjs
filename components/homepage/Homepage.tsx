@@ -11,7 +11,7 @@ export default function Homepage() {
     <section className="space-y-5 max-w-2xl mx-auto">
       <div className="flex items-center mx-auto flex-col space-y-3">
         <div className="mt-3 mb-0">
-          <Title title="Bem-vindo ao E-Ching" />
+          <Title title="Eu-Chingo, e tu? Chingas?" />
         </div>
 
         <h4 className="h4-text text-lg">

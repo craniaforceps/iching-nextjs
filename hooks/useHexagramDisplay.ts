@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useHexagramSaver } from './useHexagramSaver'
 import { mapHexagramRow } from '@/lib/mappers/mapHexagramRow'
@@ -32,9 +32,22 @@ export function useHexagramDisplay() {
     useState<BinaryMatchHexagramRawOutput | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [hexagramRaw, setHexagramRaw] = useState<string | null>(null)
-  const buttonRef = useRef<HTMLDivElement>(null)
 
   const { handleSave } = useHexagramSaver({ hexagrams, question, notes })
+
+  // 🔹 Recupera leitura guest do localStorage no mount
+  useEffect(() => {
+    const guestReading = localStorage.getItem('guestReading')
+    if (guestReading) {
+      const data = JSON.parse(guestReading)
+
+      // comentado para não limpar o localStorage
+
+      // setNotes(data.notes ?? '')
+      // setLines(data.lines ?? null)
+      // setHexagrams(data.hexagrams ?? null)
+    }
+  }, [])
 
   const handleGenerate = async () => {
     if (!question.trim()) {
@@ -43,40 +56,42 @@ export function useHexagramDisplay() {
     }
 
     try {
-      // 1️⃣ Gera linhas detalhadas
       const rawLines = generateHexagramLines()
       setLines(rawLines)
 
-      // 2️⃣ Converte para binários
       const sums = rawLines.map((l) => l.sum)
       const binaryMatch = generateBinary(sums)
       const hexagramRaw = sums.join('')
 
-      // 3️⃣ Chama a API route server-side
       const res = await fetch('/api/hexagram/match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(binaryMatch),
       })
-      if (!res.ok) throw new Error(`Erro HTTP: ${res.status}`)
 
+      if (!res.ok) throw new Error(`Erro HTTP: ${res.status}`)
       const data = await res.json()
       if (!data.success) throw new Error('Hexagrama não encontrado')
 
-      // 4️⃣ Mapear para objetos frontend
       const parsedHexagrams: BinaryMatchHexagramRawOutput = {
         match1: mapHexagramRow(data.data.match1),
         match2: mapHexagramRow(data.data.match2),
         hexagramRaw,
       }
-      console.log(hexagramRaw, 'este é o hexagramRaw')
+
       setHexagrams(parsedHexagrams)
+      setHexagramRaw(hexagramRaw)
       setError(null)
 
-      // Scroll opcional
-      setTimeout(
-        () => buttonRef.current?.scrollIntoView({ behavior: 'smooth' }),
-        100
+      // 🔹 Salvar automaticamente no localStorage como guest
+      localStorage.setItem(
+        'guestReading',
+        JSON.stringify({
+          question,
+          notes,
+          lines: rawLines,
+          hexagrams: parsedHexagrams,
+        })
       )
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Erro desconhecido'
@@ -92,8 +107,8 @@ export function useHexagramDisplay() {
     setNotes,
     lines,
     hexagrams,
+    hexagramRaw,
     error,
-    buttonRef,
     handleGenerate,
     handleSave,
   }

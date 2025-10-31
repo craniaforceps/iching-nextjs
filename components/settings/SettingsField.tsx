@@ -9,6 +9,7 @@ type SettingsFieldProps = {
   textarea?: boolean
   required?: boolean
   maxLength?: number
+  disabled?: boolean
 }
 
 export default function SettingsField({
@@ -20,6 +21,7 @@ export default function SettingsField({
   textarea = false,
   required = false,
   maxLength,
+  disabled,
 }: SettingsFieldProps) {
   if (textarea) {
     return (
@@ -40,6 +42,7 @@ export default function SettingsField({
       name={name}
       placeholder={placeholder}
       value={value}
+      disabled={disabled}
       maxLength={maxLength}
       onChange={onChange}
       required={required}

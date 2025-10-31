@@ -12,12 +12,12 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-stone-900 border-b-1">
       <div className="max-w-7xl mx-auto p-4 py-2 flex items-center justify-between">
-        <div className="w-1/4">
+        <div className="lg:w-1/4">
           <Logo />
         </div>
 
-        <div>
-          <nav className="hidden md:flex gap-x-6 w-2/4">
+        <div className="">
+          <nav className="hidden md:flex gap-x-6 lg:w-2/4">
             <NavbarLinks onLinkClick={() => setMenuOpen(false)} />
           </nav>
         </div>

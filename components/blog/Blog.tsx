@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function Contexto() {
+export default function Blog() {
   return (
     <section className="main-section">
       {/* Primeira seção (acima da dobra) */}

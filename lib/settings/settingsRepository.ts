@@ -6,20 +6,28 @@ export type DBUser = {
   password: string
   name?: string | null
   createdAt: string
+  welcomeEmailSent?: boolean
+  emailVerified?: boolean
 }
 
 export async function getUserById(userId: number): Promise<DBUser | undefined> {
   return await db.get<DBUser>(
-    'SELECT id, email, password, name, createdAt FROM users WHERE id = ?',
+    'SELECT id, email, password, name, createdAt, welcomeEmailSent, emailVerified FROM users WHERE id = ?',
     [userId]
   )
+}
+
+export async function markWelcomeEmailSent(userId: number) {
+  return await db.run('UPDATE users SET welcomeEmailSent = 1 WHERE id = ?', [
+    userId,
+  ])
 }
 
 export async function getUserByEmail(
   email: string
 ): Promise<DBUser | undefined> {
   return await db.get<DBUser>(
-    'SELECT id, email, password, name, createdAt FROM users WHERE email = ?',
+    'SELECT id, email, password, name, createdAt, emailVerified FROM users WHERE email = ?',
     [email]
   )
 }

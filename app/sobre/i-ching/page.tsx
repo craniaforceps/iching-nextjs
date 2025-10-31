@@ -1,4 +1,4 @@
-import Context from '@/components/about/context/Context'
+import Context from '@/components/about/context/IChing'
 
 export default function ContextoPage() {
   return (

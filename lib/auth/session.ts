@@ -1,5 +1,6 @@
 'use server'
 
+import crypto from 'crypto'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 
@@ -11,12 +12,16 @@ if (!secretKey) throw new Error('SESSION_SECRET não definida')
 
 const encodedKey = new TextEncoder().encode(secretKey)
 
-// Criar token JWT
-export async function encrypt(payload: {
+// 🧩 Tipagem do payload que vai dentro do JWT
+type SessionPayload = {
   userId: number
   email: string
   name: string
-}) {
+  emailVerified?: boolean
+}
+
+// Criar token JWT
+export async function encrypt(payload: SessionPayload) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -31,7 +36,7 @@ export async function decrypt(token?: string) {
     const { payload } = await jwtVerify(token, encodedKey, {
       algorithms: ['HS256'],
     })
-    return payload as { userId: number; email: string; name: string }
+    return payload as SessionPayload
   } catch {
     return null
   }
@@ -65,9 +70,20 @@ export async function getCurrentUser() {
   if (!payload || typeof payload.userId !== 'number' || !payload.email)
     return null
 
-  return { id: payload.userId, email: payload.email, name: payload.name }
+  return {
+    id: payload.userId,
+    email: payload.email,
+    name: payload.name,
+    emailVerified: payload.emailVerified ?? false, // ✅ agora incluímos o estado da verificação
+  }
 }
 
+// Logout
 export async function logoutUser() {
   await setSession('')
+}
+
+// Gerar token único para verificação de email
+export async function generateVerificationToken() {
+  return crypto.randomBytes(32).toString('hex')
 }

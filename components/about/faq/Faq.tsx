@@ -87,15 +87,17 @@ export default function Faq() {
   }
 
   return (
-    <section className="main-section">
-      <div className="content-split">
+    <section className="">
+      <h2 className="h2-title text-center mb-4">Perguntas e respostas</h2>
+      <div className="flex flex-col lg:flex-row lg:space-x-8 sm:space-x-0  justify-center mx-auto w-full">
         {/* Coluna principal */}
-        <div className="content-main">
-          <h2 className="h2-title text-center mb-4">
+
+        <div className="flex flex-col max-w-100 justify-center items-center mx-auto w-full">
+          {/* <h2 className="h2-title text-center mb-4">
             Algumas questões frequentes:
-          </h2>
-          <div className="flex justify-center">
-            <div className="w-full max-w-2xl space-y-4 text-left">
+          </h2> */}
+          <div className="flex justify-center w-full">
+            <div className="w-full space-y-4 text-left block ">
               {faqs.map((faq, index) => (
                 <AccordionItem
                   key={index}
@@ -111,8 +113,8 @@ export default function Faq() {
         </div>
 
         {/* Imagem lateral */}
-        <div className="content-side">
-          <div className="relative w-full h-[250px] lg:h-[350px] flex justify-center items-center">
+        <div className="w-80 flex mx-auto">
+          <div className="relative w-full h-[650px] mx-auto flex justify-center items-center">
             <Image
               src="/images/svg/lady-png.svg"
               alt="Figura simbólica feminina — I Ching"

@@ -6,7 +6,7 @@ interface ReadingNotesProps {
   setNotes: (notes: string) => void
   isEditing: boolean
   layout: 'stacked' | 'horizontal' | 'vertical'
-  onSave: () => void
+  onSave?: () => void
 }
 
 export default function ReadingNotes({

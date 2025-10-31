@@ -8,6 +8,7 @@ import ContactForm from './ContactForm'
 import DeleteAccount from './DeleteAccount'
 import Link from 'next/link'
 import Image from 'next/image'
+import DonateButton from './DonateButton'
 
 export default function Donation() {
   const [open, setOpen] = useState<string | null>(null)
@@ -39,7 +40,7 @@ export default function Donation() {
             </p>
           </div> */}
           <div>
-            <p className="p-primary text-center">Por implementar</p>
+            <DonateButton />
           </div>
         </div>
       </div>

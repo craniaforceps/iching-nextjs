@@ -6,7 +6,7 @@ import TextEditor from '@/components/ui/editor/TextEditor'
 type Props = {
   notes: string
   setNotes: (value: string) => void
-  onSave: () => void
+  onSave?: () => void
   layout: 'stacked' | 'horizontal' | 'vertical'
 }
 

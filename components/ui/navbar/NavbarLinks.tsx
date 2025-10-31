@@ -17,6 +17,7 @@ type NavItem = LinkItem | ActionItem
 const baseLinks: LinkItem[] = [
   { type: 'link', href: '/', label: 'Início' },
   { type: 'link', href: '/sobre', label: 'Sobre' },
+  { type: 'link', href: '/blog', label: 'Blogue' },
 ]
 
 // ------------------------

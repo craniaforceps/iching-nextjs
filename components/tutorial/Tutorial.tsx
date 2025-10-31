@@ -12,7 +12,7 @@ export default function Tutorial() {
     <section className="main-split">
       <h2 className="h2-title">Bem-vindo ao nosso oráculo</h2>
       {user ? (
-        <div className="relative left-10 w-full h-100 lg:h-[250px] ">
+        <div className="relative left-10 w-full h-50 lg:h-[250px] ">
           <Image
             src="/images/svg/snake-crop.svg"
             alt="Descrição da imagem"

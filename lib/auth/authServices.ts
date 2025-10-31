@@ -3,7 +3,7 @@
 import bcrypt from 'bcryptjs'
 import type { LoginState, RegisterState } from './authTypes'
 import { loginSchema, registerSchema } from './authSchemas'
-import { sanitizeEmailPasswordName } from './authHelpers'
+import { sanitizeEmailPasswordName, saveVerificationToken } from './authHelpers'
 import { encrypt, setSession } from './session'
 import { hashPassword } from '../utils/crypto'
 import { findUserByEmail, insertUser } from './authRepository'
@@ -43,7 +43,9 @@ export async function loginUser(
     userId: user.id,
     email: user.email,
     name: user.name,
+    emailVerified: user.emailVerified ?? false, // ✅ adiciona este campo
   })
+
   await setSession(token)
 
   return { errors: {}, success: true, userId: user.id }
@@ -56,9 +58,10 @@ export async function registerUser(
   const body = Object.fromEntries(formData) as {
     email: string
     password: string
+    name?: string
   }
-  const result = registerSchema.safeParse(body)
 
+  const result = registerSchema.safeParse(body)
   if (!result.success) {
     const { fieldErrors } = result.error.flatten()
     return { errors: fieldErrors, success: false }
@@ -72,19 +75,25 @@ export async function registerUser(
     )
 
   const existing = await findUserByEmail(sanitizedEmail)
-  if (existing)
+  if (existing) {
     return {
       errors: { email: ['Este email já está registado'], password: [] },
       success: false,
     }
+  }
 
   const hashed = await hashPassword(sanitizedPassword, SALT_ROUNDS)
   const newUserId = await insertUser(sanitizedEmail, hashed, sanitizedName)
 
+  // 🚀 Envia email de verificação logo após o registo
+  await saveVerificationToken(newUserId, sanitizedEmail, sanitizedName)
+
+  // Cria sessão, se quiseres manter login imediato
   const token = await encrypt({
     userId: newUserId,
     email: sanitizedEmail,
     name: sanitizedName,
+    emailVerified: false, // 👈 inicia como não verificado
   })
   await setSession(token)
 

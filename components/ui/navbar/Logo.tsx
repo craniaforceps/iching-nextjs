@@ -11,7 +11,7 @@ export default function Logo() {
         </Link>
       </div>
       <p>
-        <Link href="/">E-Ching</Link>
+        <Link href="/">Eu-Chingo</Link>
       </p>
     </div>
   )

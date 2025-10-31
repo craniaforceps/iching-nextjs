@@ -68,8 +68,6 @@ export default function ReadingDisplay({
     localStorage.setItem('guestReading', JSON.stringify(readingData))
   }
 
-  if (!mounted) return null
-
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col gap-6 px-4 ">
       <ReadingInput
@@ -80,11 +78,14 @@ export default function ReadingDisplay({
         error={error ?? undefined}
       />
 
-      {hexagrams && (
-        <div className="w-2/3 text-center mx-auto items-center">
-          <ReadingLogs lines={lines ?? []} />
-        </div>
-      )}
+      <div>
+        {hexagrams && (
+          <ReadingLogs
+            lines={lines ?? undefined} // se lines for null, passa undefined
+            hexagramRaw={hexagrams?.hexagramRaw}
+          />
+        )}
+      </div>
 
       {hexagrams && (
         <ModeSelector userMode={userMode} setUserMode={setUserMode} />

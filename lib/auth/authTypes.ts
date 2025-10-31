@@ -4,12 +4,15 @@ export type User = {
   name: string // adiciona name
   password: string
   createdAt: string
+  emailVerified?: boolean
 }
 
 export type SafeUser = {
   id: number
   email: string
   name?: string
+  welcomeEmailSent?: boolean
+  emailVerified?: boolean
 }
 
 export type LoginState = {

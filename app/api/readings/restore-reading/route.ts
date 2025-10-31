@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     if (!question || !lines || !hexagrams) {
       return errorResponse('Dados incompletos', 400)
     }
-
+    const hexagramRaw = hexagrams.hexagramRaw ?? null
     // Usa o readingsRepository para inserir a leitura
     const reading = await insertUserReading({
       user_id: user.id,
@@ -25,6 +25,7 @@ export async function POST(req: Request) {
       notes: notes ?? '',
       originalBinary: hexagrams.match1.binary,
       mutantBinary: hexagrams.match2.binary,
+      hexagramRaw,
     })
 
     return successResponse(reading)

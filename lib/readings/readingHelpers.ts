@@ -14,13 +14,16 @@ export function validateReadingInput(payload: unknown) {
 export function mapRowToView(row: ReadingRow): ReadingView {
   const originalHex = getHexagramByBinary(row.originalBinary)
   const mutantHex = getHexagramByBinary(row.mutantBinary)
-
-  console.log('Mapping Row to View', { originalHex, mutantHex }) // 🔹 DEBUG
+  const hexagramRaw = console.log('Mapping Row to View', {
+    originalHex,
+    mutantHex,
+  }) // 🔹 DEBUG
   return {
     ...row,
     // ⚠️ Isso vai devolver apenas promessas não resolvidas se getHexagramByBinary for async
     originalHexagram: row.originalBinary as any,
     mutantHexagram: row.mutantBinary as any,
+    hexagramRaw: row.hexagramRaw,
   }
 }
 

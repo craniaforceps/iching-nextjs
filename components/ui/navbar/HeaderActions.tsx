@@ -13,7 +13,7 @@ export default function HeaderActions({
   toggleMenu,
 }: HeaderActionsProps) {
   return (
-    <div className="flex items-center gap-4 ">
+    <div className="flex items-center gap-4 mx-auto justify-end">
       <DarkModeToggle />
       <Name />
       <MobileMenuButton isOpen={menuOpen} onClick={toggleMenu} />

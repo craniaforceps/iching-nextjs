@@ -1,5 +1,5 @@
 import type { HexagramObject } from '@/lib/hexagram/hexagramTypes'
-
+import type { Line } from '@/lib/hexagram/hexagramTypes'
 // === Reading DB Rows ===
 export type ReadingRow = {
   id: number
@@ -12,10 +12,19 @@ export type ReadingRow = {
   hexagramRaw: string
 }
 
+export type Reading = {
+  originalHexagram: HexagramObject
+  mutantHexagram: HexagramObject
+  hexagramRaw: string
+  lines?: Line[]
+}
+
 // === Reading used in frontend with Hexagrams ===
 export type ReadingView = ReadingRow & {
   originalHexagram: HexagramObject
   mutantHexagram: HexagramObject
+  hexagramRaw: string
+  lines?: Line[]
 }
 
 // === Input para criar uma leitura ===

@@ -3,9 +3,11 @@ import {
   generateRawHexagram,
   generateBinary,
 } from '@/lib/divinationMethods/coinMethodLogic/client'
-import type { BinaryMatchOutput } from '@/lib/hexagram/hexagramTypes'
+import type { BinaryMatchHexagramRawOutput } from '@/lib/hexagram/hexagramTypes'
 
-async function fetchHexagram(lines?: number[]): Promise<BinaryMatchOutput> {
+async function fetchHexagram(
+  lines?: number[]
+): Promise<BinaryMatchHexagramRawOutput> {
   const binaries = lines
     ? generateBinary(lines)
     : generateBinary(generateRawHexagram())
@@ -35,13 +37,14 @@ async function fetchHexagram(lines?: number[]): Promise<BinaryMatchOutput> {
   return {
     match1: normalize(data.data.match1),
     match2: normalize(data.data.match2),
+    hexagramRaw: data.data.hexagramRaw,
   }
 }
 
 export function useHexagram() {
   const [error, setError] = useState<string | null>(null)
 
-  const generateHexagram = async (): Promise<BinaryMatchOutput> => {
+  const generateHexagram = async (): Promise<BinaryMatchHexagramRawOutput> => {
     try {
       return await fetchHexagram()
     } catch (err) {
@@ -52,7 +55,7 @@ export function useHexagram() {
 
   const generateHexagramFromLines = async (
     lines: number[]
-  ): Promise<BinaryMatchOutput> => {
+  ): Promise<BinaryMatchHexagramRawOutput> => {
     try {
       return await fetchHexagram(lines)
     } catch (err) {

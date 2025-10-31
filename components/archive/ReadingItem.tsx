@@ -1,21 +1,22 @@
 import AccordionItem from '@/components/ui/AccordionItem'
 import ReadingHeader from './ReadingHeader'
-import ReadingHexagrams from './ReadingHexagrams'
-import ReadingNotes from './ReadingNotes'
 import { useReadingNotes } from '@/hooks/useReadingNotes'
 import { useArchiveReadings } from '@/hooks/useReadings'
 import type { ReadingItemProps } from '@/lib/readings/readingsTypes'
 import { useState, forwardRef } from 'react'
 import ModeSelector from '../reading/ModeSelector'
+import ReadingView from '../reading/ReadingView'
 
 const ReadingItem = forwardRef<HTMLDivElement, ReadingItemProps>(
   ({ reading, onDelete, isOpen, onToggle }, ref) => {
+    // hook de leitura de notas
     const { notes, setNotes, isEditing, setIsEditing, saveNotes } =
       useReadingNotes(reading.id, reading.notes ?? '', isOpen)
     const { deleteReadingWithConfirm } = useArchiveReadings()
     const [layout, setLayout] = useState<'stacked' | 'horizontal' | 'vertical'>(
       'horizontal'
     )
+
     const date = reading.createdAt
       ? new Date(reading.createdAt).toLocaleString()
       : ''
@@ -30,14 +31,11 @@ const ReadingItem = forwardRef<HTMLDivElement, ReadingItemProps>(
     const handleEditClick = () => {
       if (isEditing) {
         if (notes !== originalNotes) {
-          // Alterações feitas → abrir modal
           setShowDiscardModal(true)
         } else {
-          // Nenhuma alteração → fechar editor
           setIsEditing(false)
         }
       } else {
-        // Editor fechado → abrir
         setIsEditing(true)
       }
     }
@@ -65,39 +63,20 @@ const ReadingItem = forwardRef<HTMLDivElement, ReadingItemProps>(
           {/* Mode selector */}
           <ModeSelector userMode={layout} setUserMode={setLayout} />
 
-          {/* Container flex cards + notes */}
-          <div
-            className={`flex flex-col gap-6 ${
-              layout === 'vertical' ? 'md:flex-row' : 'flex-col'
-            } min-h-[30vh]`}
-          >
-            {/* Hexagramas */}
-            <div
-              className={`flex-1 grid grid-cols-1 gap-6 ${
-                layout === 'vertical'
-                  ? 'overflow-auto max-h-[calc(100vh-10rem)]'
-                  : ''
-              }`}
-            >
-              <ReadingHexagrams
-                originalHexagram={reading.originalHexagram}
-                mutantHexagram={reading.mutantHexagram}
-                layout={layout}
-              />
-            </div>
-
-            {/* Notes sticky */}
-            <ReadingNotes
-              notes={notes}
-              setNotes={setNotes}
-              isEditing={isEditing}
-              layout={layout}
-              onSave={saveNotes}
-            />
-          </div>
+          {/* ✅ ReadingView substitui os blocos antigos */}
+          <ReadingView
+            reading={reading}
+            layout={layout}
+            isEditing={isEditing}
+            notes={notes}
+            setNotes={setNotes}
+            onSaveNotes={saveNotes}
+            showLogs={true}
+            editable={true}
+          />
         </AccordionItem>
 
-        {/* Modal de descarte de alterações */}
+        {/* Modal de descarte */}
         {showDiscardModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full">
@@ -119,7 +98,7 @@ const ReadingItem = forwardRef<HTMLDivElement, ReadingItemProps>(
                   className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                   onClick={() => {
                     setIsEditing(false)
-                    setNotes(originalNotes) // resetar notas
+                    setNotes(originalNotes)
                     setShowDiscardModal(false)
                   }}
                 >

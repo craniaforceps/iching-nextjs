@@ -23,7 +23,7 @@ export default function HexagramDisplay({
 
   const cardsClasses = clsx('w-full', {
     'grid grid-cols-1 gap-6': isStacked,
-    'grid grid-cols-1 md:grid-cols-2 gap-6': isHorizontal,
+    'grid grid-cols-1 md:grid-cols-2 gap-6 ': isHorizontal,
     'flex-1 grid grid-cols-1 gap-6 overflow-auto max-h-[calc(100vh-8rem)]':
       isVertical,
   })
