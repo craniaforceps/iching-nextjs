@@ -1,37 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getUserById } from '@/lib/settings/settingsRepository'
-import { saveVerificationToken } from '@/lib/auth/authHelpers'
+import db from '@/data/db/db'
+import { encrypt, setSession } from '@/lib/auth/session'
 
-export async function POST(req: NextRequest) {
-  try {
-    const { userId } = await req.json()
+export async function GET(req: NextRequest) {
+  const token = req.nextUrl.searchParams.get('token')
+  if (!token)
+    return NextResponse.json({ error: 'Token em falta' }, { status: 400 })
 
-    if (!userId) {
-      return NextResponse.json({ error: 'UserId obrigatório' }, { status: 400 })
-    }
+  const user = await db.get(
+    `SELECT * FROM users
+     WHERE verification_token = ?
+       AND verification_token_expires > datetime('now')`,
+    [token]
+  )
 
-    const user = await getUserById(userId)
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Utilizador não encontrado' },
-        { status: 404 }
-      )
-    }
-
-    if (user.emailVerified) {
-      return NextResponse.json(
-        { error: 'Email já verificado' },
-        { status: 400 }
-      )
-    }
-
-    await saveVerificationToken(user.id, user.email, user.name ?? undefined)
-    return NextResponse.json({ success: true })
-  } catch (err: any) {
-    console.error('❌ Erro ao reenviar email de verificação:', err)
+  if (!user)
     return NextResponse.json(
-      { error: 'Erro ao reenviar email de verificação' },
-      { status: 500 }
+      { error: 'Token inválido ou expirado' },
+      { status: 400 }
     )
-  }
+
+  await db.run(
+    `UPDATE users
+       SET emailVerified = 1,
+           verification_token = NULL,
+           verification_token_expires = NULL
+     WHERE id = ?`,
+    [user.id]
+  )
+
+  const newSession = await encrypt({
+    userId: user.id,
+    email: user.email,
+    name: user.name,
+    emailVerified: true,
+  })
+  await setSession(newSession)
+
+  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/verificado`)
 }
