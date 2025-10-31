@@ -1,10 +1,11 @@
-// app/api/donation/create-checkout-session/route.ts
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
-
 export async function POST(req: Request) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+    apiVersion: '2025-10-29.clover',
+  })
+
   const { amount } = await req.json()
 
   try {
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
             product_data: {
               name: 'Doação ao projeto I Ching',
             },
-            unit_amount: amount * 100, // Stripe usa cêntimos
+            unit_amount: amount * 100,
           },
           quantity: 1,
         },
